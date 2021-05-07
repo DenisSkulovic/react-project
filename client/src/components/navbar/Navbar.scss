@@ -1,0 +1,27 @@
+.navbar-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgrey;
+
+    nav.navbar{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: grey;
+        
+        ul.navbar-link-list {
+            display: flex;
+            flex-direction: row;
+            list-style-type: none;
+            
+            li {
+                margin: 10px 15px;
+            }
+        }
+    }
+
+}
