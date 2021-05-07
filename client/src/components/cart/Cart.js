@@ -2,7 +2,7 @@ import React from "react";
 import CartList from "./CartList";
 import TopNav from "./TopNav";
 import BottomNav from "./BottomNav";
-import "./cart.scss";
+import "./Cart.scss";
 
 export default function Cart({ cartItems }) {
   // const addToCart = (itemID, quantity) => {
@@ -10,11 +10,12 @@ export default function Cart({ cartItems }) {
   // }
 
   return (
-    <div className="cart">
-      <h3>Cart</h3>
-      <TopNav />
-      <CartList cartItems={cartItems} />
-      <BottomNav />
+    <div className="cart-wrapper">
+      <div className="cart">
+        <TopNav />
+        <CartList cartItems={cartItems} />
+        <BottomNav />
+      </div>
     </div>
   );
 }

@@ -9,19 +9,23 @@ export default function CartItem({
   quantity,
 }) {
   return (
-    <div className="cart-item">
-      <div className="top-part">
-        <div className="category">{category}</div>
-      </div>
-      <div className="bottom-part">
-        <div className="image-wrapper">
-          <div className="cls">close</div>
-          <div className="image">{image}</div>
+    <div className="cart-item-wrapper">
+      <div className="cart-item">
+        <div className="top-part">
+          <div className="category">{category}</div>
         </div>
-        <div className="details">
-          <div className="title">{name}</div>
-          <div className="price">{price}</div>
-          <div className="quantity">{quantity}</div>
+        <div className="bottom-part">
+          <div className="image-wrapper">
+            <div className="cls">close</div>
+            <div className="image-div">
+              <img src={image} alt={name.toLowerCase().replace(/ /g, "")} />
+            </div>
+          </div>
+          <div className="details">
+            <div className="title">{name}</div>
+            <div className="price">{price}</div>
+            <div className="quantity">{quantity}</div>
+          </div>
         </div>
       </div>
     </div>

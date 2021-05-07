@@ -1,4 +1,15 @@
+html {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+html, body, #app, #app>div {
+  height: 100%
+}
+
 body {
+  min-height: 100vh;
+  min-width: 100vw;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -7,7 +18,39 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+}
+
+.nav-main-grid {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.main {
+  height: 100%;
+}
+
+.main.with-cart {
+  padding-left: 400px;
+}
+.main.with-navbar {
+  padding-top: 90px;
+}
+
