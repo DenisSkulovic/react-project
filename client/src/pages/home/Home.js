@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container";
 export default function Home({ products, cartItems }) {
   return (
     <>
-      <Navbar className={"fixed"} />
+      <Navbar className={"fixed with-cart"} />
       <div className="main with-navbar with-cart">
         <Container>
           <div className="cart-wrapper">

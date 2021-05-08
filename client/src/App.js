@@ -1,6 +1,8 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
+// pages
 import About from "./pages/about/About";
 import Home from "./pages/home/Home";
 import Users from "./pages/users/Users";

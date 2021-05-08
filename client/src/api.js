@@ -1,17 +1,22 @@
-import React from "react";
-import Navbar from "../../components/navbar/Navbar";
-import "./Users.scss";
+// ######################################################################
+// https://betterprogramming.pub/how-to-integrate-django-react-app-with-stripe-payments-95709b3f23e5
+// ######################################################################
 
-export default function Users() {
-  return (
-    <>
-      <Navbar className={"fixed"} />
-      <div className="main with-navbar">
-        <h3>Users</h3>
-      </div>
-    </>
-  );
-}
+import axios from "axios";
+export const API_URL = "http://localhost:8000";
+
+export const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    "Content-type": "application/json",
+  },
+});
+
+//   export default class ApiService{
+//     static saveStripeInfo(data={}){
+//       return api.post(`${API_URL}/payments/save-stripe-info/`, data)
+//     }
+//   }
 
 // ######################################################################
 // POST username and passwork to http://127.0.0.1:8000/api-token-auth/ to get a token

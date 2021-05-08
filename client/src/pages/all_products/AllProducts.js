@@ -32,8 +32,8 @@ export default function AllProducts({ products, cartItems }) {
 
   return (
     <>
-      <Navbar className={"fixed"} />
-      <div className="main with-navbar">
+      <Navbar className={"fixed with-cart"} />
+      <div className="main with-navbar with-cart">
         <Cart cartItems={cartItems} />
         <Container>
           <div className="products-wrapper">
