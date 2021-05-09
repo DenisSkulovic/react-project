@@ -5,19 +5,31 @@ from django.core.validators import MinValueValidator
 User = get_user_model()
 
 
+KG = "kg"
+LITER = "l"
+GRAM = "g"
+MILIGRAM = "mg"
+MILILITER = "ml"
+ITEM = "item"
+
+
 class Category(models.Model):
-    category = models.CharField(max_length=50, null=False, blank=False)
+    name = models.CharField(max_length=50, null=False, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.category}'
+        return f'{self.name}'
 
 
 class Product(models.Model):
+    UNIT_CHOICES = [(LITER, "l"), (MILILITER, "ml"),
+                    (KG, "kg"), (GRAM, "g"), (MILIGRAM, "mg"), (ITEM, "item")]
+
     name = models.CharField(max_length=50, null=False, blank=False)
     image = models.URLField(null=False, blank=False)
-    price = models.FloatField(default=0, null=False, blank=False, validators=[
+    unit = models.CharField(choices=UNIT_CHOICES, max_length=50)
+    unit_price = models.FloatField(default=0, null=False, blank=False, validators=[
         MinValueValidator(0.0)])
     category = models.ForeignKey(
         to=Category, on_delete=models.CASCADE, null=False, blank=False)
@@ -25,7 +37,7 @@ class Product(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.name} - {self.category}'
+        return f'{self.name} - {self.category} - {self.unit}'
 
 
 class StockItem(models.Model):
@@ -36,7 +48,7 @@ class StockItem(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.name} - {self.quantity}'
+        return f'{self.product} - {self.quantity}'
 
 
 class Cart(models.Model):
@@ -44,6 +56,9 @@ class Cart(models.Model):
         to=User, on_delete=models.PROTECT, null=False, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.customer} - created: {self.created_date} - modified: {self.modified_date}'
 
 
 class CartItem(models.Model):
@@ -59,7 +74,7 @@ class CartItem(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.product.name} - {self.quantity} - {self.price}'
+        return f'{self.product} - {self.quantity} - {self.price}'
 
 
 class Purchase(models.Model):
@@ -69,6 +84,9 @@ class Purchase(models.Model):
         default=0, validators=[MinValueValidator(0.0)], null=False, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.customer} - {self.total_paid}'
 
 
 class PurchaseItem(models.Model):
@@ -84,4 +102,4 @@ class PurchaseItem(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.product.name} - {self.quantity} - {self.price}'
+        return f'{self.product} - {self.quantity} - {self.price}'
