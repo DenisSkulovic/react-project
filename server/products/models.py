@@ -52,7 +52,7 @@ class StockItem(models.Model):
 
 
 class Cart(models.Model):
-    customer = models.ForeignKey(
+    customer = models.OneToOneField(
         to=User, on_delete=models.PROTECT, null=False, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)

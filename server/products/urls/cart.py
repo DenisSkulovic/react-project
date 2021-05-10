@@ -1,5 +1,6 @@
 from django.urls import path
 from products.api import cart
+from products.api import userActions
 
 
 urlpatterns = [
@@ -16,4 +17,11 @@ urlpatterns = [
 
     path('<int:user_id>/update/',
          cart.CartUpdateView.as_view(), name='cart_update'),
+
+    # user cart interactions
+    path("add/<int:quantity>",
+         userActions.AddRemoveCartItem.as_view(), "cart_add_remove"),
+
+    path('pay/<int:cart_id>/', userActions.FinalizeCart.as_view(), name="finalize_cart")
+
 ]

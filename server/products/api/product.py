@@ -11,6 +11,7 @@ from products.pagination import (
 from products.models import (Product, Category, StockItem,)
 from products.serializers.product import ProductSerializer
 from django.contrib.auth import get_user_model
+from django.db.models import F
 
 
 User = get_user_model()
@@ -18,6 +19,10 @@ User = get_user_model()
 #####################################################################
 # from rest_framework import authentication
 # authentication_classes = [authentication.TokenAuthentication]
+#####################################################################
+
+#####################################################################
+# allow product sorting
 #####################################################################
 
 
@@ -30,7 +35,7 @@ class ProductCategoryView(ListAPIView):
     def get_queryset(self):
         category = self.kwargs['category']
         queryset = self.model.objects.filter(
-            category=Category.objects.get(name=category))
+            category=F(Category.objects.get(name=category)))
         return queryset
 
 
