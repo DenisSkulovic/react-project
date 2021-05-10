@@ -26,11 +26,11 @@ class StockItemListView(ListAPIView):
     queryset = StockItem.objects.all()
     serializer_class = StockItemSerializer
     pagination_class = LargeResultsSetPagination
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class StockItemDetailView(APIView):
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
     def get(self, request, stockItem_id, format=None):
         stockItem = StockItemSerializer(StockItem.objects.get(id=stockItem_id))
@@ -40,23 +40,23 @@ class StockItemDetailView(APIView):
 class StockItemDeleteView(DestroyAPIView):
     queryset = StockItem.objects.all()
     serializer_class = StockItemSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class StockItemCreateView(CreateAPIView):
     queryset = StockItem.objects.all()
     serializer_class = StockItemSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class StockItemListView(ListAPIView):
     queryset = StockItem.objects.all()
     serializer_class = StockItemSerializer
     pagination_class = LargeResultsSetPagination
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class StockItemUpdateView(UpdateAPIView):
     queryset = StockItem.objects.all()
     serializer_class = StockItemSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)

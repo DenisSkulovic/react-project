@@ -10,6 +10,7 @@ from products.serializers.cartItem import CartItemSerializer
 from django.contrib.auth import get_user_model
 from django.db.models import F
 from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 User = get_user_model()
 
@@ -18,7 +19,7 @@ class FinalizeCart(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, cart_id):
-        cart = Cart.objects.get_object_or_404(id=cart_id)
+        cart = get_object_or_404(Cart, id=cart_id)
         cart_items = CartItem.objects.filter(cart=cart)
 
         if len(cart_items) == 0:
@@ -42,13 +43,35 @@ class FinalizeCart(APIView):
         return Response(PurchaseItemSerializer(content).data, status=status.HTTP_201_CREATED)
 
 
+class ClearCart(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, cart_id):
+        cart = get_object_or_404(Cart,
+                                 id=cart_id, customer=request.user)
+        CartItem.objects.filter(cart=cart).delete()
+        content = CartItem.objects.filter(cart=cart)
+        return Response(content, status=status.HTTP_202_ACCEPTED)
+
+
+class GetCart(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        cart = get_object_or_404(Cart,
+                                 customer=request.user)
+        content = CartItemSerializer(
+            CartItem.objects.filter(cart=cart), many=True).data
+        return Response(content, status=status.HTTP_200_OK)
+
+
 class AddRemoveCartItem(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, item_id, quantity):
-        item = Product.objects.get_object_or_404(id=item_id)
+        item = get_object_or_404(Product, id=item_id)
         quantity = int(quantity)
-        stock_item = StockItem.objects.get_object_or_404(product=item)
+        stock_item = get_object_or_404(StockItem, product=item)
         cart = Cart.objects.get_or_create(customer=request.user)
 
         if stock_item.quantity < quantity:
@@ -57,7 +80,7 @@ class AddRemoveCartItem(APIView):
         if quantity == 0:
             # return cart
             content = CartItem.objects.filter(cart=cart)
-            return Response(CartItemSerializer(content).data, status=status.HTTP_200_OK)
+            return Response(CartItemSerializer(content, many=True).data, status=status.HTTP_200_OK)
 
         # if adding some amount to cart
         elif quantity > 0:
@@ -70,7 +93,7 @@ class AddRemoveCartItem(APIView):
                     customer=request.user, product=item, cart=cart, quantity=quantity, price=item.unit_price)
             # return cart
             content = CartItem.objects.filter(cart=cart)
-            return Response(CartItemSerializer(content).data, status=status.HTTP_201_CREATED)
+            return Response(CartItemSerializer(content, many=True).data, status=status.HTTP_201_CREATED)
 
         # if removing some amount from cart
         elif quantity < 0:
@@ -80,12 +103,12 @@ class AddRemoveCartItem(APIView):
                 stock_item.update(quantity=F("quantity") + quantity)
                 # return cart
                 content = CartItem.objects.filter(cart=cart)
-                return Response(CartItemSerializer(content).data, status=status.HTTP_200_OK)
+                return Response(CartItemSerializer(content, many=True).data, status=status.HTTP_200_OK)
             except:
                 # return cart
                 content = CartItem.objects.filter(cart=cart)
-                return Response(CartItemSerializer(content).data, status=status.HTTP_200_OK)
+                return Response(CartItemSerializer(content, many=True).data, status=status.HTTP_200_OK)
 
         # return cart
         content = CartItem.objects.filter(cart=cart)
-        return Response(CartItemSerializer(content).data, status=status.HTTP_201_CREATED)
+        return Response(CartItemSerializer(content, many=True).data, status=status.HTTP_201_CREATED)

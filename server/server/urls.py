@@ -19,14 +19,14 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+
     path("cart/", include("products.urls.cart")),
     path("category/", include("products.urls.category")),
     path("product/", include("products.urls.product")),
     path("purchase/", include("products.urls.purchase")),
     path("purchaseItem/", include("products.urls.purchaseItem")),
     path("stock/", include("products.urls.stock")),
-
-    path('admin/', admin.site.urls),
 
     path("users/", include("users.urls")),
     path('payments/', include('payments.urls')),

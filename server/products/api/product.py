@@ -50,13 +50,13 @@ class ProductDetailView(APIView):
 class ProductDeleteView(DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class ProductCreateView(CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class ProductListView(ListAPIView):
@@ -69,4 +69,4 @@ class ProductListView(ListAPIView):
 class ProductUpdateView(UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)

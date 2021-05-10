@@ -26,11 +26,11 @@ class PurchaseListView(ListAPIView):
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer
     pagination_class = LargeResultsSetPagination
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class PurchaseDetailView(APIView):
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
     def get(self, request, purchase_id, format=None):
         purchase = PurchaseSerializer(Purchase.objects.get(id=purchase_id))
@@ -40,23 +40,23 @@ class PurchaseDetailView(APIView):
 class PurchaseDeleteView(DestroyAPIView):
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class PurchaseCreateView(CreateAPIView):
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class PurchaseListView(ListAPIView):
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer
     pagination_class = LargeResultsSetPagination
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class PurchaseUpdateView(UpdateAPIView):
     queryset = Purchase.objects.all()
     serializer_class = PurchaseSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)

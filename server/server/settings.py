@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-kl)t(2e@5fq$l+tu1#&-ll(hwd0e5v+%o1d2lx^f6ef^%%n(%e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -116,6 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # ]
 
 REST_FRAMEWORK = {
+    # permissions and authentication
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -123,10 +124,20 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+
     # pagination
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100,
-    #
+
+    # throttling api calls
+    'DEFAULT_THROTTLE_CLASSES': [
+        'products.throttles.BurstRateThrottle',
+        'products.throttles.SustainedRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        '60/min': '60/min',
+        '1000/day': '1000/day'
+    }
 }
 
 # Internationalization

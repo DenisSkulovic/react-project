@@ -25,7 +25,7 @@ User = get_user_model()
 
 
 class CartDetailView(APIView):
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
     def get(self, request, user_id, format=None):
         user = User.objects.get(id=user_id)
@@ -38,23 +38,23 @@ class CartDetailView(APIView):
 class CartDeleteView(DestroyAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class CartCreateView(CreateAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class CartListView(ListAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
     pagination_class = LargeResultsSetPagination
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class CartUpdateView(UpdateAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
-    permission_classes = (permissions.IsAdminUser, permissions.IsAuthenticated)
+    permission_classes = (permissions.IsAdminUser,)
