@@ -9,9 +9,10 @@ from products.pagination import (
     TenResultsSetPagination,
 )
 from products.models import (Product, Category, StockItem,)
-from products.serializers.product import ProductSerializer
+from products.serializers.product import ProductSerializer, CategorySerializer
 from django.contrib.auth import get_user_model
 from django.db.models import F
+from rest_framework import status
 
 
 User = get_user_model()
@@ -57,6 +58,21 @@ class ProductCreateView(CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = (permissions.IsAdminUser,)
+
+    # def create(self, request, *args, **kwargs):
+    #     print(request.data)
+    #     request.data._mutable = True
+
+    #     # try:
+    #     category_str = request.data.pop('category.name')
+    #     category = Category.objects.get_or_create(name=category_str)
+    #     last_product = Product.objects.latest('id')
+    #     request.data['category'] = category
+    #     serializer = self.serializer_class(request.data)
+
+    #     return Response(ProductSerializer(product).data, status=status.HTTP_201_CREATED)
+    #     # except:
+    #     # return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
 class ProductListView(ListAPIView):

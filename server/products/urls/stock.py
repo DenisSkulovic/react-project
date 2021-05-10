@@ -13,10 +13,10 @@ urlpatterns = [
     path('create/',
          stockItem.StockItemCreateView.as_view(), name='stock_item_create'),
 
-    path('<int:user_id>/delete/',
+    path('<int:pk>/delete/',
          stockItem.StockItemDeleteView.as_view(), name='stock_item_delete'),
 
-    path('<int:user_id>/update/',
+    path('<int:pk>/update/',
          stockItem.StockItemUpdateView.as_view(), name='stock_item_update'),
 
 ]

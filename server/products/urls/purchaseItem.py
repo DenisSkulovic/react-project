@@ -13,10 +13,10 @@ urlpatterns = [
     path('create/',
          purchaseItem.PurchaseItemCreateView.as_view(), name='purchase_item_create'),
 
-    path('<int:purchaseItem_id>/delete/',
+    path('<int:pk>/delete/',
          purchaseItem.PurchaseItemDeleteView.as_view(), name='purchase_item_delete'),
 
-    path('<int:purchaseItem_id>/update/',
-         purchaseItem.PurchaseItemDeleteView.as_view(), name='purchase_item_update'),
+    path('<int:pk>/update/',
+         purchaseItem.PurchaseItemUpdateView.as_view(), name='purchase_item_update'),
 
 ]

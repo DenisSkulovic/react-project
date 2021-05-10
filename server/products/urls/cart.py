@@ -12,19 +12,20 @@ urlpatterns = [
     path('create/',
          cart.CartCreateView.as_view(), name='cart_create'),
 
-    path('<int:user_id>/delete/',
+    path('<int:pk>/delete/',
          cart.CartDeleteView.as_view(), name='cart_delete'),
 
-    path('<int:user_id>/update/',
+    path('<int:pk>/update/',
          cart.CartUpdateView.as_view(), name='cart_update'),
 
     # user cart interactions
-    path("add/<int:quantity>",
+    path("change/<str:change>/<int:item_id>/<int:quantity>",
          userActions.AddRemoveCartItem.as_view(), name="cart_add_remove"),
 
-    path('pay/<int:cart_id>/', userActions.FinalizeCart.as_view(),
+    path('pay/', userActions.FinalizeCart.as_view(),
          name="finalize_cart"),
 
     path('', userActions.GetCart.as_view(), name="user_cart"),
 
+    path("clear/", userActions.ClearCart.as_view(), name="clear_user_cart"),
 ]

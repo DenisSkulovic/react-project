@@ -58,7 +58,7 @@ class Cart(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.customer} - created: {self.created_date} - modified: {self.modified_date}'
+        return f'CART: {self.customer}'
 
 
 class CartItem(models.Model):
@@ -74,7 +74,7 @@ class CartItem(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.product} - {self.quantity} - {self.price}'
+        return f'{self.cart} <||> CARITEM: {self.product} - {self.quantity} - {self.price}'
 
 
 class Purchase(models.Model):

@@ -7,7 +7,8 @@ User = get_user_model()
 
 
 class PurchaseSerializer(serializers.ModelSerializer):
+    customer = UserSerializer()
 
     class Meta:
-        model = Product
+        model = Purchase
         fields = '__all__'

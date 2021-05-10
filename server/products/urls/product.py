@@ -12,11 +12,11 @@ urlpatterns = [
     path('create/',
          product.ProductCreateView.as_view(), name='product_create'),
 
-    path('<int:product_id>/delete/',
+    path('<int:pk>/delete/',
          product.ProductDeleteView.as_view(), name='product_delete'),
 
-    path('<int:product_id>/update/',
-         product.ProductDeleteView.as_view(), name='product_update'),
+    path('<int:pk>/update/',
+         product.ProductUpdateView.as_view(), name='product_update'),
 
     # products for category
     path('category/<str:category>',
