@@ -10,8 +10,9 @@ from products.pagination import (
 from products.models import (
     Cart, CartItem,
 )
-from products.serializers.cart import CartSerializer
+from products.serializers.cart import CartSerializer, CartFullInfoSerializer
 from products.serializers.cartItem import CartItemSerializer
+
 
 from django.contrib.auth import get_user_model
 

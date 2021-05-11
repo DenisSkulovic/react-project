@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from products.models import PurchaseItem
 from django.contrib.auth import get_user_model
-from users.serializers import UserSerializer
+from users.serializers.user import UserSerializer
 from products.serializers.product import ProductSerializer
 from products.serializers.purchase import PurchaseSerializer
 
