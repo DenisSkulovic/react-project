@@ -6,6 +6,9 @@ urlpatterns = [
 
     path('all/', product.ProductListView.as_view(), name='product_list'),
 
+    path('all/bycategory', product.ProductListByCategoryView.as_view(),
+         name='product_list'),
+
     path('<int:product_id>/',
          product.ProductDetailView.as_view(), name='product_detail'),
 
@@ -19,6 +22,6 @@ urlpatterns = [
          product.ProductUpdateView.as_view(), name='product_update'),
 
     # products for category
-    path('category/<str:category>',
+    path('category/<str:category>/',
          product.ProductCategoryView.as_view(), name='product_list_category'),
 ]

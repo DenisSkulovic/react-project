@@ -18,7 +18,12 @@ urlpatterns = [
     path('<int:pk>/update/',
          cart.CartUpdateView.as_view(), name='cart_update'),
 
+    path('clear-expired/', cart.CartClearExpired.as_view(),
+         name='cart_clear_expired'),
+
+    #
     # user cart interactions
+    #
     path("change/<str:change>/<int:item_id>/<int:quantity>",
          userActions.AddRemoveCartItem.as_view(), name="cart_add_remove"),
 

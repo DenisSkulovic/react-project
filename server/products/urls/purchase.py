@@ -1,5 +1,5 @@
 from django.urls import path
-from products.api import purchase
+from products.api import purchase, userActions
 
 urlpatterns = [
 
@@ -16,5 +16,11 @@ urlpatterns = [
 
     path('<int:pk>/update/',
          purchase.PurchaseUpdateView.as_view(), name='purchase_update'),
+
+
+    # user interactions
+    path('history/', userActions.GetPurchases.as_view(),
+         name='my_purchase_history')
+
 
 ]

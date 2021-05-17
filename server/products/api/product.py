@@ -13,6 +13,7 @@ from products.serializers.product import ProductSerializer, CategorySerializer
 from django.contrib.auth import get_user_model
 from django.db.models import F
 from rest_framework import status
+from classes import SessionHandler
 
 
 User = get_user_model()
@@ -27,17 +28,56 @@ User = get_user_model()
 #####################################################################
 
 
-class ProductCategoryView(ListAPIView):
-    model = Product
+class ProductCategoryView(APIView):
     serializer_class = ProductSerializer
-    pagination_class = TenResultsSetPagination
+    pagination_class = LargeResultsSetPagination
     permission_classes = (permissions.AllowAny,)
 
-    def get_queryset(self):
-        category = self.kwargs['category']
-        queryset = self.model.objects.filter(
-            category=F(Category.objects.get(name=category)))
-        return queryset
+    def post(self, request, category):
+        session_handler = SessionHandler(request)
+        session_handler.refresh_session()
+
+        if category == 'all':
+            products = Product.objects.all()
+            products = ProductSerializer(products, many=True).data
+            content = {'products': products,
+                       'session_key': session_handler.session_key}
+            return Response(content, status=status.HTTP_200_OK)
+
+        try:
+            category = Category.objects.get(name=category)
+        except:
+            return Product.objects.none()
+
+        products = Product.objects.filter(
+            category=category)
+        products = ProductSerializer(products, many=True).data
+        content = {'products': products,
+                   'session_key': session_handler.session_key}
+        return Response(content, status=status.HTTP_200_OK)
+
+
+class ProductListByCategoryView(APIView):
+    serializer_class = ProductSerializer
+    pagination_class = LargeResultsSetPagination
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        session_handler = SessionHandler(request)
+        session_handler.refresh_session()
+
+        categories = Category.objects.all()
+
+        productsDict = {}
+        for category in categories:
+            products = Product.objects.filter(category=category)
+            products_serialized = ProductSerializer(products, many=True)
+
+            productsDict[category.name] = products_serialized.data
+
+        content = {'products': productsDict,
+                   'session_key': session_handler.session_key}
+        return Response(content, status=status.HTTP_200_OK)
 
 
 class ProductDetailView(APIView):

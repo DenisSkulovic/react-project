@@ -1,28 +1,24 @@
 import React from "react";
 
-export default function CartItem({
-  id,
-  name,
-  price,
-  category,
-  image,
-  quantity,
-}) {
+export default function CartItem({ id, price, product, quantity }) {
   return (
     <div className="cart-item-wrapper">
       <div className="cart-item">
         <div className="top-part">
-          <div className="category">{category}</div>
+          <div className="category">{product.category.name}</div>
         </div>
         <div className="bottom-part">
           <div className="image-wrapper">
             <div className="cls">close</div>
             <div className="image-div">
-              <img src={image} alt={name.toLowerCase().replace(/ /g, "")} />
+              <img
+                src={product.image}
+                alt={product.name.toLowerCase().replace(/ /g, "")}
+              />
             </div>
           </div>
           <div className="details">
-            <div className="title">{name}</div>
+            <div className="title">{product.name}</div>
             <div className="price">{price}</div>
             <div className="quantity">{quantity}</div>
           </div>

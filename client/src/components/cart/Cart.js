@@ -4,16 +4,12 @@ import TopNav from "./TopNav";
 import BottomNav from "./BottomNav";
 import "./Cart.scss";
 
-export default function Cart({ cartItems }) {
-  // const addToCart = (itemID, quantity) => {
-  //     console.log("addToCart TO DO")
-  // }
-
+export default function Cart() {
   return (
     <div className="cart-wrapper">
       <div className="cart">
         <TopNav />
-        <CartList cartItems={cartItems} />
+        <CartList />
         <BottomNav />
       </div>
     </div>

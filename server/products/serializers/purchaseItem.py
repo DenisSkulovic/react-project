@@ -10,8 +10,8 @@ User = get_user_model()
 
 class PurchaseItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer(partial=True)
-    purchase = PurchaseSerializer(partial=True)
+    # purchase = PurchaseSerializer(partial=True)
 
     class Meta:
         model = PurchaseItem
-        fields = '__all__'
+        exclude = ['purchase']

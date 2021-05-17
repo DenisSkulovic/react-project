@@ -1,33 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./HomeProducts.scss";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import HomeCarousel from "./HomeCarousel";
+import { useDispatch } from "react-redux";
 
-export default function Products({ products }) {
-  const getUniqueCategories = (products) => {
-    return Array.from(
-      new Set(
-        products.map((prod) => {
-          return prod.category;
-        })
-      )
-    );
-  };
-  const getProductsForCategory = (category) => {
-    return products.filter((prod) => {
-      return prod.category === category;
-    });
-  };
+import { useSelector } from "react-redux";
+import { makeSelectProducts } from "../../redux/productsHomePage/selectors";
 
-  const uniqueCategories = getUniqueCategories(products);
+import { getProductsByCategory } from "../../redux/productsHomePage/actions";
+
+export default function Products() {
+  const dispatch = useDispatch();
+
+  const productsData = useSelector(makeSelectProducts);
+
+  useEffect(() => {
+    dispatch(getProductsByCategory());
+  }, []);
 
   return (
     <div className="products">
       <h3>Products</h3>
-      {/* {uniqueCategories.map((category) => {
-        return <HomeCarousel products={getProductsForCategory(category)} />;
-      })} */}
-      <HomeCarousel products={products} />
+      {productsData &&
+        Object.keys(productsData.products).map((key, i) => {
+          return <HomeCarousel key={i} products={productsData.products[key]} />;
+        })}
     </div>
   );
 }

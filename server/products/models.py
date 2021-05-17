@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
+from django.contrib.sessions.models import Session
 
 User = get_user_model()
 
@@ -53,12 +54,14 @@ class StockItem(models.Model):
 
 class Cart(models.Model):
     customer = models.OneToOneField(
-        to=User, on_delete=models.PROTECT, null=False, blank=False)
+        to=User, on_delete=models.PROTECT, unique=True, null=True)
+    session = models.OneToOneField(
+        to=Session, on_delete=models.CASCADE, unique=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'CART: {self.customer}'
+        return f'CART: {self.id} - {self.customer}'
 
 
 class CartItem(models.Model):
@@ -79,7 +82,9 @@ class CartItem(models.Model):
 
 class Purchase(models.Model):
     customer = models.ForeignKey(
-        to=User, on_delete=models.PROTECT, null=False, blank=False)
+        to=User, on_delete=models.PROTECT, null=True)
+    session = models.OneToOneField(
+        to=Session, on_delete=models.PROTECT, null=True)
     total_paid = models.FloatField(
         default=0, validators=[MinValueValidator(0.0)], null=False, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)

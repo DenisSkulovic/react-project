@@ -1,13 +1,7 @@
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import {
-  Elements,
-  CardElement,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 // import LoaderButton from "./LoaderButton";
 import "./CheckoutForm.scss";
 

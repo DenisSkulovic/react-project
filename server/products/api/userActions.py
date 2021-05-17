@@ -8,10 +8,14 @@ from products.models import (
     Product, Cart, CartItem, Purchase, PurchaseItem, StockItem, Category)
 from products.serializers.cartItem import CartItemSerializer
 from products.serializers.purchaseItem import PurchaseItemSerializer
+from products.serializers.purchase import PurchaseSerializer
 from django.contrib.auth import get_user_model
 from django.db.models import F
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from django.contrib.sessions.models import Session
+from users.serializers.user import UserSessionSerializer
+from classes import CartHandler, SessionHandler
 
 User = get_user_model()
 
@@ -20,49 +24,62 @@ class FinalizeCart(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
-        cart = get_object_or_404(Cart, customer=request.user)
-        cart_items = CartItem.objects.filter(cart=cart)
 
-        if len(cart_items) == 0:
-            return Response({"message": "Cart is empty"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        cart_handler = CartHandler(request)
+        cart_handler.session_handler.refresh_session()
+        purchase, puchase_items = cart_handler.finalize_cart()
 
-        total_paid = 0
-        for cart_item in cart_items:
-            total_paid += cart_item.quantity * cart_item.price
-        purchase = Purchase.objects.create(
-            customer=request.user, total_paid=total_paid)
-
-        # create purchase items and remove cart items
-        for cart_item in cart_items:
-            PurchaseItem.objects.create(product=cart_item.product, purchase=purchase,
-                                        quantity=cart_item.quantity, price=cart_item.price)
-            cart_item.delete()
-        cart
-
-        # return purchase
-        content = PurchaseItem.objects.filter(purchase=purchase)
-        return Response(PurchaseItemSerializer(content, many=True).data, status=status.HTTP_201_CREATED)
+        content = {'purchase': PurchaseSerializer(
+            purchase).data,
+            'purchase_items': PurchaseItemSerializer(puchase_items, many=True).data,
+            'session_key': cart_handler.session_key}
+        return Response(content, status=status.HTTP_201_CREATED)
 
 
 class ClearCart(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
-        cart = get_object_or_404(Cart, customer=request.user)
-        CartItem.objects.filter(cart=cart).delete()
-        content = CartItemSerializer(
-            CartItem.objects.filter(cart=cart), many=True).data
+        cart_handler = CartHandler(request)
+        cart_handler.session_handler.refresh_session()
+        cart_handler.clear_cart()
+
+        # has to be empty, but just in case, returning the supposedly empty list
+        cart_items = cart_handler.get_cart_items()
+        cart_items = CartItemSerializer(cart_items, many=True).data
+        content = {'cart_items': cart_items,
+                   'session_key': cart_handler.session_key}
         return Response(content, status=status.HTTP_202_ACCEPTED)
+
+
+class GetPurchases(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        cart_handler = CartHandler(request)
+        cart_handler.session_handler.refresh_session()
+        content = []
+        purchases = Purchase.objects.filter(customer=request.user)
+        for purchase in purchases:
+            purchase_items = PurchaseItem.objects.filter(purchase=purchase)
+            content.append({'purchase': PurchaseSerializer(purchase).data,
+                            'purchase_items': PurchaseItemSerializer(purchase_items, many=True).data,
+                            'session_key': cart_handler.session_key})
+        return Response(content, status=status.HTTP_200_OK)
 
 
 class GetCart(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request):
-        cart = get_object_or_404(Cart,
-                                 customer=request.user)
-        content = CartItemSerializer(
-            CartItem.objects.filter(cart=cart), many=True).data
+    def post(self, request):
+        cart_handler = CartHandler(request)
+        cart_handler.session_handler.refresh_session()
+        cart_items = cart_handler.get_cart_items()
+        cart_items = CartItemSerializer(cart_items, many=True).data
+        content = {
+            'cart_items': cart_items,
+            'session_key': cart_handler.session_key
+        }
         return Response(content, status=status.HTTP_200_OK)
 
 
@@ -70,63 +87,24 @@ class AddRemoveCartItem(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, change, item_id, quantity):
-        assert change in ["add", "remove"]
+        if change not in ["add", "remove"]:
+            return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
         quantity = int(quantity)
 
-        if change == "remove":
-            quantity = -quantity
-
-        print("quantity", quantity)
-
-        item = get_object_or_404(Product, id=item_id)
-        stock_item = get_object_or_404(StockItem, product=item)
-        cart, _ = Cart.objects.get_or_create(customer=request.user)
-
-        if stock_item.quantity < quantity:
-            return Response({"message": "Insufficient items in stock."}, status=status.HTTP_406_NOT_ACCEPTABLE)
-
-        if quantity == 0:
-            # return cart
-            content = CartItem.objects.filter(cart=cart)
-            return Response(CartItemSerializer(content, many=True).data, status=status.HTTP_200_OK)
-
-        # if adding some amount to cart
-        elif quantity > 0:
-            try:
-                cartItem = CartItem.objects.get(cart=cart, product=item)
-                print("stock_item.quantity", stock_item.quantity)
-                stock_item.quantity -= quantity
-                stock_item.save()
-                cartItem.quantity += quantity
-                cartItem.save()
-            except:
-                cartItem = CartItem.objects.create(
-                    product=item, cart=cart, quantity=quantity, price=item.unit_price)
-            # return cart
-            content = CartItem.objects.filter(cart=cart)
-            return Response(CartItemSerializer(content, many=True).data, status=status.HTTP_201_CREATED)
-
-        # if removing some amount from cart
-        elif quantity < 0:
-            try:
-                cartItem = CartItem.objects.get(product=item)
-                if cartItem.quantity + quantity <= 0:
-                    CartItem.objects.filter(product=item).delete()
-                else:
-                    cartItem.quantity += quantity
-                    cartItem.save()
-
-                stock_item.quantity -= quantity
-                stock_item.save()
-                # return cart
-                content = CartItem.objects.filter(cart=cart)
-                return Response(CartItemSerializer(content, many=True).data, status=status.HTTP_200_OK)
-            except:
-                # return cart
-                content = CartItem.objects.filter(cart=cart)
-                return Response(CartItemSerializer(content, many=True).data, status=status.HTTP_200_OK)
+        cart_handler = CartHandler(request)
+        cart_handler.session_handler.refresh_session()
+        print('\n\n')
+        print("#########################################")
+        print("cart_handler.cart", cart_handler.cart)
+        print("cart_handler.session_key", cart_handler.session_key)
+        print("#########################################")
+        print('\n\n')
+        cart_handler.add_or_remove_cart_item(change, item_id, quantity)
 
         # return cart
-        content = CartItem.objects.filter(cart=cart)
-        return Response(CartItemSerializer(content, many=True).data, status=status.HTTP_201_CREATED)
+        cart_items = CartItem.objects.filter(cart=cart_handler.cart)
+        cart_items = CartItemSerializer(cart_items, many=True).data
+        content = {'cart_items': cart_items,
+                   'session_key': cart_handler.session_key}
+        return Response(content, status=status.HTTP_201_CREATED)

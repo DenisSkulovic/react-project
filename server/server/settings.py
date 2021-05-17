@@ -25,9 +25,11 @@ SECRET_KEY = 'django-insecure-kl)t(2e@5fq$l+tu1#&-ll(hwd0e5v+%o1d2lx^f6ef^%%n(%e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
-
+ALLOWED_HOSTS = ["*"]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000"
+]
+CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +42,8 @@ INSTALLED_APPS = [
     # 3rd party
     'rest_framework',
     'rest_framework.authtoken',
+    'knox',
+    'corsheaders',
     # apps
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
@@ -49,6 +53,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -118,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     # permissions and authentication
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'knox.auth.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': (
@@ -134,11 +139,22 @@ REST_FRAMEWORK = {
         'products.throttles.BurstRateThrottle',
         'products.throttles.SustainedRateThrottle'
     ],
+    #################################################################################
+    #################################################################################
+    #################################################################################
+    #################################################################################
     'DEFAULT_THROTTLE_RATES': {
-        '60/min': '60/min',
-        '1000/day': '1000/day'
+        '60/min': '6000/min',
+        '1000/day': '100000/day'
     }
+    #################################################################################
+    #################################################################################
+    #################################################################################
+    #################################################################################
 }
+
+# session cookie lives for 30 minutes
+SESSION_COOKIE_AGE = 30*60
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
