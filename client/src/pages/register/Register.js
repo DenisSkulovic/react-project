@@ -16,34 +16,36 @@ export default function Register() {
     <>
       <Navbar />
       <div className="main with-navbar">
-        <h4>Register</h4>
-        <form action="" onSubmit={onSubmit}>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-          <input
-            type="password"
-            value={password2}
-            onChange={(e) => {
-              setPassword2(e.target.value);
-            }}
-          />
-          <button type="submit">Register</button>
-          <p>
-            Already have an account? <Link to="/login">Login</Link>
-          </p>
-        </form>
+        <div className="container">
+          <h4>Register</h4>
+          <form action="" onSubmit={onSubmit}>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            <input
+              type="password"
+              value={password2}
+              onChange={(e) => {
+                setPassword2(e.target.value);
+              }}
+            />
+            <button type="submit">Register</button>
+            <p>
+              Already have an account? <Link to="/login">Login</Link>
+            </p>
+          </form>
+        </div>
       </div>
     </>
   );

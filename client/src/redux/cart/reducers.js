@@ -2,6 +2,7 @@ import ActionTypes from "./constants";
 
 const defaultStore = {
   cart: [],
+  cart_total: 0,
 };
 
 export function CartReducer(state = defaultStore, action) {
@@ -15,6 +16,11 @@ export function CartReducer(state = defaultStore, action) {
       return {
         ...state,
         cart: action.payload,
+      };
+    case ActionTypes.GET_CART_TOTAL:
+      return {
+        ...state,
+        cart_total: action.payload,
       };
     default:
       return state;

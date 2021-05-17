@@ -9,9 +9,18 @@ export const getCart = () => async (dispatch) => {
     session_key: window.sessionStorage.getItem("session_key"),
   });
   window.sessionStorage.setItem("session_key", response.data.session_key);
+
+  const total = response.data.cart_items.reduce((accumulator, currentItem) => {
+    return accumulator + currentItem.price * currentItem.quantity;
+  }, 0);
+
   dispatch({
     type: ActionTypes.GET_CART,
     payload: response.data.cart_items,
+  });
+  dispatch({
+    type: ActionTypes.GET_CART_TOTAL,
+    payload: total,
   });
 };
 
@@ -32,9 +41,18 @@ export const addRemoveCartItem = (item_id, quantity) => async (dispatch) => {
     }
   );
   window.sessionStorage.setItem("session_key", response.data.session_key);
+
+  const total = response.data.cart_items.reduce((accumulator, currentItem) => {
+    return accumulator + currentItem.price * currentItem.quantity;
+  }, 0);
+
   dispatch({
     type: ActionTypes.ADD_REMOVE_CART_ITEM,
     payload: response.data.cart_items,
+  });
+  dispatch({
+    type: ActionTypes.GET_CART_TOTAL,
+    payload: total,
   });
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../../components/navbar/Navbar";
+import Cart from "../../components/cart/Cart";
 import "./Checkout.scss";
 
 // stripe
@@ -14,12 +15,15 @@ const stripePromise = loadStripe(
 export default function Checkout() {
   return (
     <>
-      <Navbar className={"fixed"} />
-      <div className="main with-navbar">
-        <h2>Checkout</h2>
-        <Elements stripe={stripePromise}>
-          <CheckoutForm />
-        </Elements>
+      <Navbar className={"fixed with-cart"} />
+      <Cart />
+      <div className="main with-navbar with-cart">
+        <div className="container">
+          <h2>Checkout</h2>
+          <Elements stripe={stripePromise}>
+            <CheckoutForm />
+          </Elements>
+        </div>
       </div>
     </>
   );

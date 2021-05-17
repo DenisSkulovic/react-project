@@ -1,3 +1,7 @@
+.cart-list-wrapper {
+    overflow-y: scroll;
+}
+
 .cart a {
     text-decoration: none;
     color: initial;
@@ -46,6 +50,7 @@ background-color: lightgreen;
     left: 0px;
     height: 100vh;
     width: 400px;
+    z-index: 3;
 }
 
 .cart {

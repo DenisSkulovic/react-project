@@ -7,7 +7,9 @@ export default function Users() {
     <>
       <Navbar className={"fixed"} />
       <div className="main with-navbar">
-        <h3>Users</h3>
+        <div className="container">
+          <h3>Users</h3>
+        </div>
       </div>
     </>
   );

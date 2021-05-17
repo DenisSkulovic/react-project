@@ -18,12 +18,14 @@ export default function CartList() {
 
   console.log("cartSelector.cart_items", cartSelector.cart_items);
   return (
-    <div className="cart-list">
-      <h4>Cart List</h4>
-      {cartSelector.cart_items &&
-        cartSelector.cart_items.map((item) => {
-          return <CartItem key={item.id} {...item} />;
-        })}
+    <div className="cart-list-wrapper">
+      <div className="cart-list">
+        <h4>Cart List</h4>
+        {cartSelector.cart_items &&
+          cartSelector.cart_items.map((item) => {
+            return <CartItem key={item.id} {...item} />;
+          })}
+      </div>
     </div>
   );
 }

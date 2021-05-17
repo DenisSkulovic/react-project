@@ -15,27 +15,29 @@ export default function Login() {
     <>
       <Navbar />
       <div className="main with-navbar">
-        <h4>Login</h4>
-        <form action="" onSubmit={onSubmit}>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-          <button type="submit">Login</button>
-          <p>
-            Don't have an account? <Link to="/register">Login</Link>
-          </p>
-        </form>
+        <div className="container">
+          <h4>Login</h4>
+          <form action="" onSubmit={onSubmit}>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            <button type="submit">Login</button>
+            <p>
+              Don't have an account? <Link to="/register">Login</Link>
+            </p>
+          </form>
+        </div>
       </div>
     </>
   );
