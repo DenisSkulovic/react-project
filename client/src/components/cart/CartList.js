@@ -20,11 +20,15 @@ export default function CartList() {
   return (
     <div className="cart-list-wrapper">
       <div className="cart-list">
-        <h4>Cart List</h4>
         {cartSelector.cart_items &&
           cartSelector.cart_items.map((item) => {
             return <CartItem key={item.id} {...item} />;
           })}
+        {cartSelector.cart_items.length === 0 && (
+          <div className="no-cart-items-wrapper">
+            <div className="no-cart-items">Your cart is empty</div>
+          </div>
+        )}
       </div>
     </div>
   );

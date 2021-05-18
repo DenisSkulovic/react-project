@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
-import "./HomeProducts.scss";
+import "./CarouselList.scss";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import HomeCarousel from "./HomeCarousel";
-import { useDispatch } from "react-redux";
+import Carousel from "./Carousel";
+import { useDispatch, useSelector } from "react-redux";
+import { makeSelectProducts } from "../../../redux/productsHomePage/selectors";
+import { getProductsByCategory } from "../../../redux/productsHomePage/actions";
 
-import { useSelector } from "react-redux";
-import { makeSelectProducts } from "../../redux/productsHomePage/selectors";
-
-import { getProductsByCategory } from "../../redux/productsHomePage/actions";
-
-export default function Products() {
+export default function CarouselList() {
   const dispatch = useDispatch();
 
   const productsData = useSelector(makeSelectProducts);
@@ -23,7 +20,7 @@ export default function Products() {
       <h3>Products</h3>
       {productsData &&
         Object.keys(productsData.products).map((key, i) => {
-          return <HomeCarousel key={i} products={productsData.products[key]} />;
+          return <Carousel key={i} products={productsData.products[key]} />;
         })}
     </div>
   );

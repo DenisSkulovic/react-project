@@ -59,7 +59,8 @@ class GetPurchases(APIView):
         cart_handler = CartHandler(request)
         cart_handler.session_handler.refresh_session()
         content = []
-        purchases = Purchase.objects.filter(customer=request.user)
+        purchases = Purchase.objects.filter(
+            customer=request.user).order_by('created_date')
         for purchase in purchases:
             purchase_items = PurchaseItem.objects.filter(purchase=purchase)
             content.append({'purchase': PurchaseSerializer(purchase).data,
@@ -94,16 +95,11 @@ class AddRemoveCartItem(APIView):
 
         cart_handler = CartHandler(request)
         cart_handler.session_handler.refresh_session()
-        print('\n\n')
-        print("#########################################")
-        print("cart_handler.cart", cart_handler.cart)
-        print("cart_handler.session_key", cart_handler.session_key)
-        print("#########################################")
-        print('\n\n')
         cart_handler.add_or_remove_cart_item(change, item_id, quantity)
 
         # return cart
-        cart_items = CartItem.objects.filter(cart=cart_handler.cart)
+        cart_items = CartItem.objects.filter(
+            cart=cart_handler.cart).order_by('product__category', 'product__name')
         cart_items = CartItemSerializer(cart_items, many=True).data
         content = {'cart_items': cart_items,
                    'session_key': cart_handler.session_key}

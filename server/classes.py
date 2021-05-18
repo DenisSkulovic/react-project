@@ -127,12 +127,14 @@ class CartHandler():
         item = Product.objects.get(id=item_id)
         stock_item = StockItem.objects.get(product=item)
 
-        assert isinstance(quantity, int), "'quantity' has to be of type 'int'"
-        assert stock_item.quantity > quantity, "Insufficient items in stock"
-        assert quantity > 0, "'quantity' has to be a positive integer"
+        if quantity < 0:
+            return
 
         if change == "remove":
             quantity = -quantity
+
+        if stock_item.quantity < quantity:
+            return
 
         if quantity > 0:
             try:
@@ -146,20 +148,20 @@ class CartHandler():
                     product=item, cart=cart, quantity=quantity, price=item.unit_price)
         if quantity < 0:
             try:
-                cartItem = CartItem.objects.get(product=item)
+                cartItem = CartItem.objects.get(cart=cart, product=item)
                 if cartItem.quantity + quantity <= 0:
-                    CartItem.objects.filter(product=item).delete()
+                    CartItem.objects.filter(cart=cart, product=item).delete()
                 else:
                     cartItem.quantity += quantity
                     cartItem.save()
                 stock_item.quantity -= quantity
                 stock_item.save()
             except:
-                pass
+                return
 
     @staticmethod
     def _get_cart_items(cart):
-        return CartItem.objects.filter(cart=cart)
+        return CartItem.objects.filter(cart=cart).order_by('product__category', 'product__name')
 
     @staticmethod
     def _cart_items_back_to_stock(cart_items):

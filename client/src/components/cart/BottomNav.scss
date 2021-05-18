@@ -1,0 +1,33 @@
+.cart-bottom-nav {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.cart-bottom-nav button {
+    border-radius: 0px;
+}
+
+.cart-bottom-nav, .cart-top-nav {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 50, 50);
+}
+
+
+.cart-bottom-nav > div {
+    width: 100%;
+}
+
+.checkout-btn.checkout {
+    background-color: rgb(163, 162, 162);
+}
+
+.checkout-btn.pay {
+    background-color: rgb(53, 128, 35);
+}
+
+.checkout-btn, .total-amount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

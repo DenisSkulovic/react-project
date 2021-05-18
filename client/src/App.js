@@ -38,12 +38,8 @@ function App() {
         <Route path="/checkout" component={Checkout} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/all">
-          <AllProducts />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
+        <Route path="/all" component={AllProducts} />
+        <Route path="/" component={Home} />
       </Switch>
     </Router>
   );

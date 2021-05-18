@@ -1,7 +1,7 @@
 import React from "react";
 // import CarouselItem from "./CarouselItem";
 
-export default function HomeCarousel({ products }) {
+export default function Carousel({ products }) {
   console.log("products", products);
   // const handleDragStart = (e) => e.preventDefault();
   // const items = products.map((prod) => {

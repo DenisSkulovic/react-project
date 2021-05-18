@@ -1,0 +1,29 @@
+.order-by-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .order-by{
+        padding: 20px 0px;
+    }
+    .list-group-item {
+        border-top: none !important;
+        border-bottom: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        padding: 5px 15px !important;
+        border-radius: 0px !important;
+        color: #212529 !important;
+    }
+    
+    .list-group-item.active {
+        background-color: rgba(255, 0, 0, 0.25) !important;
+        color: #212529 !important;
+        z-index: 1 !important;
+    }
+    li {
+        cursor: pointer
+    }
+    li:not(:last-child), li.active:not(:last-child) {
+        border-right: rgb(192, 192, 192) 1px solid !important;
+    }
+}

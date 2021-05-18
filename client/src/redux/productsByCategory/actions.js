@@ -4,17 +4,21 @@ import ActionTypes from "./constants";
 
 //
 // GET PRODUCTS FOR CATEGORY
-export const getProductsForCategory = (category) => async (dispatch) => {
-  const response = await axios.post(
-    `http://127.0.0.1:8000/product/category/${category}/`,
-    { session_key: window.sessionStorage.getItem("session_key") }
-  );
-  window.sessionStorage.setItem("session_key", response.data.session_key);
-  dispatch({
-    type: ActionTypes.GET_PRODUCTS_FOR_CATEGORY,
-    payload: response.data.products,
-  });
-};
+export const getProductsForCategory =
+  (category, order_by) => async (dispatch) => {
+    const response = await axios.post(
+      `http://127.0.0.1:8000/product/category/${category}/`,
+      {
+        session_key: window.sessionStorage.getItem("session_key"),
+        order_by: order_by,
+      }
+    );
+    window.sessionStorage.setItem("session_key", response.data.session_key);
+    dispatch({
+      type: ActionTypes.GET_PRODUCTS_FOR_CATEGORY,
+      payload: response.data.products,
+    });
+  };
 
 //
 // SET CATEGORY
@@ -37,5 +41,12 @@ export const getCategories = () => async (dispatch) => {
     payload: response.data.categories,
   });
 };
-// an action is a func that takes an argument and returns an action,
-// which is composed of payload and action type
+
+//
+// SET ORDER BY
+export const setOrderBy = (order_by) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_ORDER_BY,
+    payload: order_by,
+  });
+};

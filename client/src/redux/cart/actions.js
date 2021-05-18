@@ -19,7 +19,7 @@ export const getCart = () => async (dispatch) => {
     payload: response.data.cart_items,
   });
   dispatch({
-    type: ActionTypes.GET_CART_TOTAL,
+    type: ActionTypes.CALC_CART_TOTAL,
     payload: total,
   });
 };
@@ -51,7 +51,7 @@ export const addRemoveCartItem = (item_id, quantity) => async (dispatch) => {
     payload: response.data.cart_items,
   });
   dispatch({
-    type: ActionTypes.GET_CART_TOTAL,
+    type: ActionTypes.CALC_CART_TOTAL,
     payload: total,
   });
 };

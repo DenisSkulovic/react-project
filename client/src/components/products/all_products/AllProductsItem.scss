@@ -1,0 +1,30 @@
+
+.all-products-item {
+    background-color: white;
+    margin: 20px 8px;
+    box-shadow: 0px 0px 2px 0px grey;
+    height: 330px;
+    .image-wrapper {
+        width: 200px;
+        height: 200px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+    }
+
+    .image-wrapper img {
+        height: auto;
+        width: auto;
+        max-width: 170px;
+        max-height: 170px;
+    }
+    .image-wrapper, .details {
+        margin: 10px;
+    }
+}
+
+.all-products-item.hover {
+    box-shadow: 0px 0px 6px 0px grey;
+}

@@ -17,7 +17,7 @@ export function CartReducer(state = defaultStore, action) {
         ...state,
         cart: action.payload,
       };
-    case ActionTypes.GET_CART_TOTAL:
+    case ActionTypes.CALC_CART_TOTAL:
       return {
         ...state,
         cart_total: action.payload,

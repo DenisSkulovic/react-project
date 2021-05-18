@@ -1,0 +1,16 @@
+.cart {
+    .add-remove-buttons-wrapper {
+        display: flex;
+        justify-content: center;
+        align-self: flex-end;
+        visibility: hidden;
+    }
+    
+    button {
+        background-color: transparent !important;
+    }
+    
+    .add-remove-buttons-wrapper.hover {
+        visibility: visible;
+    }
+}

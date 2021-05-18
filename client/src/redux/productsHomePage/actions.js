@@ -13,21 +13,6 @@ export const getProducts = () => async (dispatch) => {
 };
 
 //
-// GET PRODUCTS FOR CATEGORY
-export const getProductsForCategory = (category) => async (dispatch) => {
-  const response = await axios.post(
-    `http://127.0.0.1:8000/product/category/${category}/`,
-    { session_key: window.sessionStorage.getItem("session_key") }
-  );
-  window.sessionStorage.setItem("session_key", response.data.session_key);
-  console.log("getProductsForCategory response", response);
-  dispatch({
-    type: ActionTypes.GET_PRODUCTS_FOR_CATEGORY,
-    payload: response.data.products,
-  });
-};
-
-//
 // GET PRODUCTS BY CATEGORY
 export const getProductsByCategory = () => async (dispatch) => {
   const response = await axios.post(

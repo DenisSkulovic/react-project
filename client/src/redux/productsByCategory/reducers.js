@@ -4,6 +4,7 @@ const defaultStore = {
   products: [],
   category: "all",
   categories: [],
+  order_by: "name",
 };
 
 export function AllProductsReducer(state = defaultStore, action) {
@@ -22,6 +23,11 @@ export function AllProductsReducer(state = defaultStore, action) {
       return {
         ...state,
         categories: action.payload,
+      };
+    case ActionTypes.SET_ORDER_BY:
+      return {
+        ...state,
+        order_by: action.payload,
       };
     default:
       return state;

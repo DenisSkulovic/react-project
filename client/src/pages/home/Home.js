@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import Cart from "../../components/cart/Cart";
-import HomeProducts from "../../components/products/HomeProducts";
+import CarouselList from "../../components/products/home_products/CarouselList";
 import "./Home.scss";
 import Container from "react-bootstrap/Container";
 
@@ -15,7 +15,7 @@ export default function Home() {
             <Cart />
           </div>
           <div className="products-wrapper">
-            <HomeProducts />
+            <CarouselList />
           </div>
         </Container>
       </div>

@@ -10,6 +10,7 @@ from products.pagination import (
 )
 from products.models import (Product, Category, StockItem,)
 from products.serializers.product import ProductSerializer, CategorySerializer
+from products.serializers.stockItem import StockItemSerializer
 from django.contrib.auth import get_user_model
 from django.db.models import F
 from rest_framework import status
@@ -23,10 +24,6 @@ User = get_user_model()
 # authentication_classes = [authentication.TokenAuthentication]
 #####################################################################
 
-#####################################################################
-# allow product sorting
-#####################################################################
-
 
 class ProductCategoryView(APIView):
     serializer_class = ProductSerializer
@@ -37,8 +34,16 @@ class ProductCategoryView(APIView):
         session_handler = SessionHandler(request)
         session_handler.refresh_session()
 
+        # to prevent SQL injection
+        order_by = request.data['order_by']
+        fields = [f.name for f in Product._meta.get_fields()]
+        if order_by.replace("-", "") not in fields:
+            order_by = 'name'
+
+        print('\n\norder_by', order_by)
+
         if category == 'all':
-            products = Product.objects.all()
+            products = Product.objects.all().order_by(order_by)
             products = ProductSerializer(products, many=True).data
             content = {'products': products,
                        'session_key': session_handler.session_key}
@@ -47,10 +52,11 @@ class ProductCategoryView(APIView):
         try:
             category = Category.objects.get(name=category)
         except:
-            return Product.objects.none()
+            products = Product.objects.none()
+            return Response(ProductSerializer(products, many=True).data, status=status.HTTP_200_OK)
 
         products = Product.objects.filter(
-            category=category)
+            category=category).order_by(order_by)
         products = ProductSerializer(products, many=True).data
         content = {'products': products,
                    'session_key': session_handler.session_key}
@@ -83,9 +89,23 @@ class ProductListByCategoryView(APIView):
 class ProductDetailView(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request, product_id, format=None):
-        product = ProductSerializer(Product.objects.get(id=product_id))
-        return Response(product.data)
+    def post(self, request, product_id):
+        session_handler = SessionHandler(request)
+        session_handler.refresh_session()
+
+        product = Product.objects.get(id=product_id)
+        stock_item = StockItem.objects.filter(product=product)
+        if len(stock_item) > 0:
+            stock_item = StockItemSerializer(stock_item[0]).data
+        else:
+            stock_item = []
+        product = ProductSerializer(product).data
+        content = {
+            'product': product,
+            'stock_item': stock_item,
+            'session_key': session_handler.session_key,
+        }
+        return Response(content, status=status.HTTP_200_OK)
 
 
 class ProductDeleteView(DestroyAPIView):
@@ -98,21 +118,6 @@ class ProductCreateView(CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = (permissions.IsAdminUser,)
-
-    # def create(self, request, *args, **kwargs):
-    #     print(request.data)
-    #     request.data._mutable = True
-
-    #     # try:
-    #     category_str = request.data.pop('category.name')
-    #     category = Category.objects.get_or_create(name=category_str)
-    #     last_product = Product.objects.latest('id')
-    #     request.data['category'] = category
-    #     serializer = self.serializer_class(request.data)
-
-    #     return Response(ProductSerializer(product).data, status=status.HTTP_201_CREATED)
-    #     # except:
-    #     # return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
 class ProductListView(ListAPIView):

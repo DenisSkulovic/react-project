@@ -3,17 +3,3 @@
     grid-template-rows: auto 1fr;
     overflow-y: auto;
 }
-
-.all-products-item {
-    background-color: pink;
-    margin: 20px;
-    .image-wrapper {
-        width: 200px;
-
-    }
-
-    .image-wrapper img {
-        width: 100%;
-        height: auto;
-    }
-}
