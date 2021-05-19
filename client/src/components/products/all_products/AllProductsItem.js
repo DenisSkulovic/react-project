@@ -5,6 +5,7 @@ import {
   getProductToDisplay,
   openProductDetail,
 } from "../../../redux/productDetail/actions";
+import { setQuantityInputValue } from "../../../redux/productDetail/actions";
 
 // redux
 import { useDispatch } from "react-redux";
@@ -22,6 +23,7 @@ export default function AllProductsItem({
   const dispatch = useDispatch();
 
   const handleDetailBtnClick = (product_id) => {
+    dispatch(setQuantityInputValue(0));
     dispatch(openProductDetail());
     dispatch(getProductToDisplay(product_id));
   };
@@ -39,13 +41,14 @@ export default function AllProductsItem({
       className={`all-products-item ${hoverBool ? "hover" : ""}`}
       onMouseEnter={() => handleMouseEnter()}
       onMouseLeave={() => handleMouseLeave()}
+      onClick={() => {
+        handleDetailBtnClick(id);
+      }}
     >
-      <div
-        className="image-wrapper"
-        onClick={() => {
-          handleDetailBtnClick(id);
-        }}
-      >
+      <div className="category">
+        {category.name}
+      </div>
+      <div className="image-wrapper">
         <img src={image} alt={name.toLowerCase().replace(/ /g, "")} />
       </div>
       <div className="details">

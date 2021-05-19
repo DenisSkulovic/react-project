@@ -3,20 +3,30 @@ import "./OrderBy.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrderBy } from "../../../redux/productsByCategory/actions";
 import { getProductsForCategory } from "../../../redux/productsByCategory/actions";
-import { makeSelect_AllProducts_order_by } from "../../../redux/productsByCategory/selectors";
-import { makeSelect_AllProducts_category } from "../../../redux/productsByCategory/selectors";
+import {
+  makeSelect_AllProducts_category,
+  makeSelect_AllProducts_order_by,
+  makeSelect_AllProducts_page,
+} from "../../../redux/productsByCategory/selectors";
 
 export default function OrderBy() {
   const dispatch = useDispatch();
   const orderBySelector = useSelector(makeSelect_AllProducts_order_by);
   const currentCategorySelector = useSelector(makeSelect_AllProducts_category);
+  const page_Selector = useSelector(makeSelect_AllProducts_page);
 
   const handleClick = (choice) => {
     if (`${choice}` == `${orderBySelector.order_by}`) {
       choice = `-${choice}`;
     }
     dispatch(setOrderBy(`${choice}`));
-    dispatch(getProductsForCategory(currentCategorySelector.category, choice));
+    dispatch(
+      getProductsForCategory(
+        currentCategorySelector.category,
+        choice,
+        page_Selector.page
+      )
+    );
   };
   const choices = ["name", "category", "unit_price"];
   const choice_names = ["Name", "Category", "Price"];

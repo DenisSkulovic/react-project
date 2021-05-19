@@ -7,7 +7,7 @@ from rest_framework import permissions
 from products.pagination import (
     LargeResultsSetPagination,
     StandardResultsSetPagination,
-    TenResultsSetPagination,
+    SmallResultsSetPagination,
 )
 from products.models import (Purchase,)
 from products.serializers.purchase import PurchaseSerializer

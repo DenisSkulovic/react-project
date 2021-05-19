@@ -8,6 +8,7 @@ import {
 import CloseBtn from "./CloseBtn";
 import AddRemoveButtons from "./AddRemoveButtons";
 import "./CartItem.scss";
+import { setQuantityInputValue } from '../../redux/productDetail/actions'
 
 export default function CartItem({ id, price, product, quantity }) {
   const dispatch = useDispatch();
@@ -28,9 +29,10 @@ export default function CartItem({ id, price, product, quantity }) {
     setHoverBool(false);
   };
 
-  const handleDetailsClick = () => {
+  const handleDetailsClick = (id) => {
+    dispatch(setQuantityInputValue(0))
     dispatch(openProductDetail());
-    dispatch(getProductToDisplay(product.id));
+    dispatch(getProductToDisplay(id));
   };
   return (
     <div
@@ -42,7 +44,7 @@ export default function CartItem({ id, price, product, quantity }) {
         <CloseBtn handleRemove={handleRemove}></CloseBtn>
       )}
       <div
-        onClick={() => (checkout ? undefined : handleDetailsClick())}
+        onClick={() => (checkout ? undefined : handleDetailsClick(product.id))}
         className="cart-item container"
       >
         <div className="top-part">
@@ -64,8 +66,8 @@ export default function CartItem({ id, price, product, quantity }) {
               <div className="details-wrapper">
                 <div className="details">
                   <div className="title">{product.name}</div>
-                  <div className="price">{price}</div>
-                  <div className="quantity">{quantity}</div>
+                  <div className="price"><span>${price}</span> / <span>{product.unit}</span></div>
+                  <div className="quantity"><span>{quantity}</span> <span>{product.unit}</span></div>
                 </div>
               </div>
               <AddRemoveButtons

@@ -1,10 +1,12 @@
 import ActionTypes from "./constants";
 
 const defaultStore = {
-  products: [],
+  products: {},
   category: "all",
   categories: [],
   order_by: "name",
+  page: 1,
+  page_size: 10,
 };
 
 export function AllProductsReducer(state = defaultStore, action) {
@@ -28,6 +30,11 @@ export function AllProductsReducer(state = defaultStore, action) {
       return {
         ...state,
         order_by: action.payload,
+      };
+    case ActionTypes.SET_PAGE:
+      return {
+        ...state,
+        page: action.payload,
       };
     default:
       return state;

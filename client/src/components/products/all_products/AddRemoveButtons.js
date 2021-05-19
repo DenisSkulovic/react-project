@@ -12,7 +12,10 @@ export default function AddRemoveButtons({ id, handleDetailBtnClick }) {
   };
 
   return (
-    <div className="add-remove-buttons-wrapper">
+    <div
+      className="add-remove-buttons-wrapper"
+      onClick={(e) => e.stopPropagation()}
+    >
       <ButtonGroup>
         <Button
           onClick={() => {

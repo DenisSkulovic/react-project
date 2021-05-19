@@ -5,9 +5,9 @@ import ActionTypes from "./constants";
 //
 // GET PRODUCTS FOR CATEGORY
 export const getProductsForCategory =
-  (category, order_by) => async (dispatch) => {
+  (category, order_by, page) => async (dispatch) => {
     const response = await axios.post(
-      `http://127.0.0.1:8000/product/category/${category}/`,
+      `http://127.0.0.1:8000/product/category/${category}/?page=${page}`,
       {
         session_key: window.sessionStorage.getItem("session_key"),
         order_by: order_by,
@@ -16,7 +16,7 @@ export const getProductsForCategory =
     window.sessionStorage.setItem("session_key", response.data.session_key);
     dispatch({
       type: ActionTypes.GET_PRODUCTS_FOR_CATEGORY,
-      payload: response.data.products,
+      payload: response.data,
     });
   };
 
@@ -26,6 +26,15 @@ export const setCategory = (category) => (dispatch) => {
   dispatch({
     type: ActionTypes.SET_CATEGORY,
     payload: category,
+  });
+};
+
+//
+// SET PAGE
+export const setPage = (page) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_PAGE,
+    payload: page,
   });
 };
 

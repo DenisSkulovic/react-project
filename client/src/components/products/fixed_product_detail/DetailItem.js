@@ -36,11 +36,13 @@ export default function DetailItem({ product, stock_item }) {
 
   return (
     <div className="product-detail-info">
-      <div className="image-wrapper col-2">
-        {product ? product.image : "no data"}
+      <div className="image-wrapper col-3">
+        <div className="image-div">
+          <img src={product ? product.image : "no data"} alt={product ? product.name : "no data"} />
+        </div>
       </div>
-      <div className="name col-4">{product ? product.name : "no data"}</div>
-      <div className="quantity col-2">
+      <div className="name col-2">{product ? product.name : "no data"}</div>
+      <div className="quantity col-3">
         <AddRemoveDiv
           handleAddRemoveBtnClick={handleAddRemoveBtnClick}
           handleInput={handleInput}
@@ -51,9 +53,15 @@ export default function DetailItem({ product, stock_item }) {
         </div>
       </div>
       <div className="unit-price col-2">
-        {product ? product.unit_price : "no data"}
+        {product ? product.unit_price : "no data"} / {product ? product.unit : "no data"}
       </div>
-      <div className="total-price col-2">total-price</div>
+      <div className="total-price col-2">
+        ${product &&
+          (
+            quantityInputValue_Selector.quantity_input_value *
+            product.unit_price
+          ).toFixed(2)}
+      </div>
     </div>
   );
 }

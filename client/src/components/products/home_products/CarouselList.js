@@ -19,8 +19,14 @@ export default function CarouselList() {
     <div className="products">
       <h3>Products</h3>
       {productsData &&
-        Object.keys(productsData.products).map((key, i) => {
-          return <Carousel key={i} products={productsData.products[key]} />;
+        Object.keys(productsData.products).map((category, i) => {
+          return (
+            <Carousel
+              key={i}
+              category={category}
+              products={productsData.products[category]}
+            />
+          );
         })}
     </div>
   );

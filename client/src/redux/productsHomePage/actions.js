@@ -2,16 +2,6 @@ import axios from "axios";
 
 import ActionTypes from "./constants";
 
-// GET PRODUCTS (all in bulk)
-export const getProducts = () => async (dispatch) => {
-  const response = await axios.post("http://127.0.0.1:8000/product/all/", {
-    session_key: window.sessionStorage.getItem("session_key"),
-  });
-  window.sessionStorage.setItem("session_key", response.data.session_key);
-  console.log("getProducts response", response);
-  dispatch({ type: ActionTypes.GET_PRODUCTS, payload: response.data.products });
-};
-
 //
 // GET PRODUCTS BY CATEGORY
 export const getProductsByCategory = () => async (dispatch) => {

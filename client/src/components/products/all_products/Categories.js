@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./Categories.scss";
 
 // redux
@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   makeSelect_AllProducts_categories,
   makeSelect_AllProducts_category,
+  makeSelect_AllProducts_page,
+  makeSelect_AllProducts_order_by,
 } from "../../../redux/productsByCategory/selectors";
 import {
   getProductsForCategory,
   setCategory,
   getCategories,
 } from "../../../redux/productsByCategory/actions";
-import { makeSelect_AllProducts_order_by } from "../../../redux/productsByCategory/selectors";
 
 //
 //
@@ -27,10 +28,17 @@ export default function Categories() {
   const categoriesSelector = useSelector(makeSelect_AllProducts_categories);
   const categorySelector = useSelector(makeSelect_AllProducts_category);
   const order_by_Selector = useSelector(makeSelect_AllProducts_order_by);
+  const page_Selector = useSelector(makeSelect_AllProducts_page);
 
   const handleClick = (category) => {
     dispatch(setCategory(category));
-    dispatch(getProductsForCategory(category, order_by_Selector.order_by));
+    dispatch(
+      getProductsForCategory(
+        category,
+        order_by_Selector.order_by,
+        page_Selector.page
+      )
+    );
   };
 
   return (

@@ -1,17 +1,11 @@
 import React from "react";
 import PaginatorPageBtn from "./PaginatorPageBtn";
 
-export default function Paginator({ pageCount, setCurrentPage }) {
+export default function Paginator({ pageCount }) {
   return (
     <div className="paginator">
       {[...Array(pageCount).keys()].map((i) => {
-        return (
-          <PaginatorPageBtn
-            key={i + 1}
-            page={i + 1}
-            setCurrentPage={setCurrentPage}
-          />
-        );
+        return <PaginatorPageBtn key={i + 1} page={i + 1} />;
       })}
     </div>
   );

@@ -1,0 +1,16 @@
+.add-remove-wrapper {
+    padding: 0px 5px;
+
+    .add-remove {
+        display: grid;
+        grid-template-columns: 35px 1fr 35px;
+    
+        input[type='number'],
+        input[type="number"]:hover,
+        input[type="number"]:focus {
+            -webkit-appearance: none !important;
+            margin: 0 !important;
+            -moz-appearance: textfield !important;
+    }
+    }
+}    

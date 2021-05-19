@@ -1,17 +1,18 @@
 import React from "react";
+import "./CarouselItem.scss";
 
 export default function CarouselItem({
   id,
-  category,
   image,
   name,
-  price,
-  quantity,
+  unit,
+  unit_price,
+  category,
 }) {
   return (
     <div className="carousel-item">
       <div className="top-part">
-        <div className="category">{category}</div>
+        <div className="category">{category.name}</div>
       </div>
       <div className="bottom-part">
         <div className="image-wrapper">
@@ -21,8 +22,9 @@ export default function CarouselItem({
         </div>
         <div className="details">
           <div className="title">{name}</div>
-          <div className="price">{price}</div>
-          <div className="quantity">{quantity}</div>
+          <div className="price">
+            ${unit_price} / {unit}
+          </div>
         </div>
       </div>
     </div>

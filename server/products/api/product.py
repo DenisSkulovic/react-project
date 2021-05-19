@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from products.pagination import (
     LargeResultsSetPagination,
-    TenResultsSetPagination,
+    SmallResultsSetPagination,
 )
 from products.models import (Product, Category, StockItem,)
 from products.serializers.product import ProductSerializer, CategorySerializer
@@ -25,42 +25,58 @@ User = get_user_model()
 #####################################################################
 
 
-class ProductCategoryView(APIView):
+class ProductCategoryView(ListAPIView):
     serializer_class = ProductSerializer
-    pagination_class = LargeResultsSetPagination
+    pagination_class = SmallResultsSetPagination
     permission_classes = (permissions.AllowAny,)
+    queryset = Product.objects.all()
 
-    def post(self, request, category):
+    def get_custom_queryset(self, request, category):
         session_handler = SessionHandler(request)
         session_handler.refresh_session()
+        self.session_key = session_handler.session_key
 
         # to prevent SQL injection
-        order_by = request.data['order_by']
-        fields = [f.name for f in Product._meta.get_fields()]
-        if order_by.replace("-", "") not in fields:
+        if request.data.get('order_by'):
+            order_by = request.data['order_by']
+            fields = [f.name for f in Product._meta.get_fields()]
+            if order_by.replace("-", "") not in fields:
+                order_by = 'name'
+        else:
             order_by = 'name'
 
-        print('\n\norder_by', order_by)
-
         if category == 'all':
-            products = Product.objects.all().order_by(order_by)
-            products = ProductSerializer(products, many=True).data
-            content = {'products': products,
-                       'session_key': session_handler.session_key}
-            return Response(content, status=status.HTTP_200_OK)
+            return Product.objects.all().order_by(order_by)
 
         try:
             category = Category.objects.get(name=category)
         except:
-            products = Product.objects.none()
-            return Response(ProductSerializer(products, many=True).data, status=status.HTTP_200_OK)
+            return Product.objects.none()
 
-        products = Product.objects.filter(
+        queryset = Product.objects.filter(
             category=category).order_by(order_by)
-        products = ProductSerializer(products, many=True).data
-        content = {'products': products,
-                   'session_key': session_handler.session_key}
+
+        return queryset
+
+    def list(self, request, category, *args, **kwargs):
+        queryset = self.filter_queryset(
+            self.get_custom_queryset(request=request, category=category))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            content = {'results': serializer.data,
+                       'session_key': self.session_key}
+            return self.get_paginated_response(content)
+
+        serializer = self.get_serializer(queryset, many=True)
+        result = [x.values()[0] for x in serializer.data]
+        content = {'results': result,
+                   'session_key': self.session_key}
         return Response(content, status=status.HTTP_200_OK)
+
+    def post(self, request, category, *args, **kwargs):
+        return self.list(request, category, *args, **kwargs)
 
 
 class ProductListByCategoryView(APIView):
@@ -123,7 +139,7 @@ class ProductCreateView(CreateAPIView):
 class ProductListView(ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    pagination_class = LargeResultsSetPagination
+    pagination_class = SmallResultsSetPagination
     permission_classes = (permissions.AllowAny,)
 
 
@@ -131,3 +147,44 @@ class ProductUpdateView(UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = (permissions.IsAdminUser,)
+
+
+# class ProductCategoryView(APIView):
+#     serializer_class = ProductSerializer
+#     pagination_class = SmallResultsSetPagination
+#     permission_classes = (permissions.AllowAny,)
+
+#     def post(self, request, category):
+#         session_handler = SessionHandler(request)
+#         session_handler.refresh_session()
+
+#         # to prevent SQL injection
+#         if request.data.get('order_by'):
+#             order_by = request.data['order_by']
+#             fields = [f.name for f in Product._meta.get_fields()]
+#             if order_by.replace("-", "") not in fields:
+#                 order_by = 'name'
+#         else:
+#             order_by = 'name'
+
+#         print('\n\norder_by', order_by)
+
+#         if category == 'all':
+#             products = Product.objects.all().order_by(order_by)
+#             products = ProductSerializer(products, many=True).data
+#             content = {'products': products,
+#                        'session_key': session_handler.session_key}
+#             return Response(content, status=status.HTTP_200_OK)
+
+#         try:
+#             category = Category.objects.get(name=category)
+#         except:
+#             products = Product.objects.none()
+#             return Response(ProductSerializer(products, many=True).data, status=status.HTTP_200_OK)
+
+#         products = Product.objects.filter(
+#             category=category).order_by(order_by)
+#         products = ProductSerializer(products, many=True).data
+#         content = {'products': products,
+#                    'session_key': session_handler.session_key}
+#         return Response(content, status=status.HTTP_200_OK)
