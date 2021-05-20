@@ -1,6 +1,7 @@
 from django.contrib.sessions.models import Session
 # from products.models import Cart, CartItem, StockItem
 # from django.utils import timezone
+from django.db.models import F
 from server import settings
 from users.serializers.user import UserSessionSerializer
 from django.contrib.sessions.models import Session
@@ -33,7 +34,7 @@ class SessionHandler():
         try:
             # try to use the key provided - check it for validity
             validated_session_key = self._validate_session_key(
-                request.data.get("session_key"))
+                request.headers.get("Sessionkey"))
             session = Session.objects.get(
                 session_key=validated_session_key)
             session_key = session.session_key
@@ -45,6 +46,7 @@ class SessionHandler():
         except:
             # if key cannot be used - create new session
             request.session.create()
+            print('request.session.session_key', request.session.session_key)
             return request.session.session_key
 
     @staticmethod
@@ -139,22 +141,25 @@ class CartHandler():
         if quantity > 0:
             try:
                 cartItem = CartItem.objects.get(cart=cart, product=item)
-                stock_item.quantity -= quantity
-                cartItem.quantity += quantity
+                stock_item.quantity = F('quantity') - quantity
+                cartItem.quantity = F('quantity') + quantity
                 stock_item.save()
                 cartItem.save()
             except:
                 cartItem = CartItem.objects.create(
                     product=item, cart=cart, quantity=quantity, price=item.unit_price)
+                stock_item.quantity = F('quantity') - quantity
+                stock_item.save()
+
         if quantity < 0:
             try:
                 cartItem = CartItem.objects.get(cart=cart, product=item)
                 if cartItem.quantity + quantity <= 0:
                     CartItem.objects.filter(cart=cart, product=item).delete()
                 else:
-                    cartItem.quantity += quantity
+                    cartItem.quantity = F('quantity') + quantity
                     cartItem.save()
-                stock_item.quantity -= quantity
+                stock_item.quantity = F('quantity') - quantity
                 stock_item.save()
             except:
                 return
@@ -168,7 +173,7 @@ class CartHandler():
         for cart_item in cart_items:
             stock_item = StockItem.objects.get(
                 product=cart_item.product)
-            stock_item.quantity += cart_item.quantity
+            stock_item.quantity = F('quantity') + cart_item.quantity
             stock_item.save()
             cart_item.delete()
 

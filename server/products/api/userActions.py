@@ -23,7 +23,7 @@ User = get_user_model()
 class FinalizeCart(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request):
+    def get(self, request):
 
         cart_handler = CartHandler(request)
         cart_handler.session_handler.refresh_session()
@@ -39,7 +39,7 @@ class FinalizeCart(APIView):
 class ClearCart(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request):
+    def get(self, request):
         cart_handler = CartHandler(request)
         cart_handler.session_handler.refresh_session()
         cart_handler.clear_cart()
@@ -55,7 +55,7 @@ class ClearCart(APIView):
 class GetPurchases(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
-    def post(self, request):
+    def get(self, request):
         cart_handler = CartHandler(request)
         cart_handler.session_handler.refresh_session()
         content = []
@@ -72,7 +72,7 @@ class GetPurchases(APIView):
 class GetCart(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request):
+    def get(self, request):
         cart_handler = CartHandler(request)
         cart_handler.session_handler.refresh_session()
         cart_items = cart_handler.get_cart_items()
@@ -87,7 +87,7 @@ class GetCart(APIView):
 class AddRemoveCartItem(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request, change, item_id, quantity):
+    def get(self, request, change, item_id, quantity):
         if change not in ["add", "remove"]:
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 

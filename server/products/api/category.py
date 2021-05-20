@@ -21,7 +21,7 @@ class CategoryListView(APIView):
     pagination_class = LargeResultsSetPagination
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         session_handler = SessionHandler(request)
         session_handler.refresh_session()
         categories = Category.objects.all()

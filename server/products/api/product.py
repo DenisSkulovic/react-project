@@ -37,8 +37,9 @@ class ProductCategoryView(ListAPIView):
         self.session_key = session_handler.session_key
 
         # to prevent SQL injection
-        if request.data.get('order_by'):
-            order_by = request.data['order_by']
+        print("request.GET.get('order_by')", request.GET.get('order_by'))
+        if request.GET.get('order_by'):
+            order_by = request.GET.get('order_by')
             fields = [f.name for f in Product._meta.get_fields()]
             if order_by.replace("-", "") not in fields:
                 order_by = 'name'
@@ -75,7 +76,7 @@ class ProductCategoryView(ListAPIView):
                    'session_key': self.session_key}
         return Response(content, status=status.HTTP_200_OK)
 
-    def post(self, request, category, *args, **kwargs):
+    def get(self, request, category, *args, **kwargs):
         return self.list(request, category, *args, **kwargs)
 
 
@@ -84,7 +85,7 @@ class ProductListByCategoryView(APIView):
     pagination_class = LargeResultsSetPagination
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request):
+    def get(self, request):
         session_handler = SessionHandler(request)
         session_handler.refresh_session()
 
@@ -105,7 +106,7 @@ class ProductListByCategoryView(APIView):
 class ProductDetailView(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request, product_id):
+    def get(self, request, product_id):
         session_handler = SessionHandler(request)
         session_handler.refresh_session()
 

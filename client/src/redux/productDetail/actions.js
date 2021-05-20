@@ -30,15 +30,20 @@ export const setQuantityInputValue = (val) => (dispatch) => {
 //
 // SELECT PRODUCT
 export const getProductToDisplay = (product_id) => async (dispatch) => {
-  const response = await axios.post(
+  const response = await axios.get(
     `http://127.0.0.1:8000/product/${product_id}/`,
     {
-      session_key: window.sessionStorage.getItem("session_key"),
+      headers: {
+        Sessionkey: window.sessionStorage.getItem("Sessionkey"),
+        // Authorization: `Token ${window.sessionStorage.getItem(
+        //   "Authorization"
+        // )}`,
+      },
     }
   );
-  window.sessionStorage.setItem("session_key", response.data.session_key);
-
   console.log("response.data", response.data);
+  window.sessionStorage.setItem("Sessionkey", response.data.session_key);
+
   dispatch({
     type: ActionTypes.SELECT_PRODUCT_TO_DISPLAY,
     payload: response.data,

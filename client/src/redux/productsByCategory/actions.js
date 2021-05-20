@@ -6,14 +6,22 @@ import ActionTypes from "./constants";
 // GET PRODUCTS FOR CATEGORY
 export const getProductsForCategory =
   (category, order_by, page) => async (dispatch) => {
-    const response = await axios.post(
-      `http://127.0.0.1:8000/product/category/${category}/?page=${page}`,
+    const response = await axios.get(
+      `http://127.0.0.1:8000/product/category/${category}/?page=${page}&order_by=${order_by}`,
       {
-        session_key: window.sessionStorage.getItem("session_key"),
-        order_by: order_by,
+        headers: {
+          Sessionkey: window.sessionStorage.getItem("Sessionkey"),
+          // Authorization: `Token ${window.sessionStorage.getItem(
+          //   "Authorization"
+          // )}`,
+        },
       }
     );
-    window.sessionStorage.setItem("session_key", response.data.session_key);
+    console.log("response.data.results", response.data.results);
+    window.sessionStorage.setItem(
+      "Sessionkey",
+      response.data.results.session_key
+    );
     dispatch({
       type: ActionTypes.GET_PRODUCTS_FOR_CATEGORY,
       payload: response.data,
@@ -41,10 +49,14 @@ export const setPage = (page) => (dispatch) => {
 //
 // GET CATEGORIES
 export const getCategories = () => async (dispatch) => {
-  const response = await axios.post(`http://127.0.0.1:8000/category/all/`, {
-    session_key: window.sessionStorage.getItem("session_key"),
+  const response = await axios.get(`http://127.0.0.1:8000/category/all/`, {
+    headers: {
+      Sessionkey: window.sessionStorage.getItem("Sessionkey"),
+      // Authorization: `Token ${window.sessionStorage.getItem("Authorization")}`,
+    },
   });
-  window.sessionStorage.setItem("session_key", response.data.session_key);
+  console.log("response.data", response.data);
+  window.sessionStorage.setItem("Sessionkey", response.data.session_key);
   dispatch({
     type: ActionTypes.GET_CATEGORIES,
     payload: response.data.categories,

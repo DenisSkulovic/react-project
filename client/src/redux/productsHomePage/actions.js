@@ -5,12 +5,19 @@ import ActionTypes from "./constants";
 //
 // GET PRODUCTS BY CATEGORY
 export const getProductsByCategory = () => async (dispatch) => {
-  const response = await axios.post(
+  const response = await axios.get(
     `http://127.0.0.1:8000/product/all/bycategory`,
-    { session_key: window.sessionStorage.getItem("session_key") }
+    {
+      headers: {
+        Sessionkey: window.sessionStorage.getItem("Sessionkey"),
+        // Authorization: `Token ${window.sessionStorage.getItem(
+        //   "Authorization"
+        // )}`,
+      },
+    }
   );
-  window.sessionStorage.setItem("session_key", response.data.session_key);
-  console.log("getProductsByCategory response", response);
+  console.log("response.data", response.data);
+  window.sessionStorage.setItem("Sessionkey", response.data.session_key);
   dispatch({
     type: ActionTypes.GET_PRODUCTS_BY_CATEGORY,
     payload: response.data.products,

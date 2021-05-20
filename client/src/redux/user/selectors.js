@@ -1,10 +1,12 @@
 import { createSelector } from "reselect";
 
-const state_User_session_key = (state) => state.UserReducer.products;
+const state_isAuthenticated = (state) => {
+  return state.UserReducer.isAuthenticated;
+};
 
-export const makeSelect_User_session_key = createSelector(
-  state_User_session_key,
-  (key) => {
-    return { session_key: key };
+export const makeSelect_isAuthenticated = createSelector(
+  state_isAuthenticated,
+  (status) => {
+    return { isAuthenticated: status };
   }
 );

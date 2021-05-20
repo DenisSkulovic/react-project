@@ -5,11 +5,6 @@ import rootReducer from "./redux/rootReducer";
 
 const middleware = [thunk];
 
-// const composedEnhancer = compose(
-//   composeWithDevTools(),
-//   applyMiddleware(...middleware)
-// );
-
 const store = createStore(
   rootReducer,
   undefined,

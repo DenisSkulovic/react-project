@@ -1,31 +1,26 @@
 import React from "react";
 import "./OrderBy.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { setOrderBy } from "../../../redux/productsByCategory/actions";
+import { setOrderBy, setPage } from "../../../redux/productsByCategory/actions";
 import { getProductsForCategory } from "../../../redux/productsByCategory/actions";
 import {
   makeSelect_AllProducts_category,
   makeSelect_AllProducts_order_by,
-  makeSelect_AllProducts_page,
 } from "../../../redux/productsByCategory/selectors";
 
 export default function OrderBy() {
   const dispatch = useDispatch();
   const orderBySelector = useSelector(makeSelect_AllProducts_order_by);
   const currentCategorySelector = useSelector(makeSelect_AllProducts_category);
-  const page_Selector = useSelector(makeSelect_AllProducts_page);
 
   const handleClick = (choice) => {
     if (`${choice}` == `${orderBySelector.order_by}`) {
       choice = `-${choice}`;
     }
     dispatch(setOrderBy(`${choice}`));
+    dispatch(setPage(1));
     dispatch(
-      getProductsForCategory(
-        currentCategorySelector.category,
-        choice,
-        page_Selector.page
-      )
+      getProductsForCategory(currentCategorySelector.category, choice, 1)
     );
   };
   const choices = ["name", "category", "unit_price"];

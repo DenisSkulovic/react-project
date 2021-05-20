@@ -1,5 +1,5 @@
 const ActionTypes = {
-  GET_SESSION_KEY: "src/redux/user/constants/GET_SESSION_KEY",
+  AUTHENTICATION_STATUS: "src/redux/user/AUTHENTICATION_STATUS",
 };
 
 export default ActionTypes;

@@ -31,7 +31,7 @@ User = get_user_model()
 class CartClearExpired(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
-    def post(self, request):
+    def get(self, request):
         CartHandler.clearExpiredCarts()
         return Response({'message': 'Expired carts cleared.'}, status=status.HTTP_201_CREATED)
 

@@ -10,9 +10,14 @@ from rest_framework.permissions import (
 from users.serializers.user import UserSessionSerializer, UserSerializer, LoginSerializer, RegisterSerializer
 from rest_framework.response import Response
 from products.models import Cart, CartItem, Purchase, PurchaseItem
+from django.utils import timezone
+from datetime import timedelta
 
 from knox.models import AuthToken
-from rest_framework import generics
+from knox.auth import TokenAuthentication
+from rest_framework import generics, status
+from mixins import ConnectCartWithUserMixin
+
 
 from classes import CartHandler, SessionHandler
 from users.serializers.user import UserSessionSerializer
@@ -20,55 +25,90 @@ from users.serializers.user import UserSessionSerializer
 User = get_user_model()
 
 
-class UserSession(generics.GenericAPIView):
-    serializer_class = UserSessionSerializer
-    permission_classes = (AllowAny,)
-
-    def post(self, request):
-        session_key = SessionHandler(request).session_key
-        return Response({'session_key': session_key})
-
-
-class UserLogin(generics.GenericAPIView):
+class UserLogin(generics.GenericAPIView, ConnectCartWithUserMixin):
     serializer_class = LoginSerializer
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
-        _, token = AuthToken.objects.create(user)
         session_key = SessionHandler(request).session_key
 
-        return Response({
-            "user": UserSerializer(
-                user,
-                context=self.get_serializer_context()
-            ).data,
-            "token": token,
-            'session_key': session_key
-        })
+        if serializer.is_valid():
+            user = serializer.validated_data
+            _, token = AuthToken.objects.create(user)
+
+            self.connect_cart_with_user(user, session_key)
+
+            response = Response({
+                "user": UserSerializer(
+                    user,
+                    context=self.get_serializer_context()
+                ).data,
+                "token": token,
+                'session_key': session_key,
+                'status': 'success'
+            })
+            return response
+        else:
+            content = {
+                'error': serializer.errors,
+                'session_key': session_key,
+                'status': 'error',
+            }
+        return Response(content)
 
 
-class UserRegister(generics.GenericAPIView):
+class UserLogout(APIView):
+
+    def post(self, request, *args, **kwargs):
+        session_key = SessionHandler(request).session_key
+        try:
+            auth = TokenAuthentication()
+            _, auth_token = auth.authenticate(request)
+            print("auth_token", auth_token)
+            auth_token.delete()
+            content = {
+                'session_key': session_key,
+                'status': 'success',
+            }
+            return Response(content, status=status.HTTP_202_ACCEPTED)
+        except:
+            content = {
+                'session_key': session_key,
+                'status': 'error',
+            }
+            return Response(content, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+
+class UserRegister(generics.GenericAPIView, ConnectCartWithUserMixin):
     serializer_class = RegisterSerializer
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
+        print("\nrequest.data", request.data)
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        _, token = AuthToken.objects.create(user)
         session_key = SessionHandler(request).session_key
+        if serializer.is_valid():
+            user = serializer.save()
+            _, token = AuthToken.objects.create(user)
 
-        return Response({
-            "user": UserSerializer(
-                user,
-                context=self.get_serializer_context()
-            ).data,
-            "token": token,
-            'session_key': session_key
-        })
+            self.connect_cart_with_user(user, session_key)
+
+            return Response({
+                "user": UserSerializer(
+                    user,
+                    context=self.get_serializer_context()
+                ).data,
+                "token": token,
+                'session_key': session_key,
+                'status': 'success'
+            })
+        content = {
+            'error': serializer.errors,
+            'session_key': session_key,
+            'status': 'error',
+        }
+        return Response(content)
 
 
 class UserAPI(generics.RetrieveAPIView):

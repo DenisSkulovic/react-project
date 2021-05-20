@@ -1,15 +1,15 @@
 import ActionTypes from "./constants";
 
 const defaultStore = {
-  session_key: {},
+  isAuthenticated: false,
 };
 
 export function UserReducer(state = defaultStore, action) {
   switch (action.type) {
-    case ActionTypes.GET_SESSION_KEY:
+    case ActionTypes.AUTHENTICATION_STATUS:
       return {
         ...state,
-        products: action.payload,
+        isAuthenticated: action.payload,
       };
     default:
       return state;

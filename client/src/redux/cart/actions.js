@@ -5,10 +5,14 @@ import ActionTypes from "./constants";
 //
 // GET CART
 export const getCart = () => async (dispatch) => {
-  const response = await axios.post(`http://127.0.0.1:8000/cart/`, {
-    session_key: window.sessionStorage.getItem("session_key"),
+  const response = await axios.get(`http://127.0.0.1:8000/cart/`, {
+    headers: {
+      Sessionkey: window.sessionStorage.getItem("Sessionkey"),
+      // Authorization: `Token ${window.sessionStorage.getItem("Authorization")}`,
+    },
   });
-  window.sessionStorage.setItem("session_key", response.data.session_key);
+  console.log("response.data", response.data);
+  window.sessionStorage.setItem("Sessionkey", response.data.session_key);
 
   const total = response.data.cart_items.reduce((accumulator, currentItem) => {
     return accumulator + currentItem.price * currentItem.quantity;
@@ -34,13 +38,19 @@ export const addRemoveCartItem = (item_id, quantity) => async (dispatch) => {
   } else if (quantity >= 0) {
     change = "add";
   }
-  const response = await axios.post(
+  const response = await axios.get(
     `http://127.0.0.1:8000/cart/change/${change}/${item_id}/${quantity}`,
     {
-      session_key: window.sessionStorage.getItem("session_key"),
+      headers: {
+        Sessionkey: window.sessionStorage.getItem("Sessionkey"),
+        // Authorization: `Token ${window.sessionStorage.getItem(
+        //   "Authorization"
+        // )}`,
+      },
     }
   );
-  window.sessionStorage.setItem("session_key", response.data.session_key);
+  console.log("response.data", response.data);
+  window.sessionStorage.setItem("Sessionkey", response.data.session_key);
 
   const total = response.data.cart_items.reduce((accumulator, currentItem) => {
     return accumulator + currentItem.price * currentItem.quantity;

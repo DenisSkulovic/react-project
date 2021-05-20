@@ -4,13 +4,11 @@ from knox import views as knox_views
 
 urlpatterns = [
     # user endpoints
-    path("auth/", include('knox.urls')),
     # login and logout are overriden below, so the above only provides logoutall, which is not very useful
     path('auth/register', forUsers.UserRegister.as_view(), name="user_register"),
     path('auth/login', forUsers.UserLogin.as_view(), name="user_login"),
     path('auth/user', forUsers.UserAPI.as_view(), name="user_api"),
-    path('auth/logout', knox_views.LogoutView.as_view(), name="knox_logout"),
-    path('auth/session/', forUsers.UserSession.as_view(), name="user_session"),
+    path('auth/logout', forUsers.UserLogout.as_view(), name="user_logout"),
 
 
     #     path('account/', forUsers.UserAccount.as_view(), name="user_account"),

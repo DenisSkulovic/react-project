@@ -1,16 +1,31 @@
 import React, { useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import "./Register.scss";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { register } from "../../redux/user/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { makeSelect_isAuthenticated } from "../../redux/user/selectors";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const onSubmit = (e) => {
+  const authStatusSelector = useSelector(makeSelect_isAuthenticated);
+  const history = useHistory();
+
+  const dispatch = useDispatch();
+
+  const onSubmit = async (e) => {
     e.preventDefault();
+    if (password == password2) {
+      dispatch(register(email, password));
+    }
   };
+
+  if (authStatusSelector.isAuthenticated) {
+    history.goBack();
+  }
 
   return (
     <>
