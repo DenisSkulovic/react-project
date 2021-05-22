@@ -56,7 +56,7 @@ class Cart(models.Model):
     customer = models.OneToOneField(
         to=User, on_delete=models.PROTECT, unique=True, null=True)
     session = models.OneToOneField(
-        to=Session, on_delete=models.CASCADE, unique=True, null=True)
+        to=Session, on_delete=models.PROTECT, unique=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 

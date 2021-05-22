@@ -1,8 +1,5 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.generics import (
-    CreateAPIView, ListAPIView, UpdateAPIView
-)
+from rest_framework.generics import CreateAPIView
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import (
     AllowAny, IsAdminUser, IsAuthenticated
@@ -15,9 +12,6 @@ from products.serializers.cart import CartSerializer, CartItemSerializer
 from products.serializers.product import ProductSerializer
 from products.serializers.purchase import PurchaseSerializer
 from products.serializers.purchaseItem import PurchaseItemSerializer
-
-
-from knox.models import AuthToken
 
 
 User = get_user_model()
@@ -74,10 +68,6 @@ class UserCreate(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-
-        # create cart together with user
-        user = User.objects.get(email=serializer.data['email'])
-        Cart.objects.get_or_create(customer=user)
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)

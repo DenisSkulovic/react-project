@@ -1,17 +1,23 @@
 from django.contrib.sessions.models import Session
-# from products.models import Cart, CartItem, StockItem
-# from django.utils import timezone
 from django.db.models import F
 from server import settings
 from users.serializers.user import UserSessionSerializer
-from django.contrib.sessions.models import Session
-from django.contrib.sessions.backends.db import SessionStore
-from products.models import Cart, CartItem, StockItem, Product, Purchase, PurchaseItem
+from products.models import (
+    Cart,
+    CartItem,
+    StockItem,
+    Product,
+    Purchase,
+    PurchaseItem)
 from django.utils import timezone
 from datetime import timedelta
 
 
 class SessionHandler():
+    '''
+    Takes in a request object, validates session related data and performs session refresh/creation
+    '''
+
     def __init__(self, request, expire_time=settings.SESSION_COOKIE_AGE):
         self.request = request
         self.expire_time = expire_time
@@ -20,6 +26,7 @@ class SessionHandler():
         # session
         self.session = Session.objects.get(session_key=self.session_key)
         self.refresh_session()
+        self.delete_expired_sessions()
 
     def refresh_session(self):
         self._refresh_session(self.session, self.expire_time)
@@ -62,6 +69,11 @@ class SessionHandler():
             return serializer.validated_data['session_key']
         else:
             return None
+
+    @staticmethod
+    def delete_expired_sessions():
+        Session.objects.filter(
+            expire_date__lte=timezone.now()).delete()
 
 
 class CartHandler():
@@ -183,9 +195,14 @@ class CartHandler():
             expire_date__gte=timezone.now())
         if active_sessions:
             expired_carts = Cart.objects.exclude(session__in=active_sessions)
-            if expired_carts:
+            sessionless_carts = Cart.objects.filter(session_id=None)
+            carts_to_delete = expired_carts | sessionless_carts
+            if carts_to_delete:
                 expired_cart_items = CartItem.objects.filter(
-                    cart__in=expired_carts)
+                    cart__in=carts_to_delete)
                 if expired_cart_items:
                     cls._cart_items_back_to_stock(expired_cart_items)
-                    expired_carts.delete()
+                    carts_to_delete.delete()
+        else:
+            cls._cart_items_back_to_stock(CartItem.objects.all())
+            Cart.objects.all().delete()
