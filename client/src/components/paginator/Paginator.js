@@ -1,5 +1,6 @@
 import React from "react";
 import PaginatorPageBtn from "./PaginatorPageBtn";
+import "./Paginator.scss";
 
 export default function Paginator({ pageCount }) {
   return (

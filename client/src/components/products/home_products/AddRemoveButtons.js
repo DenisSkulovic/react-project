@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addRemoveCartItem } from "../../../redux/cart/actions";
 import "./AddRemoveButtons.scss";
 
-export default function AddRemoveButtons({ id, handleDetailBtnClick }) {
+export default function AddRemoveButtons({ id }) {
   const dispatch = useDispatch();
 
   const handleAddRemoveBtnClick = (q) => {
@@ -25,14 +25,6 @@ export default function AddRemoveButtons({ id, handleDetailBtnClick }) {
           className="add-remove-btn"
         >
           -
-        </Button>
-        <Button
-          onClick={() => {
-            handleDetailBtnClick(id);
-          }}
-          variant="light"
-        >
-          Details
         </Button>
         <Button
           onClick={() => {

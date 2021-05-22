@@ -10,6 +10,8 @@ import { getCart } from "../../redux/cart/actions";
 export default function CartList() {
   const dispatch = useDispatch();
 
+  console.log("window.sessionStorage", window.sessionStorage);
+
   useEffect(() => {
     dispatch(getCart());
   }, []);

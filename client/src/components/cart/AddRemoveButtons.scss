@@ -3,14 +3,20 @@
         display: flex;
         justify-content: center;
         align-self: flex-end;
-        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.1s ease-out 100ms;
     }
     
     button {
         background-color: transparent !important;
     }
     
-    .add-remove-buttons-wrapper.hover {
-        visibility: visible;
+    .cart-item-wrapper:hover .add-remove-buttons-wrapper {
+        opacity: 1;
+    }
+    .add-remove-btn {
+        color: red;
+        font-size: 1.6em;
+        border: none;
     }
 }

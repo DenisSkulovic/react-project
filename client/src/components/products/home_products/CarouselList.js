@@ -6,28 +6,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeSelectProducts } from "../../../redux/productsHomePage/selectors";
 import { getProductsByCategory } from "../../../redux/productsHomePage/actions";
 
+import ProductDetailFixedOverlay from "../../../components/products/fixed_product_detail/ProductDetailFixedOverlay";
+
 export default function CarouselList() {
   const dispatch = useDispatch();
 
   const productsData = useSelector(makeSelectProducts);
 
   useEffect(() => {
-    dispatch(getProductsByCategory());
+    dispatch(getProductsByCategory(10));
   }, []);
 
   return (
-    <div className="products">
-      <h3>Products</h3>
-      {productsData &&
-        Object.keys(productsData.products).map((category, i) => {
-          return (
-            <Carousel
-              key={i}
-              category={category}
-              products={productsData.products[category]}
-            />
-          );
-        })}
+    <div className="carousel-list">
+      <div className="products">
+        {productsData &&
+          Object.keys(productsData.products).map((category, i) => {
+            return (
+              <Carousel
+                key={i}
+                category={category}
+                products={productsData.products[category]}
+              />
+            );
+          })}
+      </div>
+      <ProductDetailFixedOverlay />
     </div>
   );
 }

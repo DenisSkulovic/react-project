@@ -18,8 +18,6 @@ export default function AllProductsItem({
   unit_price,
   unit,
 }) {
-  const [hoverBool, setHoverBool] = useState(false);
-
   const dispatch = useDispatch();
 
   const handleDetailBtnClick = (product_id) => {
@@ -28,38 +26,25 @@ export default function AllProductsItem({
     dispatch(getProductToDisplay(product_id));
   };
 
-  const handleMouseEnter = () => {
-    setHoverBool(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHoverBool(false);
-  };
-
   return (
     <div
-      className={`all-products-item ${hoverBool ? "hover" : ""}`}
-      onMouseEnter={() => handleMouseEnter()}
-      onMouseLeave={() => handleMouseLeave()}
+      className={`all-products-item`}
       onClick={() => {
         handleDetailBtnClick(id);
       }}
     >
-      <div className="category">
-        {category.name}
-      </div>
       <div className="image-wrapper">
         <img src={image} alt={name.toLowerCase().replace(/ /g, "")} />
       </div>
       <div className="details">
+        <div className="category">{category.name}</div>
         <div className="title">{name}</div>
         <div className="price">
-          <span>${unit_price}</span> / <span>{unit}</span>
+          <span className="unit-price">${unit_price}</span> /{" "}
+          <span className="unit">{unit}</span>
         </div>
       </div>
-      {hoverBool && (
-        <AddRemoveButtons id={id} handleDetailBtnClick={handleDetailBtnClick} />
-      )}
+      <AddRemoveButtons id={id} handleDetailBtnClick={handleDetailBtnClick} />
     </div>
   );
 }

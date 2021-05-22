@@ -1,5 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./CarouselItem.scss";
+import {
+  getProductToDisplay,
+  openProductDetail,
+} from "../../../redux/productDetail/actions";
+import { setQuantityInputValue } from "../../../redux/productDetail/actions";
+import AddRemoveButtons from "./AddRemoveButtons";
+
+// redux
+import { useDispatch } from "react-redux";
 
 export default function CarouselItem({
   id,
@@ -9,24 +18,34 @@ export default function CarouselItem({
   unit_price,
   category,
 }) {
+  const dispatch = useDispatch();
+
+  const handleDetailBtnClick = (product_id) => {
+    dispatch(setQuantityInputValue(0));
+    dispatch(openProductDetail());
+    dispatch(getProductToDisplay(product_id));
+  };
+
   return (
-    <div className="carousel-item">
-      <div className="top-part">
-        <div className="category">{category.name}</div>
-      </div>
-      <div className="bottom-part">
-        <div className="image-wrapper">
-          <div className="image-div">
-            <img src={image} alt={name.toLowerCase().replace(/ /g, "")} />
-          </div>
-        </div>
-        <div className="details">
-          <div className="title">{name}</div>
-          <div className="price">
-            ${unit_price} / {unit}
-          </div>
+    <div
+      className="carousel-item"
+      onClick={() => {
+        handleDetailBtnClick(id);
+      }}
+    >
+      <div className="image-wrapper">
+        <div className="image-div">
+          <img src={image} alt={name.toLowerCase().replace(/ /g, "")} />
         </div>
       </div>
+      <div className="details">
+        <div className="title">{name}</div>
+        <div className="price">
+          <span className="unit-price">${unit_price}</span> /{" "}
+          <span className="unit">{unit}</span>
+        </div>
+      </div>
+      <AddRemoveButtons id={id} />
     </div>
   );
 }

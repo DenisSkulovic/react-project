@@ -72,8 +72,13 @@ class SessionHandler():
 
     @staticmethod
     def delete_expired_sessions():
-        Session.objects.filter(
-            expire_date__lte=timezone.now()).delete()
+        expired_sessions = Session.objects.filter(
+            expire_date__lte=timezone.now())
+        for sess in expired_sessions:
+            try:
+                sess.delete()
+            except:
+                pass
 
 
 class CartHandler():

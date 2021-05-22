@@ -30,5 +30,12 @@ export default function PaginatorPageBtn({ page }) {
       );
     }
   };
-  return <button onClick={() => handleClick()}>{page}</button>;
+  return (
+    <button
+      className={`btn ${page_Selector.page === page ? "active" : ""}`}
+      onClick={() => handleClick()}
+    >
+      {page}
+    </button>
+  );
 }

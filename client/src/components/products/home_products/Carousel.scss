@@ -1,19 +1,14 @@
-.carousel {
-    margin: 30px 0px;
-    .react-multi-carousel-list {
-        .react-multi-carousel-track {
-            height: 300px;
+.carousel-wrapper {
+
+    .carousel {
+        margin: 30px 0px;
         }
+    .category-name {
+        font-weight: 900;
+        font-size: 1.6em;
     }
-    .image-div {
-        overflow: hidden;
-        width: 140px;
-    }
-    .image-div img {
-        width: 100%;
-        height: auto;
-    }
-    .carousel-item {
-        width: 200px;
-    }
+.react-multi-carousel-list {
+    overflow: visible !important;
+}
+
 }

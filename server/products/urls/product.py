@@ -21,6 +21,9 @@ urlpatterns = [
     path('<int:pk>/update/',
          product.ProductUpdateView.as_view(), name='product_update'),
 
+    path('all/bycategory/random/', product.ProductRandomView.as_view(),
+         name='product_bycategory_random'),
+
     # products for category
     path('category/<str:category>/',
          product.ProductCategoryView.as_view(), name='product_list_category'),

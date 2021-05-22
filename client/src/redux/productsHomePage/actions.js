@@ -4,9 +4,9 @@ import ActionTypes from "./constants";
 
 //
 // GET PRODUCTS BY CATEGORY
-export const getProductsByCategory = () => async (dispatch) => {
+export const getProductsByCategory = (q) => async (dispatch) => {
   const response = await axios.get(
-    `http://127.0.0.1:8000/product/all/bycategory`,
+    `http://localhost:8000/product/all/bycategory/random/?q=${q}`,
     {
       headers: {
         Sessionkey: window.sessionStorage.getItem("Sessionkey"),

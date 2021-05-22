@@ -46,12 +46,24 @@ function ProductsListByCategory() {
             )}
           />
         )}
+
       <div className="products-list d-flex justify-content-center flex-wrap">
         {productsSelector.products.results &&
           productsSelector.products.results.results.map((prod, i) => {
             return <AllProductsItem key={i} {...prod} />;
           })}
       </div>
+
+      {productsSelector.products.results &&
+        Math.ceil(
+          productsSelector.products.count / page_size_Selector.page_size
+        ) > 1 && (
+          <Paginator
+            pageCount={Math.ceil(
+              productsSelector.products.count / page_size_Selector.page_size
+            )}
+          />
+        )}
     </>
   );
 }

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addRemoveCartItem } from "../../redux/cart/actions";
 import "./AddRemoveButtons.scss";
 
-export default function AddRemoveButtons({ id, hover, checkout }) {
+export default function AddRemoveButtons({ id, checkout }) {
   const dispatch = useDispatch();
 
   const handleAddRemoveBtnClick = (q) => {
@@ -13,9 +13,7 @@ export default function AddRemoveButtons({ id, hover, checkout }) {
 
   return (
     <div
-      className={`add-remove-buttons-wrapper ${
-        hover && !checkout ? "hover" : ""
-      }`}
+      className={`add-remove-buttons-wrapper ${!checkout ? "hover" : ""}`}
       onClick={(e) => e.stopPropagation()}
     >
       <ButtonGroup>
@@ -24,16 +22,18 @@ export default function AddRemoveButtons({ id, hover, checkout }) {
             handleAddRemoveBtnClick(-1);
           }}
           variant="light"
+          className="add-remove-btn"
         >
-          -1
+          -
         </Button>
         <Button
           onClick={() => {
             handleAddRemoveBtnClick(1);
           }}
           variant="light"
+          className="add-remove-btn"
         >
-          +1
+          +
         </Button>
       </ButtonGroup>
     </div>

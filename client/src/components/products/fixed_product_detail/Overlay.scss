@@ -6,12 +6,48 @@
     width: 100vw;
     background-color: rgba(145, 159, 190, 0.5);
     z-index: 999;
+    display: none;
+    opacity: 0;
 }
 
 .overlay.visible {
     display: block;
+    opacity: 1;
 }
 
 .overlay.hidden {
     display: none;
+    opacity: 0;
+    -webkit-animation: detail-close 0.2s;
+    -moz-animation: detail-close 0.2s;
+    -o-animation: detail-close 0.2s;
+    animation: detail-close 0.2s;
 }
+
+@keyframes detail-open {
+    0% { opacity: 0; }
+    10% { opacity: 0.1; }
+    20% { opacity: 0.2; }
+    30% { opacity: 0.3; }
+    40% { opacity: 0.4; }
+    50% { opacity: 0.5; }
+    60% { opacity: 0.6; }
+    70% { opacity: 0.7; }
+    80% { opacity: 0.8; }
+    90% { opacity: 0.9; }
+    100% { opacity: 1; }
+    }
+
+@keyframes detail-close {
+    100% { opacity: 0; }
+    90% { opacity: 0.1; }
+    80% { opacity: 0.2; }
+    70% { opacity: 0.3; }
+    60% { opacity: 0.4; }
+    50% { opacity: 0.5; }
+    40% { opacity: 0.6; }
+    30% { opacity: 0.7; }
+    20% { opacity: 0.8; }
+    10% { opacity: 0.9; }
+    0% { opacity: 1; }
+    }

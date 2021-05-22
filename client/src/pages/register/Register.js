@@ -18,7 +18,7 @@ export default function Register() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (password == password2) {
+    if (password === password2) {
       dispatch(register(email, password));
     }
   };

@@ -6,7 +6,6 @@
       position: relative;
       width: 25px;
       height: 25px;
-      background-color: white;
       // box-shadow: 0px 0px 2px 0px rgb(73, 73, 73);
   }
   
@@ -29,4 +28,13 @@
   transform: rotate(90deg);
   z-index: 2;
   }
+  .cls {
+    opacity: 0;
+    transition: opacity 0.1s ease-out 100ms;
+    cursor: pointer;
+  }
 }
+.cart-item-wrapper:hover .cls {
+  opacity: 1;
+}
+
