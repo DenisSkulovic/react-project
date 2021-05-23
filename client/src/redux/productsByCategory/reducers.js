@@ -6,7 +6,8 @@ const defaultStore = {
   categories: [],
   order_by: "name",
   page: 1,
-  page_size: 10,
+  page_size: 15,
+  loading: true,
 };
 
 export function AllProductsReducer(state = defaultStore, action) {
@@ -35,6 +36,11 @@ export function AllProductsReducer(state = defaultStore, action) {
       return {
         ...state,
         page: action.payload,
+      };
+    case ActionTypes.SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;

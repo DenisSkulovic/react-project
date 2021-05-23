@@ -1,3 +1,9 @@
 .cart-top-nav-wrapper {
-    background-color: rgb(255, 50, 50);
+    .cart-top-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(190, 0, 0);
+        color: white;
+    }
     }

@@ -11,11 +11,15 @@
     .add-remove-buttons-wrapper {
         visibility: hidden;
     }
-    .all-products-item:hover .add-remove-buttons-wrapper {
+    .all-products-item:hover 
+    .add-remove-buttons-wrapper {
         visibility: visible;
     }
-    .add-remove-btn, .add-remove-btn:active, .add-remove-btn:focus {
-        color: red;
+    .add-remove-btn, 
+    .add-remove-btn:active, 
+    .add-remove-btn:active:focus, 
+    .add-remove-btn:focus {
+        color: rgb(190, 0, 0);
         font-weight: 900;
         font-size: 2em;
         border: none;

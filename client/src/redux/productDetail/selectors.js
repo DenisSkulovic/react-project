@@ -5,6 +5,8 @@ const state_ProductDetail_product = (state) =>
 const state_ProductDetail_open = (state) => state.ProductDetailReducer.open;
 const state_ProductDetail_quantityInputValue = (state) =>
   state.ProductDetailReducer.quantity_input_value;
+const state_ProductDetail_loading = (state) =>
+  state.ProductDetailReducer.loading;
 
 export const makeSelect_ProductDetail_product = createSelector(
   state_ProductDetail_product,
@@ -24,5 +26,12 @@ export const makeSelect_ProductDetail_quantityInputValue = createSelector(
   state_ProductDetail_quantityInputValue,
   (q) => {
     return { quantity_input_value: q };
+  }
+);
+
+export const makeSelect_ProductDetail_loading = createSelector(
+  state_ProductDetail_loading,
+  (l) => {
+    return { loading: l };
   }
 );

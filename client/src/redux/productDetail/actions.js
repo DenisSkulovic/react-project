@@ -28,8 +28,21 @@ export const setQuantityInputValue = (val) => (dispatch) => {
 };
 
 //
+// SET LOADING
+export const setLoading = (bool) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_LOADING,
+    payload: bool,
+  });
+};
+
+//
 // SELECT PRODUCT
 export const getProductToDisplay = (product_id) => async (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_LOADING,
+    payload: true,
+  });
   const response = await axios.get(
     `http://127.0.0.1:8000/product/${product_id}/`,
     {
@@ -47,5 +60,9 @@ export const getProductToDisplay = (product_id) => async (dispatch) => {
   dispatch({
     type: ActionTypes.SELECT_PRODUCT_TO_DISPLAY,
     payload: response.data,
+  });
+  dispatch({
+    type: ActionTypes.SET_LOADING,
+    payload: false,
   });
 };

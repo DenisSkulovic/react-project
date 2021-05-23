@@ -5,9 +5,14 @@ import ActionTypes from "./constants";
 //
 // GET PRODUCTS FOR CATEGORY
 export const getProductsForCategory =
-  (category, order_by, page) => async (dispatch) => {
+  (category, order_by, page, page_size = 15) =>
+  async (dispatch) => {
+    dispatch({
+      type: ActionTypes.SET_LOADING,
+      payload: true,
+    });
     const response = await axios.get(
-      `http://127.0.0.1:8000/product/category/${category}/?page=${page}&order_by=${order_by}`,
+      `http://127.0.0.1:8000/product/category/${category}/?page=${page}&order_by=${order_by}&page_size=${page_size}`,
       {
         headers: {
           Sessionkey: window.sessionStorage.getItem("Sessionkey"),
@@ -26,6 +31,10 @@ export const getProductsForCategory =
       type: ActionTypes.GET_PRODUCTS_FOR_CATEGORY,
       payload: response.data,
     });
+    dispatch({
+      type: ActionTypes.SET_LOADING,
+      payload: false,
+    });
   };
 
 //
@@ -34,6 +43,15 @@ export const setCategory = (category) => (dispatch) => {
   dispatch({
     type: ActionTypes.SET_CATEGORY,
     payload: category,
+  });
+};
+
+//
+// SET LOADING
+export const setLoading = (bool) => (dispatch) => {
+  dispatch({
+    type: ActionTypes.SET_LOADING,
+    payload: bool,
   });
 };
 

@@ -14,9 +14,15 @@
     .cart-item-wrapper:hover .add-remove-buttons-wrapper {
         opacity: 1;
     }
-    .add-remove-btn {
-        color: red;
+    .add-remove-btn,
+    .add-remove-btn:active,
+    .add-remove-btn:active:focus,
+    .add-remove-btn:hover,
+    .add-remove-btn:focus {
+        color: rgb(190, 0, 0);
         font-size: 2em;
         border: none;
+        outline: none;
+        box-shadow: none;
     }
 }

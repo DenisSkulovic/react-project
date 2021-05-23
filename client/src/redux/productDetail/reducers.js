@@ -4,6 +4,7 @@ const defaultStore = {
   product: {},
   open: false,
   quantity_input_value: 0,
+  loading: true,
 };
 
 export function ProductDetailReducer(state = defaultStore, action) {
@@ -27,6 +28,11 @@ export function ProductDetailReducer(state = defaultStore, action) {
       return {
         ...state,
         quantity_input_value: action.payload,
+      };
+    case ActionTypes.SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;

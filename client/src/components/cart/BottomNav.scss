@@ -10,7 +10,8 @@
 .cart-bottom-nav, .cart-top-nav {
     width: 100%;
     height: 100%;
-    background-color: rgb(255, 50, 50);
+    background-color: rgb(190, 0, 0);
+    color: white;
 }
 
 
@@ -19,7 +20,8 @@
 }
 
 .checkout-btn.checkout {
-    background-color: rgb(163, 162, 162);
+    background-color: grey;
+    color: white !important;
 }
 
 .checkout-btn.pay {

@@ -5,6 +5,7 @@ const ActionTypes = {
   GET_CATEGORIES: "src/redux/productsByCategory/constants/GET_CATEGORIES",
   SET_ORDER_BY: "src/redux/productsByCategory/constants/SET_ORDER_BY",
   SET_PAGE: "src/redux/productsByCategory/constants/SET_PAGE",
+  SET_LOADING: "src/redux/productsByCategory/constants/SET_LOADING",
 };
 
 export default ActionTypes;

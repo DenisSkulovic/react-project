@@ -11,17 +11,20 @@
         .details{
             .quantity {
                 font-size: 1.3em;
-                color: red;
+                color: rgb(190, 0, 0);
                 font-weight: 900;
             }
             .quantity-unit {
-                color: red;
+                color: rgb(190, 0, 0);
             }
             .unit-span {
                 font-size: 0.85em;
             }
             .title {
                 font-size: 1.2em;
+                font-weight: 900;
+            }
+            .total {
                 font-weight: 900;
             }
         }

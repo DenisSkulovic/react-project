@@ -5,6 +5,7 @@ const ActionTypes = {
     "src/redux/productDetail/constants/SELECT_PRODUCT_TO_DISPLAY",
   SET_QUANTITY_INPUT_VALUE:
     "src/redux/productDetail/constants/SET_QUANTITY_INPUT_VALUE",
+  SET_LOADING: "src/redux/productDetail/constants/SET_LOADING",
 };
 
 export default ActionTypes;

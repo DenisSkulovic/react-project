@@ -16,9 +16,9 @@ export default function BottomNav() {
           <span>${totalSelector.cart_total.toFixed(2)}</span>
         </div>
         {!checkout && (
-          <div className="checkout-btn checkout">
-            <Link to="/checkout">Checkout</Link>
-          </div>
+          <Link className={"checkout-btn checkout"} to="/checkout">
+            Checkout
+          </Link>
         )}
         {checkout && <div className="checkout-btn pay">Pay</div>}
       </div>

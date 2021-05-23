@@ -1,25 +1,39 @@
 .add-remove-wrapper {
-    padding: 0px 5px;
 
-    .add-remove-btn{
-        color: red;
+    .add-remove-btn,
+    .add-remove-btn:active,
+    .add-remove-btn:focus,
+    .add-remove-btn:hover
+    {
+        color: rgb(190, 0, 0);
         font-size: 1.6em;
         font-weight: 900;
         background-color: transparent;
         border: none;
+        box-shadow: initial;
     }
 
     .add-remove {
         display: grid;
-        grid-template-columns: 35px 1fr 35px;
-
+        grid-template-columns: 40px 1fr 40px;
+        border: 1px solid #ced4da;
+        margin-bottom: 10px;
+        input {
+            border: none;
+            border-radius: 0px;
+            border-left: 1px solid #ced4da;
+            border-right: 1px solid #ced4da;
+        }
     }
         
     input[type='number'],
+    input[type="number"]:active,
+    input[type="number"]:active:focus,
     input[type="number"]:hover,
     input[type="number"]:focus {
         -webkit-appearance: none !important;
         margin: 0 !important;
         -moz-appearance: textfield !important;
+        box-shadow: initial;
     }
 }    

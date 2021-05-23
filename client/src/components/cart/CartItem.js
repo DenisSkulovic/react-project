@@ -53,11 +53,14 @@ export default function CartItem({ id, price, product, quantity }) {
                   <div className="title">{product.name}</div>
                   <div className="quantity-div">
                     <span className="quantity">{quantity}</span>{" "}
-                    <span className="quantity-unit">{product.unit}</span>
-                  </div>
-                  <div className="price">
+                    <span className="quantity-unit">{product.unit}</span>,{" "}
                     <span className="price-span">${price}</span>/
                     <span className="unit-span">{product.unit}</span>
+                  </div>
+                  <div className="price">
+                    <span className="total">
+                      ${(price * quantity).toFixed(2)}
+                    </span>
                   </div>
                 </div>
               </div>

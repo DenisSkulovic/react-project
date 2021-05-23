@@ -17,9 +17,11 @@
     .carousel-item:hover .add-remove-buttons-wrapper {
         opacity: 1;
     }
-    .add-remove-btn {
+    .add-remove-btn, .add-remove-btn:active:focus, .add-remove-btn:active, .add-remove-btn:focus {
         font-size: 2em;
-        color: red !important;
+        color: rgb(190, 0, 0) !important;
         border: none;
+        outline: none !important;
+        box-shadow: none;
     }
     }

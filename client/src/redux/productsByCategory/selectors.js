@@ -8,6 +8,7 @@ const stateAllProducts_order_by = (state) => state.AllProductsReducer.order_by;
 const stateAllProducts_page = (state) => state.AllProductsReducer.page;
 const stateAllProducts_page_size = (state) =>
   state.AllProductsReducer.page_size;
+const stateAllProducts_loading = (state) => state.AllProductsReducer.loading;
 
 export const makeSelect_AllProducts_products = createSelector(
   stateAllProducts_products,
@@ -48,5 +49,12 @@ export const makeSelect_AllProducts_page_size = createSelector(
   stateAllProducts_page_size,
   (p) => {
     return { page_size: p };
+  }
+);
+
+export const makeSelect_AllProducts_loading = createSelector(
+  stateAllProducts_loading,
+  (l) => {
+    return { loading: l };
   }
 );
