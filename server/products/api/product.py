@@ -28,33 +28,33 @@ class ProductRandomView(APIView):
 
     def get(self, request):
         session_handler = SessionHandler(request)
-        try:
-            if request.GET.get('q'):
-                q = int(request.GET.get('q'))
-            else:
-                q = 10
+        # try:
+        if request.GET.get('q'):
+            q = int(request.GET.get('q'))
+        else:
+            q = 10
 
-            categories = Category.objects.all()
-            products_data = {}
-            for category in categories:
+        categories = Category.objects.all()
+        products_data = {}
+        for category in categories:
 
-                products = Product.objects.filter(category=category)
+            products = Product.objects.filter(category=category)
 
-                products_list = list(products)
-                random.shuffle(products_list)
-                product_ids = {product.id for product in products_list}
-                if len(product_ids) > q:
-                    product_ids = product_ids[:q]
-                products = Product.objects.filter(id__in=product_ids)
+            products_list = list(products)
+            random.shuffle(products_list)
+            product_ids = [product.id for product in products_list]
+            if len(product_ids) > q:
+                product_ids = product_ids[:q]
+            products = Product.objects.filter(id__in=product_ids)
 
-                prods_serialized = ProductSerializer(products, many=True).data
-                products_data[category.name] = prods_serialized
+            prods_serialized = ProductSerializer(products, many=True).data
+            products_data[category.name] = prods_serialized
 
-            content = {'products': products_data,
-                       'session_key': session_handler.session_key}
-            return Response(content, status=status.HTTP_200_OK)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        content = {'products': products_data,
+                   'session_key': session_handler.session_key}
+        return Response(content, status=status.HTTP_200_OK)
+        # except:
+        #     return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class ProductCategoryView(ListAPIView):
