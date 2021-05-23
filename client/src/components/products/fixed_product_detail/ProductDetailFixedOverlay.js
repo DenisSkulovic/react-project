@@ -54,6 +54,13 @@ export default function ProductDetailFixedOverlay() {
             <DetailItem {...productSelector.product} />
           </div>
           <BottomBar handleAddClick={handleAddClick} />
+          <button
+            className="btn add-btn-container"
+            onClick={() => handleAddClick()}
+          >
+            {" "}
+            ADD TO CART
+          </button>
         </div>
       </div>
     </div>

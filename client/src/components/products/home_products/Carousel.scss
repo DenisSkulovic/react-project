@@ -1,5 +1,4 @@
 .carousel-wrapper {
-
     .carousel {
         margin: 30px 0px;
         }
@@ -7,8 +6,19 @@
         font-weight: 900;
         font-size: 1.6em;
     }
-.react-multi-carousel-list {
-    overflow: visible !important;
-}
-
+    .react-multi-carousel-list {
+        // overflow: visible !important;
+        box-shadow: 0px 0px 3px 0px rgba(255, 0, 0, 0.237);
+    }
+    .react-multi-carousel-dot-list {
+        bottom: -35px !important;
+    }
+    li.react-multi-carousel-dot button {
+        background-color: white;
+        border-color: grey;
+    }
+    li.react-multi-carousel-dot.react-multi-carousel-dot--active button {
+        background-color: grey;
+        border-color: grey;
+    }
 }

@@ -4,16 +4,14 @@ import "./PriceBar.scss";
 export default function PriceBar({ productSelector }) {
   return (
     <div className="large-price-bar">
-      ONLY FOR $
+      <span className="only-for">ONLY FOR</span> <span className="dollar-sign">$</span>
       {productSelector.product &&
         productSelector.product.product &&
         productSelector.product.product.unit_price &&
-        `${
-          productSelector.product.product.unit_price
-            ? `${(<span>productSelector.product.product.unit_price</span>)}` /
-              `${(<span>productSelector.product.product.unit</span>)}`
-            : "no data"
-        }`}
+        <>
+          <span className="unit-price">{productSelector.product.product.unit_price}</span><span className="slash">/</span>
+          <span className="unit">{productSelector.product.product.unit}</span>
+        </>}
     </div>
   );
 }

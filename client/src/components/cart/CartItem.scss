@@ -7,11 +7,15 @@
         box-shadow: 0px 0px 2px 0px rgba(255, 0, 0, 0.4);
         transition: box-shadow 0.1s ease-out 100ms;
         padding: 7px 10px;
+
         .details{
             .quantity {
                 font-size: 1.3em;
                 color: red;
                 font-weight: 900;
+            }
+            .quantity-unit {
+                color: red;
             }
             .unit-span {
                 font-size: 0.85em;

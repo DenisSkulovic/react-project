@@ -13,15 +13,14 @@
 
     .product-detail-box {
         display: grid;
-        grid-template-rows: 40px 1fr 60px;
+        grid-template-rows: 40px 1fr 82px 50px;
         height: 100%;
         width: 100%;
 
         .top-bar {
-            background-color: rgb(255, 103, 103);
+            background-color: rgb(231, 231, 231);
             width: 100%;
             position: relative;
-
         }
 
         .main-section {
@@ -30,23 +29,15 @@
             align-items: center;
             margin: 10px;
     
-            .large-price-bar {
-                background-color: lightgreen;
-                margin-bottom: 10px;
-                width: 100%;
-                text-align: center;
-            }
-    
             .column-names {
                 width: 100%;
                 margin-bottom: 10px;
             }
         }
-        .bottom-bar {
-            background-color: rgb(255, 103, 103);
-            display: flex;
-            flex-direction: row;
-            justify-content:space-between;
+        .add-btn-container {
+            background-color: rgb(255, 50, 50);
+            font-size: 1.4em;
+            font-weight: 900;
         }
     }
 }

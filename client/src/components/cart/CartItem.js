@@ -51,11 +51,12 @@ export default function CartItem({ id, price, product, quantity }) {
               <div className="details-wrapper">
                 <div className="details">
                   <div className="title">{product.name}</div>
-                  <div className="quantity">
-                    <span>{quantity}</span> <span>{product.unit}</span>
+                  <div className="quantity-div">
+                    <span className="quantity">{quantity}</span>{" "}
+                    <span className="quantity-unit">{product.unit}</span>
                   </div>
                   <div className="price">
-                    <span className="price-span">${price}</span> /{" "}
+                    <span className="price-span">${price}</span>/
                     <span className="unit-span">{product.unit}</span>
                   </div>
                 </div>

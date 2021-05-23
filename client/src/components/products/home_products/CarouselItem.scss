@@ -1,17 +1,16 @@
-.react-multi-carousel-item {
-    margin: 35px 0px;
-}
-
 .carousel-item {
     display: grid !important;
-    grid-template-rows: 1fr 60px 80px;
-    width: 100%;
+    grid-template-rows: 1fr 60px 50px;
     height: 100%;
+    width: 100%;
     max-width: 100%;
     max-height: 100%;
     cursor: pointer;
-    .image-wrapper {
+    box-shadow: 0px 0px 2px 0px rgba(255, 0, 0, 0.237);
+    background-color: rgba(255, 0, 0, 0.015);
+    min-height: 320px;
 
+    .image-wrapper {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -32,6 +31,7 @@
     }
     .details {
         text-align: center;
+        background-color: rgba(255, 0, 0, 0.04);
         .title {
             font-weight: 900;
         }
@@ -45,6 +45,11 @@
         }
 
     }
+}
+
+.react-multiple-carousel__arrow::before {
+    font-size: 40px;
+    text-shadow: 0px 0px 5px red;
 }
 
 

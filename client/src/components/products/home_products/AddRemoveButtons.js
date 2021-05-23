@@ -16,8 +16,9 @@ export default function AddRemoveButtons({ id }) {
       className="add-remove-buttons-wrapper"
       onClick={(e) => e.stopPropagation()}
     >
-      <ButtonGroup>
+      <ButtonGroup block>
         <Button
+          block
           onClick={() => {
             handleAddRemoveBtnClick(-1);
           }}
@@ -27,6 +28,7 @@ export default function AddRemoveButtons({ id }) {
           -
         </Button>
         <Button
+          block
           onClick={() => {
             handleAddRemoveBtnClick(1);
           }}

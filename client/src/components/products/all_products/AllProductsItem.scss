@@ -1,11 +1,14 @@
 
 .all-products-item {
     margin: 15px 0px;
-    height: 370px;
+    height: 350px;
     cursor: pointer;
     box-shadow: transparent;
     transition: box-shadow 0.1s ease-out 100ms;
-
+    box-shadow: 0px 0px 2px 0px rgba(255, 0, 0, 0.3);
+    background-color: rgba(255, 0, 0, 0.01);
+    display: grid;
+    grid-template-rows: 1fr 78px 60px;
 
     .image-wrapper {
         width: 200px;
@@ -26,11 +29,9 @@
         -o-animation: img-zoom-out 0.1s;
         animation: img-zoom-out 0.1s;
     }
-    .image-wrapper, .details {
-        margin: 10px;
-    }
     .details {
         text-align: center;
+        background-color: rgba(255, 0, 0, 0.04);
         .title {
             font-weight: 900;
         }
@@ -50,8 +51,8 @@
 }
 
 .all-products-item:hover {
-    box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.137);
-    background-color: rgba(255, 0, 0, 0.02);
+    box-shadow: 0px 0px 5px 0px rgba(255, 0, 0, 0.5);
+    background-color: rgba(255, 0, 0, 0.03);
     .image-wrapper img {
         max-width: 170px;
         max-height: 170px;
