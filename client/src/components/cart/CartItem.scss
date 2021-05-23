@@ -8,16 +8,13 @@
         transition: box-shadow 0.1s ease-out 100ms;
         padding: 7px 10px;
         .details{
-            .price-span {
-                color: red;
-            }
             .quantity {
                 font-size: 1.3em;
                 color: red;
                 font-weight: 900;
             }
             .unit-span {
-                font-size: 0.9em;
+                font-size: 0.85em;
             }
             .title {
                 font-size: 1.2em;

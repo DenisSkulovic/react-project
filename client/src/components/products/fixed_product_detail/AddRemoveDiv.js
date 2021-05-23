@@ -15,9 +15,10 @@ export default function AddRemoveDiv({
             handleAddRemoveBtnClick(-1);
           }}
           variant="light"
+          className="add-remove-btn"
         >
-          -1
-      </Button>
+          -
+        </Button>
         <Form.Control
           type="number"
           onInput={(e) => handleInput(e)}
@@ -28,9 +29,10 @@ export default function AddRemoveDiv({
             handleAddRemoveBtnClick(1);
           }}
           variant="light"
+          className="add-remove-btn"
         >
-          +1
-      </Button>
+          +
+        </Button>
       </div>
     </div>
   );

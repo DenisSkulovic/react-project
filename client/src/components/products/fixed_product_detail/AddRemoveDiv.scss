@@ -1,6 +1,14 @@
 .add-remove-wrapper {
     padding: 0px 5px;
 
+    .add-remove-btn{
+        color: red;
+        font-size: 1.6em;
+        font-weight: 900;
+        background-color: transparent;
+        border: none;
+    }
+
     .add-remove {
         display: grid;
         grid-template-columns: 35px 1fr 35px;

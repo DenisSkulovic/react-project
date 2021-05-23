@@ -14,10 +14,13 @@
     .all-products-item:hover .add-remove-buttons-wrapper {
         visibility: visible;
     }
-    .add-remove-btn {
+    .add-remove-btn, .add-remove-btn:active, .add-remove-btn:focus {
         color: red;
         font-weight: 900;
         font-size: 2em;
+        border: none;
+        outline: none;
+        box-shadow: none;
     }
 
 }
