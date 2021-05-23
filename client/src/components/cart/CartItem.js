@@ -26,7 +26,7 @@ export default function CartItem({ id, price, product, quantity }) {
     dispatch(getProductToDisplay(id));
   };
   return (
-    <div className={`cart-item-wrapper ${!checkout ? "hover" : ""}`}>
+    <div className={`cart-item-wrapper`}>
       {!checkout && <CloseBtn handleRemove={handleRemove}></CloseBtn>}
       <div
         onClick={() => (checkout ? undefined : handleDetailsClick(product.id))}
@@ -51,11 +51,12 @@ export default function CartItem({ id, price, product, quantity }) {
               <div className="details-wrapper">
                 <div className="details">
                   <div className="title">{product.name}</div>
-                  <div className="price">
-                    <span>${price}</span> / <span>{product.unit}</span>
-                  </div>
                   <div className="quantity">
                     <span>{quantity}</span> <span>{product.unit}</span>
+                  </div>
+                  <div className="price">
+                    <span className="price-span">${price}</span> /{" "}
+                    <span className="unit-span">{product.unit}</span>
                   </div>
                 </div>
               </div>

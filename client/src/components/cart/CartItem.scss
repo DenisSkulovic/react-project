@@ -7,6 +7,26 @@
         box-shadow: 0px 0px 2px 0px rgba(255, 0, 0, 0.4);
         transition: box-shadow 0.1s ease-out 100ms;
         padding: 7px 10px;
+        .details{
+            .price-span {
+                color: red;
+            }
+            .quantity {
+                font-size: 1.3em;
+                color: red;
+                font-weight: 900;
+            }
+            .unit-span {
+                font-size: 0.9em;
+            }
+            .title {
+                font-size: 1.2em;
+                font-weight: 900;
+            }
+        }
+        .details>div {
+            margin-bottom: 4px;
+        }
     }
     .cart-item:hover {
         box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.2);
@@ -41,16 +61,63 @@
             img {
                 height: auto;
                 width: auto;
-                max-width: 100px;
-                max-height: 100px;
+                max-width: 95px;
+                max-height: 95px;
+                -webkit-animation: cart-img-zoom-out 0.1s;
+                -moz-animation: cart-img-zoom-out 0.1s;
+                -o-animation: cart-img-zoom-out 0.1s;
+                animation: cart-img-zoom-out 0.1s; 
             }
         }
     }
     .cls {
         position: absolute;
-        top: 5px;
-        right: 5px;
+        top: 10px;
+        right: 10px;
     }
 }
 
 
+.cart-item-wrapper:hover {
+    .image-div {
+        img {
+            max-width: 100px;
+            max-height: 100px; 
+            -webkit-animation: cart-img-zoom-in 0.1s;
+            -moz-animation: cart-img-zoom-in 0.1s;
+            -o-animation: cart-img-zoom-in 0.1s;
+            animation: cart-img-zoom-in 0.1s;  
+        }
+}
+}
+
+
+@keyframes cart-img-zoom-out {
+    0% {max-width: 100px;
+        max-height: 100px}
+    20% {max-width: 99px;
+        max-height: 99px}
+    40% {max-width: 98px;
+        max-height: 98px}
+    60% {max-width: 97px;
+        max-height: 97px}
+    80% {max-width: 96px;
+        max-height: 96px}
+    100% {max-width: 95px;
+        max-height: 95px}
+    }
+
+@keyframes cart-img-zoom-in {
+    100% {max-width: 100px;
+        max-height: 100px}
+    80% {max-width: 99px;
+        max-height: 99px}
+    60% {max-width: 98px;
+        max-height: 98px}
+    40% {max-width: 97px;
+        max-height: 97px}
+    20% {max-width: 96px;
+        max-height: 96px}
+    0% {max-width: 95px;
+        max-height: 95px}
+    }
