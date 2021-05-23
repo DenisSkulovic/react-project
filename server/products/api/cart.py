@@ -10,22 +10,13 @@ from products.pagination import (
 from products.models import (
     Cart, CartItem,
 )
-from products.serializers.cart import CartSerializer, CartFullInfoSerializer
+from products.serializers.cart import CartSerializer
 from products.serializers.cartItem import CartItemSerializer
-from django.shortcuts import get_object_or_404
-
-from classes import CartHandler, SessionHandler
-
-
+from classes import CartHandler
 from django.contrib.auth import get_user_model
 
 
 User = get_user_model()
-
-#####################################################################
-# from rest_framework import authentication
-# authentication_classes = [authentication.TokenAuthentication]
-#####################################################################
 
 
 class CartClearExpired(APIView):
@@ -39,12 +30,21 @@ class CartClearExpired(APIView):
 class CartDetailView(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
-    def get(self, request, user_id, format=None):
-        user = get_object_or_404(User, id=user_id)
-        cart = Cart.objects.get(customer=user)
-        cart_items = CartItemSerializer(
-            CartItem.objects.filter(cart=cart), many=True)
-        return Response(cart_items.data, status=status.HTTP_200_OK)
+    def get(self, request, user_id):
+        # first retrieve info to Python and check outside of SQL to avoid injection
+        users = User.objects.all()
+        user_ids = {user.id for user in users}
+        try:
+            if user_id in user_ids:
+                user = User.objects.get(id=user_id)
+                cart = Cart.objects.get(customer=user)
+                cart_items = CartItemSerializer(
+                    CartItem.objects.filter(cart=cart), many=True)
+                return Response(cart_items.data, status=status.HTTP_200_OK)
+            else:
+                return Response({'message': 'Requested id does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response({'message': 'Requested id does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CartListView(ListAPIView):

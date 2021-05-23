@@ -1,21 +1,15 @@
 from rest_framework.views import APIView
-from rest_framework.generics import (
-    ListAPIView, DestroyAPIView,
-    CreateAPIView, UpdateAPIView)
 from rest_framework.response import Response
 from rest_framework import permissions
 from products.models import (
-    Product, Cart, CartItem, Purchase, PurchaseItem, StockItem, Category)
+    CartItem, Purchase, PurchaseItem)
 from products.serializers.cartItem import CartItemSerializer
 from products.serializers.purchaseItem import PurchaseItemSerializer
 from products.serializers.purchase import PurchaseSerializer
 from django.contrib.auth import get_user_model
 from django.db.models import F
 from rest_framework import status
-from django.shortcuts import get_object_or_404
-from django.contrib.sessions.models import Session
-from users.serializers.user import UserSessionSerializer
-from classes import CartHandler, SessionHandler
+from classes import CartHandler
 
 User = get_user_model()
 
@@ -88,7 +82,7 @@ class AddRemoveCartItem(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request, change, item_id, quantity):
-        if change not in ["add", "remove"]:
+        if change not in {"add", "remove"}:
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
         quantity = int(quantity)

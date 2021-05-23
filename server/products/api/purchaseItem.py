@@ -12,14 +12,11 @@ from products.pagination import (
 from products.models import (PurchaseItem,)
 from products.serializers.purchaseItem import PurchaseItemSerializer
 from django.contrib.auth import get_user_model
+from rest_framework import status
+from classes import SessionHandler
 
 
 User = get_user_model()
-
-#####################################################################
-# from rest_framework import authentication
-# authentication_classes = [authentication.TokenAuthentication]
-#####################################################################
 
 
 class PurchaseItemListView(ListAPIView):
@@ -32,10 +29,20 @@ class PurchaseItemListView(ListAPIView):
 class PurchaseItemDetailView(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
-    def get(self, request, purchaseItem_id, format=None):
-        purchaseItem = PurchaseItemSerializer(
-            PurchaseItem.objects.get(id=purchaseItem_id))
-        return Response(purchaseItem.data)
+    def get(self, request, purchaseItem_id):
+        session_key = SessionHandler(request).session_key
+
+        # preventing SQL injection
+        purchaseItems = PurchaseItem.objects.all()
+        purchaseItems_ids = {purchaseItem.id for purchaseItem in purchaseItems}
+        if purchaseItem_id in purchaseItems_ids:
+            purchaseItem = PurchaseItemSerializer(
+                PurchaseItem.objects.get(id=purchaseItem_id)).data
+            content = {
+                'purchaseItem': purchaseItem,
+                'session_key': session_key}
+            return Response(purchaseItem, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class PurchaseItemDeleteView(DestroyAPIView):

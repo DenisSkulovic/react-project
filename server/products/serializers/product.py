@@ -12,11 +12,10 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        # fields = '__all__'
-        fields = ['id', 'name', 'image', 'unit', 'unit_price', 'category']
+        fields = '__all__'
+        # fields = ['id', 'name', 'image', 'unit', 'unit_price', 'category']
 
     def create(self, validated_data):
-        # First we create 'mod' data for the AssetModel
         category_name = validated_data.pop('category')
         category_name = category_name.get("name")
         categ, _ = Category.objects.get_or_create(
@@ -24,5 +23,4 @@ class ProductSerializer(serializers.ModelSerializer):
 
         product = Product.objects.create(category=categ, **validated_data)
 
-        # Return a Dataitem instance
         return product

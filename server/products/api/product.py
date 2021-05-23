@@ -20,11 +20,6 @@ import random
 
 User = get_user_model()
 
-#####################################################################
-# from rest_framework import authentication
-# authentication_classes = [authentication.TokenAuthentication]
-#####################################################################
-
 
 class ProductRandomView(APIView):
     serializer_class = ProductSerializer
@@ -33,31 +28,33 @@ class ProductRandomView(APIView):
 
     def get(self, request):
         session_handler = SessionHandler(request)
+        try:
+            if request.GET.get('q'):
+                q = int(request.GET.get('q'))
+            else:
+                q = 10
 
-        if request.GET.get('q'):
-            q = int(request.GET.get('q'))
-        else:
-            q = 10
+            categories = Category.objects.all()
+            products_data = {}
+            for category in categories:
 
-        categories = Category.objects.all()
-        products_data = {}
-        for category in categories:
+                products = Product.objects.filter(category=category)
 
-            products = Product.objects.filter(category=category)
+                products_list = list(products)
+                random.shuffle(products_list)
+                product_ids = {product.id for product in products_list}
+                if len(product_ids) > q:
+                    product_ids = product_ids[:q]
+                products = Product.objects.filter(id__in=product_ids)
 
-            products_list = list(products)
-            random.shuffle(products_list)
-            product_ids = [product.id for product in products_list]
-            if len(product_ids) > q:
-                product_ids = product_ids[:q]
-            products = Product.objects.filter(id__in=product_ids)
+                prods_serialized = ProductSerializer(products, many=True).data
+                products_data[category.name] = prods_serialized
 
-            prods_serialized = ProductSerializer(products, many=True).data
-            products_data[category.name] = prods_serialized
-
-        content = {'products': products_data,
-                   'session_key': session_handler.session_key}
-        return Response(content, status=status.HTTP_200_OK)
+            content = {'products': products_data,
+                       'session_key': session_handler.session_key}
+            return Response(content, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class ProductCategoryView(ListAPIView):
@@ -93,7 +90,7 @@ class ProductCategoryView(ListAPIView):
         # to prevent SQL injection
         if request.GET.get('order_by'):
             order_by = request.GET.get('order_by')
-            fields = [f.name for f in Product._meta.get_fields()]
+            fields = {f.name for f in Product._meta.get_fields()}
             if order_by.replace("-", "") not in fields:
                 order_by = 'name'
         else:
@@ -102,15 +99,20 @@ class ProductCategoryView(ListAPIView):
         if category == 'all':
             return Product.objects.all().order_by(order_by)
 
-        try:
-            category = Category.objects.get(name=category)
-        except:
-            return Product.objects.none()
+        # preventing SQL injection
+        categories = Category.objects.all()
+        category_names = {category.name for category in categories}
+        if category in category_names:
+            try:
+                category = Category.objects.get(name=category)
+            except:
+                return Product.objects.none()
 
-        queryset = Product.objects.filter(
-            category=category).order_by(order_by)
+            queryset = Product.objects.filter(
+                category=category).order_by(order_by)
 
-        return queryset
+            return queryset
+        return Product.objects.none()
 
 
 class ProductListByCategoryView(APIView):
@@ -140,20 +142,27 @@ class ProductDetailView(APIView):
 
     def get(self, request, product_id):
         session_handler = SessionHandler(request)
-
-        product = Product.objects.get(id=product_id)
-        stock_item = StockItem.objects.filter(product=product)
-        if len(stock_item) > 0:
-            stock_item = StockItemSerializer(stock_item[0]).data
-        else:
-            stock_item = []
-        product = ProductSerializer(product).data
-        content = {
-            'product': product,
-            'stock_item': stock_item,
-            'session_key': session_handler.session_key,
-        }
-        return Response(content, status=status.HTTP_200_OK)
+        try:
+            # check for membership in Python to avoid SQL injection
+            products = Product.objects.all()
+            product_ids = {product.id for product in products}
+            if product_id in product_ids:
+                product = Product.objects.get(id=product_id)
+                stock_item = StockItem.objects.filter(product=product)
+                if len(stock_item) > 0:
+                    stock_item = StockItemSerializer(stock_item[0]).data
+                else:
+                    stock_item = []
+                product = ProductSerializer(product).data
+                content = {
+                    'product': product,
+                    'stock_item': stock_item,
+                    'session_key': session_handler.session_key,
+                }
+                return Response(content, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class ProductDeleteView(DestroyAPIView):

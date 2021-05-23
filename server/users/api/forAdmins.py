@@ -8,7 +8,8 @@ from users.serializers.user import UserSerializer, RegisterSerializer
 from rest_framework.response import Response
 from products.models import Cart, CartItem, Purchase, PurchaseItem
 from rest_framework import status
-from products.serializers.cart import CartSerializer, CartItemSerializer
+from products.serializers.cart import CartSerializer
+from products.serializers.cartItem import CartItemSerializer
 from products.serializers.product import ProductSerializer
 from products.serializers.purchase import PurchaseSerializer
 from products.serializers.purchaseItem import PurchaseItemSerializer
@@ -21,32 +22,36 @@ class UserFullDetailView(APIView):
     permission_classes = (IsAdminUser,)
 
     def get(self, request, user_id):
-        user = User.objects.get(id=user_id)
-        try:
-            cart = Cart.objects.get(customer=user)
-        except:
-            cart = None
-        cart_items = CartItem.objects.filter(cart=cart)
-        purchases = Purchase.objects.filter(customer=user)
-        purchase_history = []
-        for purchase in purchases:
-            purchase_items = PurchaseItem.objects.filter(purchase=purchase)
-            purchase_items = PurchaseItemSerializer(
-                purchase_items, many=True).data
-            purchase = PurchaseSerializer(purchase).data
-            purchase_history.append(
-                {'purchase': purchase, 'purchase_items': purchase_items})
+        users = User.objects.all()
+        users_ids = {user.id for user in users}
+        if user_id in users_ids:
+            user = User.objects.get(id=user_id)
+            try:
+                cart = Cart.objects.get(customer=user)
+            except:
+                cart = None
+            cart_items = CartItem.objects.filter(cart=cart)
+            purchases = Purchase.objects.filter(customer=user)
+            purchase_history = []
+            for purchase in purchases:
+                purchase_items = PurchaseItem.objects.filter(purchase=purchase)
+                purchase_items = PurchaseItemSerializer(
+                    purchase_items, many=True).data
+                purchase = PurchaseSerializer(purchase).data
+                purchase_history.append(
+                    {'purchase': purchase, 'purchase_items': purchase_items})
 
-        user = UserSerializer(user).data
-        cart = CartSerializer(cart).data
-        cart_items = CartItemSerializer(cart_items, many=True).data
+            user = UserSerializer(user).data
+            cart = CartSerializer(cart).data
+            cart_items = CartItemSerializer(cart_items, many=True).data
 
-        content = {"cart_info": {
-            "cart": cart, 'cart_items': cart_items
-        },
-            'user_info': user,
-            'purchase_history': purchase_history}
-        return Response(content, status=status.HTTP_200_OK)
+            content = {"cart_info": {
+                "cart": cart, 'cart_items': cart_items
+            },
+                'user_info': user,
+                'purchase_history': purchase_history}
+            return Response(content, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class UserDetail(APIView):

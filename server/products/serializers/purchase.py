@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from products.models import Purchase, Product
+from products.models import Purchase
 from django.contrib.auth import get_user_model
 from users.serializers.user import UserSerializer
 

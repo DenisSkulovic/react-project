@@ -24,19 +24,37 @@ class CategoryListView(APIView):
     def get(self, request, *args, **kwargs):
         session_handler = SessionHandler(request)
         session_handler.refresh_session()
-        categories = Category.objects.all()
-        categories = CategorySerializer(categories, many=True).data
-        content = {'categories': categories,
-                   'session_key': session_handler.session_key}
-        return Response(content, status=status.HTTP_200_OK)
+        try:
+            categories = Category.objects.all()
+            categories = CategorySerializer(categories, many=True).data
+            content = {'categories': categories,
+                       'session_key': session_handler.session_key}
+            return Response(content, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class CategoryDetailView(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
-    def get(self, request, category_id, format=None):
-        category = CategorySerializer(Category.objects.get(id=category_id))
-        return Response(category.data)
+    def get(self, request, category_id):
+        session_handler = SessionHandler(request)
+        session_handler.refresh_session()
+        try:
+            # retrieve all categories into Python and check for membership; to protect against SQL injections
+            categories = Category.objects.all()
+            category_ids = {category.id for category in categories}
+            if category_id in category_ids:
+                category = CategorySerializer(
+                    Category.objects.get(id=category_id)).data
+                content = {
+                    'category': category,
+                    'session_key': session_handler.session_key
+                }
+                return Response(content, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class CategoryDeleteView(DestroyAPIView):

@@ -10,5 +10,5 @@ User = get_user_model()
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        # fields = '__all__'
-        fields = ['id', 'name']
+        fields = '__all__'
+        # fields = ['id', 'name']

@@ -45,7 +45,7 @@ class SessionHandler():
 
             # retrieve keys, and check for membership in Python to avoid SQL injection
             sessions = Session.objects.all()
-            session_keys = [session.session_key for session in sessions]
+            session_keys = {session.session_key for session in sessions}
             if validated_session_key in session_keys:
                 session = Session.objects.get(
                     session_key=validated_session_key)
@@ -150,43 +150,48 @@ class CartHandler():
 
     @staticmethod
     def _add_or_remove_cart_item(cart, change, item_id, quantity):
-        item = Product.objects.get(id=item_id)
-        stock_item = StockItem.objects.get(product=item)
+        products = Product.objects.all()
+        products_ids = {product.id for product in products}
+        if (item_id in products_ids) & isinstance(quantity, int):
+            item = Product.objects.get(id=item_id)
+            stock_item = StockItem.objects.get(product=item)
 
-        if quantity < 0:
-            return
-
-        if change == "remove":
-            quantity = -quantity
-
-        if stock_item.quantity < quantity:
-            return
-
-        if quantity > 0:
-            try:
-                cartItem = CartItem.objects.get(cart=cart, product=item)
-                stock_item.quantity = F('quantity') - quantity
-                cartItem.quantity = F('quantity') + quantity
-                stock_item.save()
-                cartItem.save()
-            except:
-                cartItem = CartItem.objects.create(
-                    product=item, cart=cart, quantity=quantity, price=item.unit_price)
-                stock_item.quantity = F('quantity') - quantity
-                stock_item.save()
-
-        if quantity < 0:
-            try:
-                cartItem = CartItem.objects.get(cart=cart, product=item)
-                if cartItem.quantity + quantity <= 0:
-                    CartItem.objects.filter(cart=cart, product=item).delete()
-                else:
-                    cartItem.quantity = F('quantity') + quantity
-                    cartItem.save()
-                stock_item.quantity = F('quantity') - quantity
-                stock_item.save()
-            except:
+            if quantity < 0:
                 return
+
+            if change == "remove":
+                quantity = -quantity
+
+            if stock_item.quantity < quantity:
+                return
+
+            if quantity > 0:
+                try:
+                    cartItem = CartItem.objects.get(cart=cart, product=item)
+                    stock_item.quantity = F('quantity') - quantity
+                    cartItem.quantity = F('quantity') + quantity
+                    stock_item.save()
+                    cartItem.save()
+                except:
+                    cartItem = CartItem.objects.create(
+                        product=item, cart=cart, quantity=quantity, price=item.unit_price)
+                    stock_item.quantity = F('quantity') - quantity
+                    stock_item.save()
+
+            if quantity < 0:
+                try:
+                    cartItem = CartItem.objects.get(cart=cart, product=item)
+                    if cartItem.quantity + quantity <= 0:
+                        CartItem.objects.filter(
+                            cart=cart, product=item).delete()
+                    else:
+                        cartItem.quantity = F('quantity') + quantity
+                        cartItem.save()
+                    stock_item.quantity = F('quantity') - quantity
+                    stock_item.save()
+                except:
+                    return
+        return
 
     @staticmethod
     def _get_cart_items(cart):

@@ -12,14 +12,10 @@ from products.pagination import (
 from products.models import (Purchase,)
 from products.serializers.purchase import PurchaseSerializer
 from django.contrib.auth import get_user_model
+from rest_framework import status
 
 
 User = get_user_model()
-
-#####################################################################
-# from rest_framework import authentication
-# authentication_classes = [authentication.TokenAuthentication]
-#####################################################################
 
 
 class PurchaseListView(ListAPIView):
@@ -32,9 +28,13 @@ class PurchaseListView(ListAPIView):
 class PurchaseDetailView(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
-    def get(self, request, purchase_id, format=None):
-        purchase = PurchaseSerializer(Purchase.objects.get(id=purchase_id))
-        return Response(purchase.data)
+    def get(self, request, purchase_id):
+        purchases = Purchase.objects.all()
+        purchases_ids = {purchase.id for purchase in purchases}
+        if purchase_id in purchases_ids:
+            purchase = PurchaseSerializer(Purchase.objects.get(id=purchase_id))
+            return Response(purchase.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class PurchaseDeleteView(DestroyAPIView):

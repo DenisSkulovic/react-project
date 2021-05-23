@@ -16,11 +16,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-#####################################################################
-# from rest_framework import authentication
-# authentication_classes = [authentication.TokenAuthentication]
-#####################################################################
-
 
 class StockItemListView(ListAPIView):
     queryset = StockItem.objects.all()
@@ -33,8 +28,12 @@ class StockItemDetailView(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     def get(self, request, stockItem_id, format=None):
-        stockItem = StockItemSerializer(StockItem.objects.get(id=stockItem_id))
-        return Response(stockItem.data)
+        stockItems = StockItem.objects.all()
+        stockItems_ids = {stockItem.id for stockItem in stockItems}
+        if stockItem_id in stockItems_ids:
+            stockItem = StockItemSerializer(
+                StockItem.objects.get(id=stockItem_id))
+            return Response(stockItem.data)
 
 
 class StockItemDeleteView(DestroyAPIView):
