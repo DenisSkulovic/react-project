@@ -42,14 +42,21 @@ class SessionHandler():
             # try to use the key provided - check it for validity
             validated_session_key = self._validate_session_key(
                 request.headers.get("Sessionkey"))
-            session = Session.objects.get(
-                session_key=validated_session_key)
-            session_key = session.session_key
-            if self._check_session_expiry_validity(session):
-                return session_key
+
+            # retrieve keys, and check for membership in Python to avoid SQL injection
+            sessions = Session.objects.all()
+            session_keys = [session.session_key for session in sessions]
+            if validated_session_key in session_keys:
+                session = Session.objects.get(
+                    session_key=validated_session_key)
+                session_key = session.session_key
+                if self._check_session_expiry_validity(session):
+                    return session_key
+                else:
+                    request.session.create()
+                    return request.session.session_key
             else:
-                request.session.create()
-                return request.session.session_key
+                raise ValueError
         except:
             # if key cannot be used - create new session
             request.session.create()
