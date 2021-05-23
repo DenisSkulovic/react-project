@@ -1,8 +1,7 @@
 
 .all-products-item {
-    background-color: white;
     margin: 15px 0px;
-    height: 360px;
+    height: 370px;
     cursor: pointer;
     box-shadow: transparent;
     transition: box-shadow 0.1s ease-out 100ms;
@@ -14,7 +13,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: white;
         overflow: hidden;
     }
 

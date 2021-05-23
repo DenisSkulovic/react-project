@@ -1,5 +1,5 @@
 .react-multi-carousel-item {
-    margin: 5px 10px;
+    margin: 35px 0px;
 }
 
 .carousel-item {
@@ -23,6 +23,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0px 20px;
             img {
                 max-width: 100%;
                 max-height: 100%;
@@ -46,17 +47,8 @@
     }
 }
 
-// /* The animation code */
-// @keyframes example {
-//     from {background-color: red;}
-//     to {background-color: yellow;}
-//   }
-  
-//   /* The element to apply the animation to */
-//   div {
-//     width: 100px;
-//     height: 100px;
-//     background-color: red;
-//     animation-name: example;
-//     animation-duration: 4s;
-//   }
+
+.carousel-item:hover {
+    box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.137);
+    background-color: rgba(255, 0, 0, 0.02);
+}

@@ -10,39 +10,39 @@ export default function Carousel({ products, category }) {
   const responsive = {
     8: {
       breakpoint: { max: 4000, min: 2800 },
-      items: 10,
+      items: 9,
     },
     7: {
       breakpoint: { max: 2800, min: 2500 },
-      items: 9,
+      items: 8,
     },
     6: {
       breakpoint: { max: 2500, min: 1650 },
-      items: 8,
+      items: 7,
     },
     5: {
       breakpoint: { max: 1650, min: 1450 },
-      items: 7,
+      items: 6,
     },
     4: {
       breakpoint: { max: 1450, min: 1250 },
-      items: 6,
+      items: 5,
     },
     3: {
       breakpoint: { max: 1250, min: 1100 },
-      items: 5,
+      items: 4,
     },
     2: {
       breakpoint: { max: 1100, min: 950 },
-      items: 4,
+      items: 3,
     },
     1: {
       breakpoint: { max: 950, min: 800 },
-      items: 3,
+      items: 2,
     },
     0: {
       breakpoint: { max: 800, min: 0 },
-      items: 2,
+      items: 1,
     },
   };
 
@@ -64,7 +64,7 @@ export default function Carousel({ products, category }) {
               keyBoardControl={true}
               transitionDuration={500}
               containerClass="carousel-container"
-              removeArrowOnDeviceType={["tablet", "mobile"]}
+              removeArrowOnDeviceType={[0, 1]}
               dotListClass="custom-dot-list-style"
               itemClass="carousel-item-padding-40-px"
             >
