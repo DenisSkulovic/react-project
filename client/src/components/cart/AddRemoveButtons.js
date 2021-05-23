@@ -13,29 +13,31 @@ export default function AddRemoveButtons({ id, checkout }) {
 
   return (
     <div
-      className={`add-remove-buttons-wrapper ${!checkout ? "hover" : ""}`}
+      className={`add-remove-buttons-wrapper`}
       onClick={(e) => e.stopPropagation()}
     >
-      <ButtonGroup>
-        <Button
-          onClick={() => {
-            handleAddRemoveBtnClick(-1);
-          }}
-          variant="light"
-          className="add-remove-btn"
-        >
-          -
-        </Button>
-        <Button
-          onClick={() => {
-            handleAddRemoveBtnClick(1);
-          }}
-          variant="light"
-          className="add-remove-btn"
-        >
-          +
-        </Button>
-      </ButtonGroup>
+      {!checkout && (
+        <ButtonGroup>
+          <Button
+            onClick={() => {
+              handleAddRemoveBtnClick(-1);
+            }}
+            variant="light"
+            className="add-remove-btn"
+          >
+            -
+          </Button>
+          <Button
+            onClick={() => {
+              handleAddRemoveBtnClick(1);
+            }}
+            variant="light"
+            className="add-remove-btn"
+          >
+            +
+          </Button>
+        </ButtonGroup>
+      )}
     </div>
   );
 }

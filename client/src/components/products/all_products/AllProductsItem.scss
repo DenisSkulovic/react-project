@@ -5,8 +5,8 @@
     cursor: pointer;
     box-shadow: transparent;
     transition: box-shadow 0.1s ease-out 100ms;
-    box-shadow: 0px 0px 2px 0px rgba(255, 0, 0, 0.3);
-    background-color: rgba(255, 0, 0, 0.01);
+    box-shadow: 0px 0px 2px 0px rgba(190, 0, 0, 0.3);
+    background-color: rgba(190, 0, 0, 0.01);
     display: grid;
     grid-template-rows: 1fr 78px 60px;
 
@@ -31,14 +31,14 @@
     }
     .details {
         text-align: center;
-        background-color: rgba(255, 0, 0, 0.04);
+        background-color: rgba(190, 0, 0, 0.04);
         .title {
             font-weight: 900;
         }
         .unit-price {
             font-weight: 900;
             font-size: 1.4em;
-            color: rgb(255, 0, 0);
+            color: rgb(190, 0, 0);
         }
         .unit {
             font-size: 0.9em;
@@ -51,8 +51,8 @@
 }
 
 .all-products-item:hover {
-    box-shadow: 0px 0px 5px 0px rgba(255, 0, 0, 0.5);
-    background-color: rgba(255, 0, 0, 0.03);
+    box-shadow: 0px 0px 5px 0px rgba(190, 0, 0, 0.5);
+    background-color: rgba(190, 0, 0, 0.03);
     .image-wrapper img {
         max-width: 170px;
         max-height: 170px;

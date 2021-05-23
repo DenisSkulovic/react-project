@@ -6,7 +6,7 @@
     max-width: 100%;
     max-height: 100%;
     cursor: pointer;
-    box-shadow: 0px 0px 2px 0px rgba(255, 0, 0, 0.237);
+    box-shadow: 0px 0px 2px 0px rgba(190, 0, 0, 0.237);
     background-color: rgba(255, 0, 0, 0.015);
     min-height: 320px;
 
@@ -31,14 +31,14 @@
     }
     .details {
         text-align: center;
-        background-color: rgba(255, 0, 0, 0.04);
+        background-color: rgba(190, 0, 0, 0.04);
         .title {
             font-weight: 900;
         }
         .unit-price {
             font-weight: 900;
             font-size: 1.4em;
-            color: rgb(255, 0, 0);
+            color: rgb(190, 0, 0);
         }
         .unit {
             font-size: 0.9em;
@@ -49,11 +49,11 @@
 
 .react-multiple-carousel__arrow::before {
     font-size: 40px;
-    text-shadow: 0px 0px 5px red;
+    text-shadow: 0px 0px 5px rgb(190, 0, 0);
 }
 
 
 .carousel-item:hover {
-    box-shadow: 0px 0px 10px 0px rgba(255, 0, 0, 0.137);
+    box-shadow: 0px 0px 10px 0px rgba(190, 0, 0, 0.137);
     background-color: rgba(255, 0, 0, 0.02);
 }
