@@ -30,9 +30,11 @@ export default function Categories() {
   const order_by_Selector = useSelector(makeSelect_AllProducts_order_by);
 
   const handleClick = (category) => {
-    dispatch(setCategory(category));
-    dispatch(setPage(1));
-    dispatch(getProductsForCategory(category, order_by_Selector.order_by, 1));
+    if (categorySelector.category !== category) {
+      dispatch(setCategory(category));
+      dispatch(setPage(1));
+      dispatch(getProductsForCategory(category, order_by_Selector.order_by, 1));
+    }
   };
 
   return (
