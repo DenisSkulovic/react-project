@@ -65,6 +65,3 @@ export const addRemoveCartItem = (item_id, quantity) => async (dispatch) => {
     payload: total,
   });
 };
-
-// an action is a func that takes an argument and returns an action,
-// which is composed of payload and action type

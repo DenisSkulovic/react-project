@@ -47,7 +47,14 @@ class ProductRandomView(APIView):
                 product_ids = product_ids[:q]
             products = Product.objects.filter(id__in=product_ids)
 
-            prods_serialized = ProductSerializer(products, many=True).data
+            prods_serialized = []
+            for product in products:
+                prod_serialized = ProductSerializer(product).data
+                stockItem = StockItem.objects.get(product=product)
+                stock_serialized = StockItemSerializer(stockItem).data
+                prod_serialized['stock_item'] = stock_serialized
+                prods_serialized.append(prod_serialized)
+
             products_data[category.name] = prods_serialized
 
         content = {'products': products_data,
@@ -72,14 +79,26 @@ class ProductCategoryView(ListAPIView):
 
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            content = {'results': serializer.data,
+            products_serialized = []
+            for product in page:
+                prod_serialized = ProductSerializer(product).data
+                stockItem = StockItem.objects.get(product=product)
+                stock_serialized = StockItemSerializer(stockItem).data
+                prod_serialized['stock_item'] = stock_serialized
+                products_serialized.append(prod_serialized)
+
+            content = {'results': products_serialized,
                        'session_key': self.session_key}
             return self.get_paginated_response(content)
 
-        serializer = self.get_serializer(queryset, many=True)
-        result = [x.values()[0] for x in serializer.data]
-        content = {'results': result,
+        products_serialized = []
+        for product in queryset:
+            prod_serialized = ProductSerializer(product).data
+            stockItem = StockItem.objects.get(product=product)
+            stock_serialized = StockItemSerializer(stockItem).data
+            prod_serialized['stock_item'] = stock_serialized
+            products_serialized.append(prod_serialized)
+        content = {'results': {'results': products_serialized},
                    'session_key': self.session_key}
         return Response(content, status=status.HTTP_200_OK)
 
@@ -128,9 +147,16 @@ class ProductListByCategoryView(APIView):
         productsDict = {}
         for category in categories:
             products = Product.objects.filter(category=category)
-            products_serialized = ProductSerializer(products, many=True)
 
-            productsDict[category.name] = products_serialized.data
+            products_serialized = []
+            for product in products:
+                prod_serialized = ProductSerializer(product).data
+                stockItem = StockItem.objects.get(product=product)
+                stock_serialized = StockItemSerializer(stockItem).data
+                prod_serialized['stock_item'] = stock_serialized
+                products_serialized.append(prod_serialized)
+
+            productsDict[category.name] = products_serialized
 
         content = {'products': productsDict,
                    'session_key': session_handler.session_key}

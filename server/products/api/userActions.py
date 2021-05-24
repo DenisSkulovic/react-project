@@ -17,7 +17,9 @@ User = get_user_model()
 class FinalizeCart(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request):
+    def post(self, request):
+
+        print("\n\n", request.data, '\n\n')
 
         cart_handler = CartHandler(request)
         cart_handler.session_handler.refresh_session()

@@ -1,9 +1,12 @@
 import React from "react";
 import "./OutOfStock.scss";
 
-export default function OutOfStock({ color, textColor, message }) {
+export default function OutOfStock({ backgroundColor, textColor, message }) {
   return (
-    <div className="out-of-stock-container" style={{ backgroundColor: color }}>
+    <div
+      className="out-of-stock-container"
+      style={{ backgroundColor: backgroundColor }}
+    >
       <div className="out-of-stock-wrapper">
         <div className="out-of-stock" style={{ textColor: textColor }}>
           <span>{message[0]}</span>

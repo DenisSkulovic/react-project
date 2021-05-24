@@ -115,7 +115,9 @@ class CartHandler():
 
         if self.request.user.is_authenticated:
             purchase = Purchase.objects.create(
-                customer=self.request.user, total_paid=total_paid)
+                customer=self.request.user,
+                total_paid=total_paid,
+                session=self.session)
 
         else:
             purchase = Purchase.objects.create(

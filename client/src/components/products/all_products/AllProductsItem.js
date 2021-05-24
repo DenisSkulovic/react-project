@@ -43,14 +43,14 @@ export default function AllProductsItem({
     >
       {quantity === 0 && (
         <OutOfStock
-          color={"red"}
+          backgroundColor={"red"}
           textColor={"white"}
           message={["OUT OF", "STOCK"]}
         />
       )}
       {quantity < 100 && quantity > 0 && (
         <OutOfStock
-          color={"orange"}
+          backgroundColor={"orange"}
           textColor={"white"}
           message={["ALMOST", "SOLD OUT"]}
         />

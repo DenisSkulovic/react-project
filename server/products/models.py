@@ -87,6 +87,14 @@ class Purchase(models.Model):
         to=Session, on_delete=models.PROTECT, null=True)
     total_paid = models.FloatField(
         default=0, validators=[MinValueValidator(0.0)], null=False, blank=False)
+    full_name = models.CharField(max_length=200, blank=False, null=False)
+    country = models.CharField(max_length=200, blank=False, null=False)
+    address = models.CharField(max_length=200, blank=False, null=False)
+    city = models.CharField(max_length=200, blank=False, null=False)
+    state = models.CharField(max_length=200, blank=False, null=False)
+    zip_code = models.CharField(max_length=200, blank=False, null=False)
+    phone = models.CharField(max_length=200, blank=False, null=False)
+    email = models.EmailField(blank=False, null=False)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 

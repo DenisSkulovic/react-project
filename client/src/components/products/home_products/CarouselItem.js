@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CarouselItem.scss";
 import {
   getProductToDisplay,
@@ -18,6 +18,7 @@ export default function CarouselItem({
   unit,
   unit_price,
   category,
+  stock_item,
 }) {
   const dispatch = useDispatch();
 
@@ -27,6 +28,11 @@ export default function CarouselItem({
     dispatch(getProductToDisplay(product_id));
   };
 
+  const [quantity, setQuantity] = useState(1000);
+  useEffect(() => {
+    setQuantity(stock_item.quantity);
+  }, []);
+
   return (
     <div
       className="carousel-item"
@@ -34,7 +40,20 @@ export default function CarouselItem({
         handleDetailBtnClick(id);
       }}
     >
-      <OutOfStock />
+      {quantity === 0 && (
+        <OutOfStock
+          backgroundColor={"red"}
+          textColor={"white"}
+          message={["OUT OF", "STOCK"]}
+        />
+      )}
+      {quantity < 100 && quantity > 0 && (
+        <OutOfStock
+          backgroundColor={"orange"}
+          textColor={"white"}
+          message={["ALMOST", "SOLD OUT"]}
+        />
+      )}
       <div className="image-wrapper">
         <div className="image-div">
           <img src={image} alt={name.toLowerCase().replace(/ /g, "")} />
