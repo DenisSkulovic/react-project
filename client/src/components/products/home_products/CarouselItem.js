@@ -6,6 +6,7 @@ import {
 } from "../../../redux/productDetail/actions";
 import { setQuantityInputValue } from "../../../redux/productDetail/actions";
 import AddRemoveButtons from "./AddRemoveButtons";
+import OutOfStock from "../OutOfStock";
 
 // redux
 import { useDispatch } from "react-redux";
@@ -33,6 +34,7 @@ export default function CarouselItem({
         handleDetailBtnClick(id);
       }}
     >
+      <OutOfStock />
       <div className="image-wrapper">
         <div className="image-div">
           <img src={image} alt={name.toLowerCase().replace(/ /g, "")} />

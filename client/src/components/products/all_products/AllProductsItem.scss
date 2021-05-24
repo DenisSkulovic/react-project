@@ -9,6 +9,8 @@
     background-color: rgba(190, 0, 0, 0.01);
     display: grid;
     grid-template-rows: 1fr 78px 60px;
+    overflow: hidden;
+    position: relative;
 
     .image-wrapper {
         width: 200px;

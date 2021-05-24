@@ -9,6 +9,8 @@
     box-shadow: 0px 0px 2px 0px rgba(190, 0, 0, 0.237);
     background-color: rgba(255, 0, 0, 0.015);
     min-height: 320px;
+    overflow: hidden;
+    position: relative;
 
     .image-wrapper {
         display: flex;
@@ -45,6 +47,10 @@
         }
 
     }
+}
+
+.react-multiple-carousel__arrow {
+    z-index: 1;
 }
 
 .react-multiple-carousel__arrow::before {

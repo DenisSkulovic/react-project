@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddRemoveButtons from "./AddRemoveButtons";
 import "./AllProductsItem.scss";
 import {
@@ -6,6 +6,7 @@ import {
   openProductDetail,
 } from "../../../redux/productDetail/actions";
 import { setQuantityInputValue } from "../../../redux/productDetail/actions";
+import OutOfStock from "../OutOfStock";
 
 // redux
 import { useDispatch } from "react-redux";
@@ -17,6 +18,7 @@ export default function AllProductsItem({
   name,
   unit_price,
   unit,
+  stock_item,
 }) {
   const dispatch = useDispatch();
 
@@ -26,6 +28,12 @@ export default function AllProductsItem({
     dispatch(getProductToDisplay(product_id));
   };
 
+  const [quantity, setQuantity] = useState(1000);
+
+  useEffect(() => {
+    setQuantity(stock_item.quantity);
+  }, []);
+
   return (
     <div
       className={`all-products-item`}
@@ -33,6 +41,20 @@ export default function AllProductsItem({
         handleDetailBtnClick(id);
       }}
     >
+      {quantity === 0 && (
+        <OutOfStock
+          color={"red"}
+          textColor={"white"}
+          message={["OUT OF", "STOCK"]}
+        />
+      )}
+      {quantity < 100 && quantity > 0 && (
+        <OutOfStock
+          color={"orange"}
+          textColor={"white"}
+          message={["ALMOST", "SOLD OUT"]}
+        />
+      )}
       <div className="image-wrapper">
         <img src={image} alt={name.toLowerCase().replace(/ /g, "")} />
       </div>

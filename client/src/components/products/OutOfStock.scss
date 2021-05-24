@@ -1,0 +1,13 @@
+.out-of-stock-container {
+    position: absolute;
+    top: 15px;
+    left: -65px;
+    width: 100%;
+    transform: rotate(-45deg);
+    .out-of-stock {
+        text-align: center;
+        color: white;
+        font-weight: 900;
+        font-size: 0.8em;
+    }
+}
