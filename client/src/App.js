@@ -10,6 +10,7 @@ import Checkout from "./pages/checkout/Checkout";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import AllProducts from "./pages/all_products/AllProducts";
+import PaymentHistory from "./pages/payment/PaymentHistory";
 import { decideAuthStatus } from "./redux/user/actions";
 
 import {
@@ -30,13 +31,14 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/history" component={PaymentHistory} />
         <Route path="/about" component={About} />
         <Route path="/users" component={Users} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/all" component={AllProducts} />
-        <Route path="/" component={Home} />
+        <Route exact path="/" component={Home} />
       </Switch>
     </Router>
   );

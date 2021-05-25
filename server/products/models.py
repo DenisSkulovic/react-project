@@ -83,7 +83,7 @@ class CartItem(models.Model):
 class Purchase(models.Model):
     customer = models.ForeignKey(
         to=User, on_delete=models.PROTECT, null=True)
-    session = models.OneToOneField(
+    session = models.ForeignKey(
         to=Session, on_delete=models.PROTECT, null=True)
     total_paid = models.FloatField(
         default=0, validators=[MinValueValidator(0.0)], null=False, blank=False)

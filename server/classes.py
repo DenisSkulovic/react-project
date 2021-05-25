@@ -113,15 +113,32 @@ class CartHandler():
         for cart_item in cart_items:
             total_paid += cart_item.quantity * cart_item.price
 
+        print('\n\n', self.request.data, '\n\n')
+
+        userdata = dict(
+            full_name=self.request.data.get('full_name', ''),
+            country=self.request.data.get('full_name', ''),
+            address=self.request.data.get('address', ''),
+            city=self.request.data.get('city', ''),
+            state=self.request.data.get('state', ''),
+            zip_code=self.request.data.get('zip_code', ''),
+            phone=self.request.data.get('phone', ''),
+            email=self.request.data.get('email', ''),
+        )
+
         if self.request.user.is_authenticated:
             purchase = Purchase.objects.create(
                 customer=self.request.user,
                 total_paid=total_paid,
+                **userdata,
                 session=self.session)
 
         else:
             purchase = Purchase.objects.create(
-                session=Session.objects.get(session_key=self.session_key), total_paid=total_paid)
+                total_paid=total_paid,
+                **userdata,
+                session=Session.objects.get(session_key=self.session_key),
+            )
 
         # create purchase items and remove cart items
         for cart_item in cart_items:

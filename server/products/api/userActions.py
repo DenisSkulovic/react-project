@@ -54,14 +54,16 @@ class GetPurchases(APIView):
     def get(self, request):
         cart_handler = CartHandler(request)
         cart_handler.session_handler.refresh_session()
-        content = []
+        payments = []
+        content = {}
         purchases = Purchase.objects.filter(
             customer=request.user).order_by('created_date')
         for purchase in purchases:
             purchase_items = PurchaseItem.objects.filter(purchase=purchase)
-            content.append({'purchase': PurchaseSerializer(purchase).data,
-                            'purchase_items': PurchaseItemSerializer(purchase_items, many=True).data,
-                            'session_key': cart_handler.session_key})
+            payments.append({'purchase': PurchaseSerializer(purchase).data,
+                            'purchase_items': PurchaseItemSerializer(purchase_items, many=True).data})
+            content['payments'] = payments
+            content['session_key'] = cart_handler.session_key
         return Response(content, status=status.HTTP_200_OK)
 
 
