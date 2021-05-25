@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Navbar from "../../components/navbar/Navbar";
 import Cart from "../../components/cart/Cart";
 import "./Checkout.scss";
 import CheckoutForm from "../../components/checkout/CheckoutForm";
 import { makeSelect_Payment_payment } from "../../redux/payment/selectors";
 import PaymentDetail from "../../components/payment/PaymentDetail";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { makeSelect_Cart_cartItems } from "../../redux/cart/selectors";
-import { getCart } from "../../redux/cart/actions";
 
 // stripe
 import { Elements } from "@stripe/react-stripe-js";
@@ -18,12 +17,8 @@ const stripePromise = loadStripe(
 );
 
 export default function Checkout() {
-  const dispatch = useDispatch();
   const paymentSelector = useSelector(makeSelect_Payment_payment);
   const cartItemsSelector = useSelector(makeSelect_Cart_cartItems);
-  useEffect(() => {
-    dispatch(getCart());
-  }, []);
   console.log("paymentSelector.payment", paymentSelector.payment);
   return (
     <>

@@ -1,4 +1,5 @@
 import "./PaymentDetail.scss";
+import DownloadBtn from "../pdf/DownloadBtn";
 
 import React from "react";
 
@@ -86,6 +87,7 @@ export default function PaymentDetail({ payment }) {
         <p className="total">
           TOTAL: ${payment.purchase.total_paid.toFixed(2)}
         </p>
+        <DownloadBtn />
       </div>
     </div>
   );

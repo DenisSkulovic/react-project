@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import ActionTypes from "./constants";
+import CartActionTypes from "../cart/constants";
 
 //
 // PAY
@@ -9,18 +10,22 @@ export const pay = (data) => async (dispatch) => {
     type: ActionTypes.SET_PROCESSING,
     payload: true,
   });
+  const auth = window.sessionStorage.getItem("Authorization");
+  let headers = {
+    Sessionkey: window.sessionStorage.getItem("Sessionkey"),
+  };
+
+  if (auth) {
+    headers["Authoziration"] = `Token ${auth}`;
+  }
+
   const response = await axios.post(
     `http://127.0.0.1:8000/cart/pay/`,
     {
       ...data,
     },
     {
-      headers: {
-        Sessionkey: window.sessionStorage.getItem("Sessionkey"),
-        Authorization: `Token ${window.sessionStorage.getItem(
-          "Authorization"
-        )}`,
-      },
+      headers: headers,
     }
   );
   console.log("response.data", response.data);
@@ -32,6 +37,14 @@ export const pay = (data) => async (dispatch) => {
   dispatch({
     type: ActionTypes.SET_PROCESSING,
     payload: false,
+  });
+  dispatch({
+    type: CartActionTypes.GET_CART,
+    payload: [],
+  });
+  dispatch({
+    type: CartActionTypes.CALC_CART_TOTAL,
+    payload: 0,
   });
 };
 
