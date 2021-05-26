@@ -38,126 +38,118 @@ function CheckoutForm() {
 
   return (
     <div className="container">
-      <h1>Stripe form</h1>
-      <CardElement />
-      <form
-        action="#"
-        className="payment-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit(stripe, elements);
-        }}
-      >
-        <div className="form-group">
-          <label htmlFor="full_name" hidden>
-            Full Name
-          </label>
-          <input
-            autoComplete="name"
-            className="form-control"
-            type="text"
-            name="full_name"
-            placeholder="Full Name"
-            required
-          />
+      <div className="checkout-form">
+        <div className="stripe-container mb-3">
+          <label>Card Details</label>
+          <div className="stripe-wrapper form-control">
+            <CardElement />
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="country" hidden>
-            Country
-          </label>
-          <input
-            autoComplete="country"
-            className="form-control"
-            type="text"
-            name="country"
-            placeholder="Country"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="address" hidden>
-            Address
-          </label>
-          <input
-            autoComplete="street-address"
-            className="form-control"
-            type="text"
-            name="address"
-            placeholder="Address"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="city" hidden>
-            City
-          </label>
-          <input
-            autoComplete="address-level2"
-            className="form-control"
-            type="text"
-            name="city"
-            placeholder="City"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="state" hidden>
-            State
-          </label>
-          <input
-            autoComplete="address-level1"
-            className="form-control"
-            type="text"
-            name="state"
-            placeholder="State"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="zip_code" hidden>
-            Zip Code
-          </label>
-          <input
-            autoComplete="postal-code"
-            className="form-control"
-            type="text"
-            name="zip_code"
-            placeholder="Zip Code"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="phone" hidden>
-            Phone
-          </label>
-          <input
-            autoComplete="tel"
-            className="form-control"
-            type="text"
-            name="phone"
-            placeholder="Phone"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email" hidden>
-            Email
-          </label>
-          <input
-            autoComplete="email"
-            className="form-control"
-            type="text"
-            name="email"
-            placeholder="Email"
-            required
-          />
-        </div>
-        <input
-          type="submit"
-          className="btn-block btn btn-success"
-          value="Buy"
-        ></input>
-      </form>
+        <form
+          action="#"
+          className="payment-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit(stripe, elements);
+          }}
+        >
+          <div className="form-group mb-3">
+            <label htmlFor="full_name">Full Name</label>
+            <input
+              autoComplete="name"
+              className="form-control"
+              type="text"
+              name="full_name"
+              placeholder="Full Name"
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="country">Country</label>
+            <input
+              autoComplete="country"
+              className="form-control"
+              type="text"
+              name="country"
+              placeholder="Country"
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="address">Address</label>
+            <input
+              autoComplete="street-address"
+              className="form-control"
+              type="text"
+              name="address"
+              placeholder="Address"
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="city">City</label>
+            <input
+              autoComplete="address-level2"
+              className="form-control"
+              type="text"
+              name="city"
+              placeholder="City"
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="state">State</label>
+            <input
+              autoComplete="address-level1"
+              className="form-control"
+              type="text"
+              name="state"
+              placeholder="State"
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="zip_code">Zip Code</label>
+            <input
+              autoComplete="postal-code"
+              className="form-control"
+              type="text"
+              name="zip_code"
+              placeholder="Zip Code"
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="phone">Phone</label>
+            <input
+              autoComplete="tel"
+              className="form-control"
+              type="text"
+              name="phone"
+              placeholder="Phone"
+              required
+            />
+          </div>
+          <div className="form-group mb-3">
+            <label htmlFor="email">Email</label>
+            <input
+              autoComplete="email"
+              className="form-control"
+              type="text"
+              name="email"
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div className="purchase-btn-wrapper">
+            <input
+              type="submit"
+              className="btn-block btn btn-success purchase-btn"
+              value="Submit Purchase"
+            ></input>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -26,12 +26,16 @@ export default function Checkout() {
       <Cart />
       <div className="main with-navbar with-cart">
         <div className="container">
-          <h2>Checkout</h2>
-          {Object.keys(paymentSelector.payment).length === 0 && (
-            <Elements stripe={stripePromise}>
-              <CheckoutForm />
-            </Elements>
-          )}
+          <div className="checkout-container  w-100 d-flex justify-content-center">
+            <div className="checkout-wrapper">
+              <h2>Checkout</h2>
+              {Object.keys(paymentSelector.payment).length === 0 && (
+                <Elements stripe={stripePromise}>
+                  <CheckoutForm />
+                </Elements>
+              )}
+            </div>
+          </div>
           {cartItemsSelector.cart_items.length === 0 &&
             Object.keys(paymentSelector.payment).length > 0 && (
               <PaymentDetail payment={paymentSelector.payment} />

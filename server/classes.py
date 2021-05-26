@@ -117,7 +117,7 @@ class CartHandler():
 
         userdata = dict(
             full_name=self.request.data.get('full_name', ''),
-            country=self.request.data.get('full_name', ''),
+            country=self.request.data.get('country', ''),
             address=self.request.data.get('address', ''),
             city=self.request.data.get('city', ''),
             state=self.request.data.get('state', ''),

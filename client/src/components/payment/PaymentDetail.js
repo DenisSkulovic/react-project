@@ -1,94 +1,80 @@
 import "./PaymentDetail.scss";
 import DownloadBtn from "../pdf/DownloadBtn";
+import ContactRow from "./ContactRow";
+import PaymentRow from "./PaymentRow";
 
-import React from "react";
+import React, { useState } from "react";
 
 export default function PaymentDetail({ payment }) {
-  console.log(payment.purchase_items);
+  const [names, setNames] = useState([
+    "full_name",
+    "country",
+    "address",
+    "city",
+    "state",
+    "zip_code",
+    "phone",
+    "email",
+    "created_date",
+  ]);
+  const [readableNames, setReadableNames] = useState([
+    "Full Name",
+    "Country",
+    "Address",
+    "City",
+    "State",
+    "ZIP Code",
+    "Phone",
+    "Email",
+    "Date",
+  ]);
+  console.log("payment", payment);
   return (
-    <div className="payment-details">
-      <div className="payment-details-box">
-        <h4>Payment Detail</h4>
-        <p className="name">
-          <span>Full Name:</span>{" "}
-          <span>
-            {payment.purchase.full_name
-              ? payment.purchase.full_name
-              : "Not specified"}
-          </span>
-        </p>
-        <p className="country">
-          Country:{" "}
-          {payment.purchase.country
-            ? payment.purchase.country
-            : "Not specified"}
-        </p>
-        <p className="address">
-          Address:{" "}
-          {payment.purchase.address
-            ? payment.purchase.address
-            : "Not specified"}
-        </p>
-        <p className="city">
-          City:{" "}
-          {payment.purchase.city ? payment.purchase.city : "Not specified"}
-        </p>
-        <p className="state">
-          State:{" "}
-          {payment.purchase.state ? payment.purchase.state : "Not specified"}
-        </p>
-        <p className="zip_code">
-          ZIP Code:{" "}
-          {payment.purchase.zip_code
-            ? payment.purchase.zip_code
-            : "Not specified"}
-        </p>
-        <p className="phone">
-          Phode:{" "}
-          {payment.purchase.phone ? payment.purchase.phone : "Not specified"}
-        </p>
-        <p className="email">
-          Email:{" "}
-          {payment.purchase.email ? payment.purchase.email : "Not specified"}
-        </p>
-        <p className="date">
-          Payment Date:{" "}
-          {payment.purchase.created_date
-            ? payment.purchase.created_date
-            : "Not specified"}
-        </p>
-      </div>
-      <div className="purchase-items">
+    <div className="payment-detail d-flex flex-row justify-content-around">
+
+      <div className="purchase-items left-col col-7">
         <h4>Purchase Items</h4>
-        {payment.purchase_items &&
-          payment.purchase_items.map((item) => {
-            return (
-              <p className="purchase-item">
-                <span className="name">{item.product.name}</span> {"("}
-                <span className="category">
-                  {item.product.category.name.toLowerCase()}
-                </span>
-                {")"} -{" "}
-                <span className="quantity">
-                  {item.quantity}
-                  {item.product.unit}
-                </span>{" "}
-                -{" "}
-                <span className="price">
-                  ${item.price}/{item.product.unit}
-                </span>{" "}
-                -{" "}
-                <span className="total-price">
-                  ${(item.quantity * item.price).toFixed(2)}
-                </span>
-              </p>
-            );
-          })}
-        <p className="total">
-          TOTAL: ${payment.purchase.total_paid.toFixed(2)}
-        </p>
+        <div className="columns d-flex flex-row">
+          <div className="name col-4">Product</div>
+          <div className="category col-2">Category</div>
+          <div className="quantity col-2">Quantity</div>
+          <div className="unit-price col-2">Unit Price</div>
+          <div className="total col-2">Total</div>
+        </div>
+        <div className="payment-rows">
+          {payment.purchase_items &&
+            payment.purchase_items.map((item, i) => {
+              return <PaymentRow key={i} item={item} />;
+            })}
+        </div>
+        <div className="total-wrapper d-flex flex-row">
+          <div className="total-span-str col-10">TOTAL:</div>{" "}
+          <div className="total-span-num col-2">
+            ${payment.purchase.total_paid.toFixed(2)}
+          </div>
+        </div>
         <DownloadBtn />
       </div>
+
+      <div className="payment-details-box-wrapper right-col col-4">
+        <div className="payment-details-box">
+          <h4>Contact Details</h4>
+          <div className="payment-detail-rows">
+            {payment.purchase &&
+              names.map((name, i) => {
+                return (
+                  <ContactRow
+                    key={i}
+                    purchase={payment.purchase}
+                    name={name}
+                    readableName={readableNames[i]}
+                  />
+                );
+              })}
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }

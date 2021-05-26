@@ -143,6 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # ]
 
 REST_FRAMEWORK = {
+    'DATETIME_FORMAT': "%Y-%m-%d %H:%M:%S",
     # permissions and authentication
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'knox.auth.TokenAuthentication',

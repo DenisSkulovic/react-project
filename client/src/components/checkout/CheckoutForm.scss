@@ -1,0 +1,32 @@
+.checkout-form {
+    .purchase-btn-wrapper {
+        width: 100%;
+        margin-top: 30px;
+        .purchase-btn {
+            width: 100%;
+        }
+    }
+    input::-moz-placeholder, input::-webkit-input-placeholder, input:-ms-input-placeholder {
+        opacity: 0 !important;
+        color: transparent !important;
+       }
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:active, 
+    input:-webkit-autofill:focus {
+        background-color: white !important;
+        outline: none !important;
+        box-shadow: 0 0 0 30px white inset !important;
+        -webkit-box-shadow: 0 0 0 30px white inset !important;
+    }
+    .stripe-wrapper {
+        background-color: white !important;
+        min-height: 38px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .StripeElement {
+            width: 100%;
+        }
+    }
+}
