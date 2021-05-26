@@ -1,0 +1,22 @@
+.purchase-row {
+    margin: 5px 0px;
+    color: grey;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: left;
+    width: 100%;
+    .name, .total-price, .total-span-num, .total-span-str {
+        font-weight: 900;
+    }
+    .total-price, .price, .total-span-num {
+        text-align: right;
+    }
+}
+.purchase-row.total {
+    border-top: 1px solid grey;
+}
+
+.purchase-row.columns {
+    border-bottom: 1px solid grey;
+}

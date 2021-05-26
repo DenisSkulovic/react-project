@@ -1,0 +1,11 @@
+.purchase-table-wrapper {
+    width: 100%;
+    table {
+        width: 100%;
+    }
+    .columns {
+        .unit-price, .total {
+            text-align: right;
+        }
+    }
+}
