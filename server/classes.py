@@ -113,8 +113,6 @@ class CartHandler():
         for cart_item in cart_items:
             total_paid += cart_item.quantity * cart_item.price
 
-        print('\n\n', self.request.data, '\n\n')
-
         userdata = dict(
             full_name=self.request.data.get('full_name', ''),
             country=self.request.data.get('country', ''),

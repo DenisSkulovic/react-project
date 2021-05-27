@@ -2,6 +2,7 @@ import ActionTypes from "./constants";
 
 const defaultStore = {
   isAuthenticated: false,
+  email: "",
 };
 
 export function UserReducer(state = defaultStore, action) {
@@ -10,6 +11,11 @@ export function UserReducer(state = defaultStore, action) {
       return {
         ...state,
         isAuthenticated: action.payload,
+      };
+    case ActionTypes.SET_EMAIL:
+      return {
+        ...state,
+        email: action.payload,
       };
     default:
       return state;

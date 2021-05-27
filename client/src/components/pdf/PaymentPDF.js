@@ -60,7 +60,7 @@ export default function PaymentPDF({ payment }) {
       textAlign: "center",
     },
   });
-  console.log("payment PaymentPDF", payment);
+  // console.log("payment PaymentPDF", payment);
   return (
     <Document>
       <Page debug wrap size="A4" style={styles.page}>

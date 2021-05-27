@@ -6,7 +6,6 @@ import "./Carousel.scss";
 import CarouselItem from "./CarouselItem";
 
 export default function Carousel({ products, category }) {
-  console.log("products", products);
   const responsive = {
     8: {
       breakpoint: { max: 4000, min: 2800 },

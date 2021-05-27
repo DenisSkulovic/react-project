@@ -22,7 +22,6 @@ export const getProductsForCategory =
         },
       }
     );
-    console.log("response.data.results", response.data.results);
     window.sessionStorage.setItem(
       "Sessionkey",
       response.data.results.session_key
@@ -73,7 +72,6 @@ export const getCategories = () => async (dispatch) => {
       // Authorization: `Token ${window.sessionStorage.getItem("Authorization")}`,
     },
   });
-  console.log("response.data", response.data);
   window.sessionStorage.setItem("Sessionkey", response.data.session_key);
   dispatch({
     type: ActionTypes.GET_CATEGORIES,

@@ -28,40 +28,60 @@ export default function Register() {
   }
 
   return (
-    <>
+    <div className="register-page">
       <Navbar />
       <div className="main with-navbar">
-        <div className="container">
-          <h4>Register</h4>
-          <form action="" onSubmit={onSubmit}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <input
-              type="password"
-              value={password2}
-              onChange={(e) => {
-                setPassword2(e.target.value);
-              }}
-            />
-            <button type="submit">Register</button>
-            <p>
-              Already have an account? <Link to="/login">Login</Link>
-            </p>
-          </form>
+        <div className="container register-container">
+          <div className="register-wrapper">
+            <h4>Register</h4>
+            <form action="" onSubmit={onSubmit}>
+              <div className="form-group mb-3">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  name='email'
+                  className='form-control'
+                  autoComplete="off"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-group mb-3">
+                <label htmlFor="email">Password</label>
+                <input
+                  type="password"
+                  className='form-control'
+                  autoComplete="off"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-group mb-3">
+                <label htmlFor="email">Repeat Password</label>
+                <input
+                  type="password"
+                  className='form-control'
+                  autoComplete="off"
+                  value={password2}
+                  onChange={(e) => {
+                    setPassword2(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-group submit-div">
+                <button className='btn btn-success btn-block' type="submit">Register</button>
+              </div>
+              <p>
+                Already have an account? <Link to="/login">Login</Link>
+              </p>
+            </form>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -4,7 +4,6 @@ import PaymentPDF from "./PaymentPDF";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export default function DownloadBtn(payment) {
-  console.log("payment", payment);
   return (
     <div>
       {Object.keys(payment).length > 0 && (

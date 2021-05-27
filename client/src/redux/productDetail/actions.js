@@ -54,7 +54,6 @@ export const getProductToDisplay = (product_id) => async (dispatch) => {
       },
     }
   );
-  console.log("response.data", response.data);
   window.sessionStorage.setItem("Sessionkey", response.data.session_key);
 
   dispatch({

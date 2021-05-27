@@ -13,9 +13,6 @@ export default function NavbarLinkList() {
       <li>
         <Link to="/about">About</Link>
       </li>
-      <li>
-        <Link to="/users">Account</Link>
-      </li>
     </ul>
   );
 }

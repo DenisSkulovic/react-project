@@ -10,15 +10,12 @@ import { getCart } from "../../redux/cart/actions";
 export default function CartList() {
   const dispatch = useDispatch();
 
-  console.log("window.sessionStorage", window.sessionStorage);
-
   useEffect(() => {
     dispatch(getCart());
   }, []);
 
   const cartSelector = useSelector(makeSelect_Cart_cartItems);
 
-  console.log("cartSelector.cart_items", cartSelector.cart_items);
   return (
     <div className="cart-list-wrapper">
       <div className="cart-list">

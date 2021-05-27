@@ -11,12 +11,13 @@ export const getCart = () => async (dispatch) => {
       // Authorization: `Token ${window.sessionStorage.getItem("Authorization")}`,
     },
   });
-  console.log("response.data", response.data);
   window.sessionStorage.setItem("Sessionkey", response.data.session_key);
 
   const total = response.data.cart_items.reduce((accumulator, currentItem) => {
     return accumulator + currentItem.price * currentItem.quantity;
   }, 0);
+
+  window.sessionStorage.setItem("cart_length", response.data.cart_items.length);
 
   dispatch({
     type: ActionTypes.GET_CART,
@@ -49,12 +50,13 @@ export const addRemoveCartItem = (item_id, quantity) => async (dispatch) => {
       },
     }
   );
-  console.log("response.data", response.data);
   window.sessionStorage.setItem("Sessionkey", response.data.session_key);
 
   const total = response.data.cart_items.reduce((accumulator, currentItem) => {
     return accumulator + currentItem.price * currentItem.quantity;
   }, 0);
+
+  window.sessionStorage.setItem("cart_length", response.data.cart_items.length);
 
   dispatch({
     type: ActionTypes.ADD_REMOVE_CART_ITEM,

@@ -60,7 +60,6 @@ function CheckoutForm() {
               className="form-control"
               type="text"
               name="full_name"
-              placeholder="Full Name"
               required
             />
           </div>
@@ -71,7 +70,6 @@ function CheckoutForm() {
               className="form-control"
               type="text"
               name="country"
-              placeholder="Country"
               required
             />
           </div>
@@ -82,7 +80,6 @@ function CheckoutForm() {
               className="form-control"
               type="text"
               name="address"
-              placeholder="Address"
               required
             />
           </div>
@@ -93,7 +90,6 @@ function CheckoutForm() {
               className="form-control"
               type="text"
               name="city"
-              placeholder="City"
               required
             />
           </div>
@@ -104,7 +100,6 @@ function CheckoutForm() {
               className="form-control"
               type="text"
               name="state"
-              placeholder="State"
               required
             />
           </div>
@@ -115,7 +110,6 @@ function CheckoutForm() {
               className="form-control"
               type="text"
               name="zip_code"
-              placeholder="Zip Code"
               required
             />
           </div>
@@ -126,7 +120,6 @@ function CheckoutForm() {
               className="form-control"
               type="text"
               name="phone"
-              placeholder="Phone"
               required
             />
           </div>
@@ -137,7 +130,6 @@ function CheckoutForm() {
               className="form-control"
               type="text"
               name="email"
-              placeholder="Email"
               required
             />
           </div>

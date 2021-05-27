@@ -1,4 +1,12 @@
-.payment-detail {
+.payment-detail-wrapper {
+    margin: 20px 0px 40px 0px;
+    .payment-detail-header {
+        border-bottom: 1px solid grey;
+        cursor: pointer;
+    }
+    .payment-detail {
+        margin: 20px 0px;
+    }
     .payment-details-box {
         border: 1px solid grey;
         border-radius: 10px;
@@ -10,6 +18,19 @@
         border-bottom: 1px solid grey;
     }
     .total-wrapper {
+        font-weight: 900;
+    }
+    .collapse-triangle {
+        color: rgb(190,0,0)
+    }
+    .collapse-triangle.open {
+        transform: rotate(90deg);
+        display: inline-block;
+    }
+    .date {
+        font-weight: 900;
+    }
+    .total-sum {
         font-weight: 900;
     }
 }

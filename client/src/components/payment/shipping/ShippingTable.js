@@ -28,17 +28,19 @@ export default function ShippingTable({ purchase }) {
   return (
     <div className="shipping-table-wrapper">
       <table>
-        {purchase &&
-          names.map((name, i) => {
-            return (
-              <ShippingRow
-                key={i}
-                purchase={purchase}
-                name={name}
-                readableName={readableNames[i]}
-              />
-            );
-          })}
+        <tbody>
+          {purchase &&
+            names.map((name, i) => {
+              return (
+                <ShippingRow
+                  key={i}
+                  purchase={purchase}
+                  name={name}
+                  readableName={readableNames[i]}
+                />
+              );
+            })}
+        </tbody>
       </table>
     </div>
   );

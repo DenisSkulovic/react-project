@@ -16,7 +16,7 @@ export const pay = (data) => async (dispatch) => {
   };
 
   if (auth) {
-    headers["Authoziration"] = `Token ${auth}`;
+    headers["Authorization"] = `Token ${auth}`;
   }
 
   const response = await axios.post(
@@ -28,7 +28,6 @@ export const pay = (data) => async (dispatch) => {
       headers: headers,
     }
   );
-  console.log("response.data", response.data);
   window.sessionStorage.setItem("Sessionkey", response.data.session_key);
   dispatch({
     type: ActionTypes.SET_PAYMENT,
@@ -57,7 +56,6 @@ export const getPaymentHistory = () => async (dispatch) => {
       Authorization: `Token ${window.sessionStorage.getItem("Authorization")}`,
     },
   });
-  console.log("response.data", response.data);
   window.sessionStorage.setItem("Sessionkey", response.data.session_key);
   dispatch({
     type: ActionTypes.SET_PAYMENT_HISTORY,

@@ -27,10 +27,6 @@ export default function UserMenuNav() {
     }
   });
 
-  console.log(
-    "authStatusSelector.isAuthenticated",
-    authStatusSelector.isAuthenticated
-  );
   return (
     <div className="user-menu-nav">
       {!authStatusSelector.isAuthenticated && (
@@ -45,6 +41,8 @@ export default function UserMenuNav() {
           <a href="#" onClick={(e) => handleLogout(e)}>
             Logout
           </a>
+          {" | "}
+          <Link to="/users">Account</Link>
         </span>
       )}
     </div>

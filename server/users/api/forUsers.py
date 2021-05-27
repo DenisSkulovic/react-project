@@ -35,15 +35,12 @@ class UserLogin(generics.GenericAPIView, ConnectCartWithUserMixin):
 
         if serializer.is_valid():
             user = serializer.validated_data
+            AuthToken.objects.filter(user_id=user.id).delete()
             _, token = AuthToken.objects.create(user)
-
             self.connect_cart_with_user(user, session_key)
 
             response = Response({
-                "user": UserSerializer(
-                    user,
-                    context=self.get_serializer_context()
-                ).data,
+                "user": user.email,
                 "token": token,
                 'session_key': session_key,
                 'status': 'success'
@@ -59,25 +56,18 @@ class UserLogin(generics.GenericAPIView, ConnectCartWithUserMixin):
 
 
 class UserLogout(APIView):
+    permission_classes = (IsAuthenticated,)
 
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
+        print('request.headers.keys()',
+              request.headers.keys())
         session_key = SessionHandler(request).session_key
-        try:
-            auth = TokenAuthentication()
-            _, auth_token = auth.authenticate(request)
-            print("auth_token", auth_token)
-            auth_token.delete()
-            content = {
-                'session_key': session_key,
-                'status': 'success',
-            }
-            return Response(content, status=status.HTTP_202_ACCEPTED)
-        except:
-            content = {
-                'session_key': session_key,
-                'status': 'error',
-            }
-            return Response(content, status=status.HTTP_406_NOT_ACCEPTABLE)
+        AuthToken.objects.filter(user=request.user).delete()
+        content = {
+            'session_key': session_key,
+            'status': 'success',
+        }
+        return Response(content, status=status.HTTP_202_ACCEPTED)
 
 
 class UserRegister(generics.GenericAPIView, ConnectCartWithUserMixin):
@@ -88,9 +78,13 @@ class UserRegister(generics.GenericAPIView, ConnectCartWithUserMixin):
         print("\nrequest.data", request.data)
         serializer = self.get_serializer(data=request.data)
         session_key = SessionHandler(request).session_key
+
+        content = {'session_key': session_key, }
+
         if serializer.is_valid():
             user = serializer.save()
             _, token = AuthToken.objects.create(user)
+            print("\n\nuser", user)
 
             self.connect_cart_with_user(user, session_key)
 
@@ -103,11 +97,12 @@ class UserRegister(generics.GenericAPIView, ConnectCartWithUserMixin):
                 'session_key': session_key,
                 'status': 'success'
             })
-        content = {
-            'error': serializer.errors,
-            'session_key': session_key,
-            'status': 'error',
-        }
+        content['error'] = serializer.errors
+        content['status'] = 'error'
+        if User.objects.filter(email=request.data.get('email')):
+            content['message'] = 'This email already has an account.'
+            return Response(content)
+        content['message'] = 'Some error occured.'
         return Response(content)
 
 

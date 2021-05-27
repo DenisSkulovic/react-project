@@ -16,7 +16,6 @@ export const getProductsByCategory = (q) => async (dispatch) => {
       },
     }
   );
-  console.log("response.data", response.data);
   window.sessionStorage.setItem("Sessionkey", response.data.session_key);
   dispatch({
     type: ActionTypes.GET_PRODUCTS_BY_CATEGORY,
