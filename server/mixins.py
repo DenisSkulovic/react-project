@@ -13,6 +13,6 @@ class ConnectCartWithUserMixin():
         except:
             pass
 
-        cart = Cart.objects.get(session_id=session.session_key)
+        cart, _ = Cart.objects.get_or_create(session_id=session.session_key)
         cart.customer_id = user.id
         cart.save()

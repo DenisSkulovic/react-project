@@ -3,7 +3,7 @@ html {
   min-width: 100vw;
 }
 
-html, body, #app, #app>div {
+html, #app, #app>div {
   height: 100%
 }
 
@@ -28,7 +28,6 @@ body {
 
 #root {
   width: 100%;
-  height: 100%;
   position: absolute;
   left: 0;
 }
@@ -47,6 +46,7 @@ code {
 
 .main {
   height: 100%;
+  padding-bottom: 100px;
 }
 
 .main.with-cart {
@@ -55,4 +55,3 @@ code {
 .main.with-navbar {
   padding-top: 90px;
 }
-

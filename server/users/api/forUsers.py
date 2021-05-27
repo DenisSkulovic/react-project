@@ -59,9 +59,14 @@ class UserLogout(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        print('request.headers.keys()',
-              request.headers.keys())
         session_key = SessionHandler(request).session_key
+
+        # disconnect cart from user
+        cart = Cart.objects.get(customer=request.user)
+        cart.user_id = None
+        cart.save()
+
+        # delete auth token
         AuthToken.objects.filter(user=request.user).delete()
         content = {
             'session_key': session_key,

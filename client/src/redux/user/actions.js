@@ -26,12 +26,20 @@ export const login = (email, password) => async (dispatch) => {
       type: ActionTypes.AUTHENTICATION_STATUS,
       payload: true,
     });
+    dispatch({
+      type: ActionTypes.SET_EMAIL,
+      payload: window.sessionStorage.getItem("Email"),
+    });
   } else {
     window.sessionStorage.removeItem("Authorization");
     window.sessionStorage.removeItem("Email");
     dispatch({
       type: ActionTypes.AUTHENTICATION_STATUS,
       payload: false,
+    });
+    dispatch({
+      type: ActionTypes.SET_EMAIL,
+      payload: "",
     });
   }
 };
@@ -54,6 +62,10 @@ export const logout = () => async (dispatch) => {
     dispatch({
       type: ActionTypes.AUTHENTICATION_STATUS,
       payload: false,
+    });
+    dispatch({
+      type: ActionTypes.SET_EMAIL,
+      payload: "",
     });
     window.sessionStorage.removeItem("Authorization");
     window.sessionStorage.removeItem("Email");

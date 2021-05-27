@@ -30,13 +30,15 @@ export default function ProductDetailFixedOverlay() {
   const loadingSelector = useSelector(makeSelect_ProductDetail_loading);
 
   const handleAddClick = () => {
-    dispatch(
-      addRemoveCartItem(
-        productSelector.product.product.id,
-        quantityInputValue_Selector.quantity_input_value
-      )
-    );
-    dispatch(closeProductDetail());
+    if (quantityInputValue_Selector.quantity_input_value > 0) {
+      dispatch(
+        addRemoveCartItem(
+          productSelector.product.product.id,
+          quantityInputValue_Selector.quantity_input_value
+        )
+      );
+      dispatch(closeProductDetail());
+    }
   };
 
   return (
