@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework.serializers import (ModelSerializer, Serializer,
-                                        CharField, ValidationError)
+                                        CharField, ValidationError, EmailField)
 from django.contrib.auth import authenticate
 from django.contrib.sessions.models import Session
 
@@ -20,7 +20,23 @@ class UserSerializer(ModelSerializer):
 
     # reset password
     def create(self, validated_data):
-        password = validated_data.pop('password')
+        print("validated_data", validated_data)
+        password = validated_data.pop('new_password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+
+
+class PasswordResetSerializer(Serializer):
+    email = EmailField(max_length=200)
+    old_password = CharField(max_length=200, write_only=True)
+    new_password = CharField(max_length=200, write_only=True)
+
+    # reset password
+    def create(self, validated_data):
+        print("validated_data", validated_data)
+        password = validated_data.pop('new_password')
         user = User(**validated_data)
         user.set_password(password)
         user.save()

@@ -1,41 +1,38 @@
-import React, { useState } from "react";
-import Navbar from "../../components/navbar/Navbar";
-import "./Register.scss";
+import React, { useState, useEffect } from "react";
+import "./ChangePassword.scss";
+import Navbar from "../../../components/navbar/Navbar";
 import { Link, useHistory } from "react-router-dom";
-import { register } from "../../redux/user/actions";
+import { change_password } from "../../../redux/user/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { makeSelect_isAuthenticated } from "../../redux/user/selectors";
 
-export default function Register() {
+export default function ChangePassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
-  const authStatusSelector = useSelector(makeSelect_isAuthenticated);
   const history = useHistory();
 
   const dispatch = useDispatch();
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (password === password2) {
-      dispatch(register(email, password));
-    } else {
-      alert("Passwords do not match.");
-    }
+    dispatch(change_password(email, oldPassword, newPassword));
   };
 
-  if (authStatusSelector.isAuthenticated) {
-    history.goBack();
-  }
+  useEffect(() => {
+    if (window.sessionStorage.getItem("password_change_success") === "true") {
+      window.sessionStorage.removeItem("password_change_success");
+      history.goBack();
+    }
+  }, []);
 
   return (
-    <div className="register-page">
+    <div className="change-password-page">
       <Navbar />
       <div className="main with-navbar">
-        <div className="container register-container">
-          <div className="register-wrapper">
-            <h4>Register</h4>
+        <div className="container change-password-container">
+          <div className="change-password-wrapper">
+            <h4>Change Password</h4>
             <form action="" onSubmit={onSubmit}>
               <div className="form-group mb-3">
                 <label htmlFor="email">Email</label>
@@ -51,36 +48,37 @@ export default function Register() {
                 />
               </div>
               <div className="form-group mb-3">
-                <label htmlFor="email">Password</label>
+                <label htmlFor="email">Old Password</label>
                 <input
                   type="password"
                   className="form-control"
                   autoComplete="off"
-                  value={password}
+                  value={oldPassword}
                   onChange={(e) => {
-                    setPassword(e.target.value);
+                    setOldPassword(e.target.value);
                   }}
                 />
               </div>
               <div className="form-group mb-3">
-                <label htmlFor="email">Repeat Password</label>
+                <label htmlFor="email">New Password</label>
                 <input
                   type="password"
                   className="form-control"
                   autoComplete="off"
-                  value={password2}
+                  value={newPassword}
                   onChange={(e) => {
-                    setPassword2(e.target.value);
+                    setNewPassword(e.target.value);
                   }}
                 />
               </div>
               <div className="form-group submit-div">
                 <button className="btn btn-success btn-block" type="submit">
-                  Register
+                  Change Password
                 </button>
               </div>
               <p>
-                Already have an account? <Link to="/login">Login</Link>
+                Create a new account instead?{" "}
+                <Link to="/register">Register</Link>
               </p>
             </form>
           </div>

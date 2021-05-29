@@ -1,6 +1,5 @@
 from django.urls import path, include
 from users.api import forUsers, forAdmins
-from knox import views as knox_views
 
 urlpatterns = [
     # user endpoints

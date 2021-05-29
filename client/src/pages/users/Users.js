@@ -10,7 +10,8 @@ export default function Users() {
       <div className="main with-navbar">
         <div className="container">
           <h3>Users</h3>
-          <Link to="/users/history">history</Link>
+          <Link to="/account/history">history</Link> {" | "}
+          <Link to="/account/change-password">change password</Link>
         </div>
       </div>
     </>

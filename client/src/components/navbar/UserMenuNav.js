@@ -42,7 +42,7 @@ export default function UserMenuNav() {
             Logout
           </a>
           {" | "}
-          <Link to="/users">Account</Link>
+          <Link to="/account">Account</Link>
         </span>
       )}
     </div>

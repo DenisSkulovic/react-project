@@ -17,7 +17,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     }
   );
-  console.log("response", response);
+  alert(response.data.message);
   window.sessionStorage.setItem("Sessionkey", response.data["session_key"]);
   if (response.data.status === "success") {
     window.sessionStorage.setItem("Authorization", response.data["token"]);
@@ -76,6 +76,38 @@ export const logout = () => async (dispatch) => {
 };
 
 //
+// CHANGE PASSWORD
+export const change_password =
+  (email, old_password, new_password) => async (dispatch) => {
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/users/account/change_password/`,
+        {
+          email: email,
+          old_password: old_password,
+          new_password: new_password,
+        },
+        {
+          headers: {
+            Sessionkey: window.sessionStorage.getItem("Sessionkey"),
+            Authorization: `Token ${window.sessionStorage.getItem(
+              "Authorization"
+            )}`,
+          },
+        }
+      );
+      alert(`${response.data.message}`);
+      console.log("response", response);
+      window.sessionStorage.setItem("Sessionkey", response.data["session_key"]);
+      if (response.data.status === "success") {
+        window.sessionStorage.setItem("password_change_success", "true");
+      }
+    } catch (err) {
+      console.error("err", err);
+    }
+  };
+
+//
 // REGISTER
 export const register = (email, password) => async (dispatch) => {
   const response = await axios.post(
@@ -90,7 +122,7 @@ export const register = (email, password) => async (dispatch) => {
       },
     }
   );
-  console.log("response", response);
+  alert(response.data.message);
   if (response.data.status === "success") {
     window.sessionStorage.setItem("Authorization", response.data["token"]);
     window.sessionStorage.setItem("Email", response.data.user);
@@ -105,7 +137,6 @@ export const register = (email, password) => async (dispatch) => {
       type: ActionTypes.AUTHENTICATION_STATUS,
       payload: false,
     });
-    alert(`${response.data.message}`);
   }
 };
 

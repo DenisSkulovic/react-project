@@ -7,6 +7,7 @@ import { PrivateRoute, PublicRoute } from "./utils";
 import About from "./pages/about/About";
 import Home from "./pages/home/Home";
 import Users from "./pages/users/Users";
+import ChangePassword from "./pages/users/change_password/ChangePassword";
 import Checkout from "./pages/checkout/Checkout";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
@@ -32,8 +33,12 @@ function App() {
   return (
     <Router>
       <Switch>
-        <PrivateRoute path="/users/history" component={PaymentHistory} />
-        <PrivateRoute path="/users" component={Users} />
+        <PrivateRoute path="/account/history" component={PaymentHistory} />
+        <PrivateRoute
+          path="/account/change-password"
+          component={ChangePassword}
+        />
+        <PrivateRoute path="/account" component={Users} />
         <PublicRoute path="/about" component={About} />
         <PublicRoute path="/checkout" component={Checkout} />
         <PublicRoute path="/login" component={Login} />

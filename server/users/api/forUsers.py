@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.generics import (
-    CreateAPIView, ListAPIView, UpdateAPIView
+    CreateAPIView, ListAPIView, UpdateAPIView, GenericAPIView, RetrieveAPIView
 )
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import (
     AllowAny, IsAdminUser, IsAuthenticated
 )
-from users.serializers.user import UserSessionSerializer, UserSerializer, LoginSerializer, RegisterSerializer
+from users.serializers.user import UserSessionSerializer, PasswordResetSerializer, UserSerializer, LoginSerializer, RegisterSerializer
 from rest_framework.response import Response
 from products.models import Cart, CartItem, Purchase, PurchaseItem
 from django.utils import timezone
@@ -25,7 +25,7 @@ from users.serializers.user import UserSessionSerializer
 User = get_user_model()
 
 
-class UserLogin(generics.GenericAPIView, ConnectCartWithUserMixin):
+class UserLogin(GenericAPIView, ConnectCartWithUserMixin):
     serializer_class = LoginSerializer
     permission_classes = (AllowAny,)
 
@@ -38,19 +38,20 @@ class UserLogin(generics.GenericAPIView, ConnectCartWithUserMixin):
             AuthToken.objects.filter(user_id=user.id).delete()
             _, token = AuthToken.objects.create(user)
             self.connect_cart_with_user(user, session_key)
-
-            response = Response({
+            content = Response({
                 "user": user.email,
                 "token": token,
                 'session_key': session_key,
-                'status': 'success'
+                'status': 'success',
+                'message': 'Login successful.'
             })
-            return response
+            return content
         else:
             content = {
                 'error': serializer.errors,
                 'session_key': session_key,
                 'status': 'error',
+                'message': 'Invalid data entered.'
             }
         return Response(content)
 
@@ -60,7 +61,6 @@ class UserLogout(APIView):
 
     def get(self, request, *args, **kwargs):
         session_key = SessionHandler(request).session_key
-
         # disconnect cart from user
         try:
             cart = Cart.objects.get(customer=request.user)
@@ -68,7 +68,6 @@ class UserLogout(APIView):
             cart.save()
         except:
             pass
-
         # delete auth token
         AuthToken.objects.filter(user=request.user).delete()
         content = {
@@ -78,32 +77,24 @@ class UserLogout(APIView):
         return Response(content, status=status.HTTP_202_ACCEPTED)
 
 
-class UserRegister(generics.GenericAPIView, ConnectCartWithUserMixin):
+class UserRegister(GenericAPIView, ConnectCartWithUserMixin):
     serializer_class = RegisterSerializer
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
-        print("\nrequest.data", request.data)
         serializer = self.get_serializer(data=request.data)
         session_key = SessionHandler(request).session_key
-
         content = {'session_key': session_key, }
-
         if serializer.is_valid():
             user = serializer.save()
             _, token = AuthToken.objects.create(user)
-            print("\n\nuser", user)
-
             self.connect_cart_with_user(user, session_key)
-
             return Response({
-                "user": UserSerializer(
-                    user,
-                    context=self.get_serializer_context()
-                ).data,
+                "user": user.email,
                 "token": token,
                 'session_key': session_key,
-                'status': 'success'
+                'status': 'success',
+                'message': 'Registration successful.'
             })
         content['error'] = serializer.errors
         content['status'] = 'error'
@@ -114,44 +105,49 @@ class UserRegister(generics.GenericAPIView, ConnectCartWithUserMixin):
         return Response(content)
 
 
-class UserAPI(generics.RetrieveAPIView):
-    permission_classes = [
-        IsAuthenticated,
-    ]
+class UserAPI(RetrieveAPIView):
+    permission_classes = (IsAuthenticated, )
     serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
 
 
-class ChangePassword(UpdateAPIView):
+class ChangePassword(GenericAPIView):
+    serializer_class = PasswordResetSerializer
+    permission_classes = (IsAuthenticated, )
 
-    model = User
-    serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated, IsAdminUser,)
-
-    def get_object(self, queryset=None):
-        obj = self.request.user
-        return obj
-
-    def update(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        serializer = self.get_serializer(data=request.data)
+    def post(self, request, *args, **kwargs):
+        serializer = PasswordResetSerializer(data={
+            'email': request.data['email'],
+            'old_password': request.data['old_password'],
+            'new_password': request.data['new_password'],
+        })
+        session_key = SessionHandler(request).session_key
 
         if serializer.is_valid():
             # Check old password
-            if not self.object.check_password(serializer.data.get("old_password")):
-                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+            if not request.user.check_password(serializer.validated_data.get("old_password")):
+                content = {
+                    'status': 'error',
+                    'message': 'Wrong password.',
+                    'session_key': session_key,
+                }
+                return Response(content, status=status.HTTP_200_OK)
             # set_password also hashes the password that the user will get
-            self.object.set_password(serializer.data.get("new_password"))
-            self.object.save()
-            response = {
+            request.user.set_password(
+                serializer.validated_data.get("new_password"))
+            request.user.save()
+            content = {
                 'status': 'success',
-                'code': status.HTTP_200_OK,
                 'message': 'Password updated successfully',
-                'data': []
+                'session_key': session_key
             }
-
-            return Response(response)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(content, status=status.HTTP_200_OK)
+        content = {
+            'status': 'error',
+            'message': 'Something went wrong.',
+            'session_key': session_key,
+            'serializer_errors': serializer.errors,
+        }
+        return Response(content, status=status.HTTP_400_BAD_REQUEST)
