@@ -62,9 +62,12 @@ class UserLogout(APIView):
         session_key = SessionHandler(request).session_key
 
         # disconnect cart from user
-        cart = Cart.objects.get(customer=request.user)
-        cart.user_id = None
-        cart.save()
+        try:
+            cart = Cart.objects.get(customer=request.user)
+            cart.user_id = None
+            cart.save()
+        except:
+            pass
 
         # delete auth token
         AuthToken.objects.filter(user=request.user).delete()

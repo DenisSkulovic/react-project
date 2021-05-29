@@ -25,7 +25,7 @@ export default function CartList() {
         {cartSelector.cart_items.length === 0 && (
           <div className="no-cart-items-wrapper">
             <div className="no-cart-items">
-              {paymentSelector.payment
+              {Object.keys(paymentSelector.payment).length > 0
                 ? "Thank you for the purchase!"
                 : "Your cart is empty"}
             </div>
