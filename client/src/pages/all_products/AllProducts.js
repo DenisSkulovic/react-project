@@ -11,8 +11,8 @@ import ProductDetailFixedOverlay from "../../components/products/fixed_product_d
 export default function AllProducts() {
   return (
     <>
-      <Navbar className={"fixed with-cart"} />
-      <div className="main with-navbar with-cart">
+      <Navbar className={"fixed"} />
+      <div className="main with-navbar">
         <Cart />
         <Container>
           <div className="products-wrapper">

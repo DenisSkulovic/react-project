@@ -1,14 +1,18 @@
 import React from "react";
 import { ButtonGroup, Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addRemoveCartItem } from "../../../redux/cart/actions";
 import "./AddRemoveButtons.scss";
+import { makeSelect_Cart_cartBubbleClass } from "../../../redux/cart/selectors";
+import { openCart } from "../../../utils";
 
 export default function AddRemoveButtons({ id }) {
   const dispatch = useDispatch();
+  const cartBubbleClassSelector = useSelector(makeSelect_Cart_cartBubbleClass);
 
   const handleAddRemoveBtnClick = (q) => {
     dispatch(addRemoveCartItem(id, q));
+    dispatch(openCart(cartBubbleClassSelector));
   };
 
   return (

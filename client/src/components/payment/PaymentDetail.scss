@@ -33,4 +33,16 @@
     .total-sum {
         font-weight: 900;
     }
+    @media only screen and (max-width: 500px) {
+        .purchase-table-wrapper {
+            .payment-row-cell, th {
+                font-size: 0.8em !important;
+            }
+        }
+        .shipping-table-wrapper {
+            .contact-row, th {
+                font-size: 0.8em !important;
+            }
+        }
+    }
 }

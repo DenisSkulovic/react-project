@@ -6,6 +6,7 @@ import ColumnNames from "./ColumnNames";
 import PriceBar from "./PriceBar";
 import "./ProductDetailFixedOverlay.scss";
 import { useSelector, useDispatch } from "react-redux";
+import { openCart } from "../../../utils";
 
 import {
   makeSelect_ProductDetail_open,
@@ -13,7 +14,7 @@ import {
 } from "../../../redux/productDetail/selectors";
 import { addRemoveCartItem } from "../../../redux/cart/actions";
 import { closeProductDetail } from "../../../redux/productDetail/actions";
-
+import { makeSelect_Cart_cartBubbleClass } from "../../../redux/cart/selectors";
 import {
   makeSelect_ProductDetail_quantityInputValue,
   makeSelect_ProductDetail_loading,
@@ -28,6 +29,7 @@ export default function ProductDetailFixedOverlay() {
     makeSelect_ProductDetail_quantityInputValue
   );
   const loadingSelector = useSelector(makeSelect_ProductDetail_loading);
+  const cartBubbleClassSelector = useSelector(makeSelect_Cart_cartBubbleClass);
 
   const handleAddClick = () => {
     if (quantityInputValue_Selector.quantity_input_value > 0) {
@@ -38,6 +40,7 @@ export default function ProductDetailFixedOverlay() {
         )
       );
       dispatch(closeProductDetail());
+      dispatch(openCart(cartBubbleClassSelector));
     }
   };
 

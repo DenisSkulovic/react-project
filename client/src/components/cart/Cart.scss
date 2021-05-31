@@ -1,32 +1,3 @@
-.cart-list-wrapper {
-    overflow-y: scroll;
-}
-
-.cart-list {
-    height: 100%;
-}
-
-.cart a {
-    text-decoration: none;
-    color: initial;
-  }
-
-.cart-top-nav {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-}
-
-.no-cart-items-wrapper {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .no-cart-items {
-        font-size: 1.4em;
-    }
-}
-
 .cart-wrapper {
     padding: 7px;
     position: fixed;
@@ -34,14 +5,104 @@
     left: 0px;
     height: 100vh;
     width: 400px;
-    z-index: 3;
-}
-
-.cart {
-    height: 100%;
-    box-shadow: 0px 0px 6px 0px rgb(54, 54, 54);
-    display: grid;
-    grid-template-rows: 50px 1fr 50px;
+    z-index: 9;
+    .cart-list-wrapper {
+        overflow-y: scroll;
+    }
+    .cart-list {
+        height: 100%;
+    }
+    .cart a {
+        text-decoration: none;
+        color: initial;
+      }
+    .cart-top-nav {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+    .no-cart-items-wrapper {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .no-cart-items {
+            font-size: 1.4em;
+        }
+    }
+    .close-wrapper-cart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 25px;
+        height: 25px;
+    }
+    #mdiv-cart {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        z-index: 9;
+        }
+    .clear-cart-btn {
+        position: absolute;
+        top: 18px;
+        left: 18px;
+        z-index: 9;
+    }
+        
+    .mdiv-cart {
+    height: 20px;
+    width: 2px;
     background-color: white;
+    transform: rotate(45deg);
+    z-index: 1;
+    }
+    
+    .md-cart {
+    height: 20px;
+    width: 2px;
+    background-color: white;
+    transform: rotate(90deg);
+    z-index: 2;
+    }
+    .cls-cart {
+        cursor: pointer;
+    }
+    
+    .cart {
+        height: 100%;
+        box-shadow: 0px 0px 6px 0px rgb(54, 54, 54);
+        display: grid;
+        grid-template-rows: 50px 1fr 50px;
+        background-color: white;
+    }
+}    
+.cart-wrapper.cart-closed {
+    visibility: hidden;
+    left: -480px;
 }
+.cart-wrapper.cart-closing {
+    visibility: visible;
+    transition: left 300ms;
+    left: -480px;
 
+}
+.cart-wrapper.cart-open {
+    visibility: visible;
+    left: 0px;
+
+}
+.cart-wrapper.cart-opening {
+    visibility: visible;
+    transition: left 300ms;
+    left: 0px;
+}
+@media screen and (max-width: 471px) {
+    .cart-wrapper {
+        padding: 5px;
+        left: 50%;
+        // transform: translateX(-50%);
+        width: 95vw;
+    }
+}

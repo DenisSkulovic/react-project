@@ -8,12 +8,10 @@ import Container from "react-bootstrap/Container";
 export default function Home() {
   return (
     <>
-      <Navbar className={"fixed with-cart"} />
-      <div className="main with-navbar with-cart">
+      <Navbar className={"fixed"} />
+      <div className="main with-navbar">
         <Container>
-          <div className="cart-wrapper">
-            <Cart />
-          </div>
+          <Cart />
           <div className="products-wrapper">
             <CarouselList />
           </div>

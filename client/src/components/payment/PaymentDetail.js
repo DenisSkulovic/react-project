@@ -50,8 +50,8 @@ export default function PaymentDetail({ payment }) {
       </div>
       <Collapse in={open}>
         <div>
-          <div className="payment-detail d-flex flex-row justify-content-around">
-            <div className="purchase-items left-col col-7">
+          <div className="payment-detail d-flex flex-row justify-content-around flex-wrap">
+            <div className="purchase-items left-col col-12 col-md-11 col-lg-7 col-xl-7 mb-5">
               <h4>Purchase Items </h4>
               <div>
                 <PurchaseTable
@@ -62,7 +62,7 @@ export default function PaymentDetail({ payment }) {
               <DownloadBtn payment={payment} />
             </div>
 
-            <div className="payment-details-box-wrapper right-col col-4">
+            <div className="payment-details-box-wrapper right-col col-12 col-md-9 col-lg-4 col-xl-4 mb-5">
               <div className="payment-details-box">
                 <h4>Shipping Details </h4>
                 <div>

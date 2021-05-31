@@ -4,6 +4,7 @@ import Navbar from "../../../components/navbar/Navbar";
 import { Link, useHistory } from "react-router-dom";
 import { change_password } from "../../../redux/user/actions";
 import { useDispatch, useSelector } from "react-redux";
+import BackBtn from "../../../components/BackBtn";
 
 export default function ChangePassword() {
   const [email, setEmail] = useState("");
@@ -28,13 +29,20 @@ export default function ChangePassword() {
 
   return (
     <div className="change-password-page">
-      <Navbar />
+      <Navbar className={"fixed"} />
       <div className="main with-navbar">
         <div className="container change-password-container">
-          <div className="change-password-wrapper">
+          <Link to="/account">
+            <BackBtn />
+          </Link>
+          <div className="change-password-wrapper d-flex flex-column justify-content-center align-items-center">
             <h4>Change Password</h4>
-            <form action="" onSubmit={onSubmit}>
-              <div className="form-group mb-3">
+            <form
+              action=""
+              onSubmit={onSubmit}
+              className="d-flex flex-column w-100"
+            >
+              <div className="form-group d-flex flex-column mb-3">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
@@ -47,7 +55,7 @@ export default function ChangePassword() {
                   }}
                 />
               </div>
-              <div className="form-group mb-3">
+              <div className="form-group d-flex flex-column mb-3">
                 <label htmlFor="email">Old Password</label>
                 <input
                   type="password"
@@ -59,7 +67,7 @@ export default function ChangePassword() {
                   }}
                 />
               </div>
-              <div className="form-group mb-3">
+              <div className="form-group d-flex flex-column mb-3">
                 <label htmlFor="email">New Password</label>
                 <input
                   type="password"
@@ -71,7 +79,7 @@ export default function ChangePassword() {
                   }}
                 />
               </div>
-              <div className="form-group submit-div">
+              <div className="form-group d-flex flex-column submit-div">
                 <button className="btn btn-success btn-block" type="submit">
                   Change Password
                 </button>

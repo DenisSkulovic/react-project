@@ -7,7 +7,6 @@
     background-color: rgb(235, 235, 235);
     z-index: 2;
     box-shadow: 0px 0px 6px 0px #363636;
-
     nav.store-navbar {
         display: flex;
         flex-direction: row;
@@ -36,26 +35,83 @@
                     font-weight: 900;
                 }
                 margin: 10px 15px;
-
             }
         }
         .logo-wrapper {
-            width: 200px;
-            height: 80px;
+            width: 175px;
+            height: 60px;
             img {
                 width: 100%;
                 height: auto;
             }
         }
-
         .user-menu-nav {
             margin:5px 15px;
         }
+        @media only screen and (max-width: 800px) {
+            .logo-wrapper {
+                width: 100px;
+                height: 40px;
+            }
+            .navbar-link-list {
+                font-size: 0.9em !important;
+            }
+            .user-menu-nav {
+                font-size: 0.9em !important;
+            }
+        }
+        @media only screen and (max-width: 616px) {
+            .logo-wrapper {
+                width: 85px;
+                height: 30px;
+            }
+            .navbar-link-list {
+                font-size: 0.8em !important;
+            }
+            .user-menu-nav {
+                font-size: 0.9em !important;
+            }
+        }
+        @media only screen and (max-width: 560px) {
+            .logo-wrapper {
+                width: 85px;
+                height: 30px;
+            }
+            .navbar-link-list {
+                font-size: 0.6em !important;
+            }
+            .user-menu-nav {
+                font-size: 0.8em !important;
+            }
+        }
+
     }
 }        
 .navbar-wrapper.fixed {
     position: fixed;
     width: 100vw;
+}
+@media only screen and (max-width: 471px) {
+    .navbar-wrapper.fixed {
+        position: initial;
+        .logo-wrapper {
+            width: 100px !important;
+            height: 90px !important;
+        }
+        .navbar-link-list {
+            font-size: 0.9em !important;
+            flex-direction: column !important;
+            transform: translate(-50%, -50%) !important;
+            li {
+                margin: 5px 15px !important;
+                text-align: center;
+            }
+        }
+        .user-menu-nav {
+            font-size: 0.9em !important;
+        }
+    }
+
 }
 .navbar-wrapper.with-cart {
     padding-left: 400px;

@@ -1,0 +1,20 @@
+.about-page {
+    .table-contanier {
+        border-radius: 10px;
+        border: 1px solid rgb(190,0,0);
+        padding: 15px;
+        .table-wrapper {
+            table {
+                td {
+                    padding: 7px 0px;
+                }
+                td:nth-child(2) {
+                    text-align: end;
+                }
+                tr:not(:last-child) {
+                    border-bottom: 1px solid rgba(190,0,0,0.3);
+                }
+            }
+        }
+    }
+}

@@ -24,24 +24,24 @@ export default function Carousel({ products, category }) {
       items: 6,
     },
     4: {
-      breakpoint: { max: 1450, min: 1250 },
+      breakpoint: { max: 1450, min: 992 },
       items: 5,
     },
     3: {
-      breakpoint: { max: 1250, min: 1100 },
+      breakpoint: { max: 992, min: 860 },
       items: 4,
     },
     2: {
-      breakpoint: { max: 1100, min: 950 },
+      breakpoint: { max: 860, min: 767 },
       items: 3,
     },
     1: {
-      breakpoint: { max: 950, min: 800 },
-      items: 2,
+      breakpoint: { max: 767, min: 600 },
+      items: 3,
     },
     0: {
-      breakpoint: { max: 800, min: 0 },
-      items: 1,
+      breakpoint: { max: 600, min: 320 },
+      items: 2,
     },
   };
 

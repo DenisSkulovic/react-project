@@ -3,6 +3,8 @@ import ActionTypes from "./constants";
 const defaultStore = {
   cart: [],
   cart_total: 0,
+  cart_class: "cart-closed",
+  cart_bubble_class: "cart-bubble-open",
 };
 
 export function CartReducer(state = defaultStore, action) {
@@ -21,6 +23,16 @@ export function CartReducer(state = defaultStore, action) {
       return {
         ...state,
         cart_total: action.payload,
+      };
+    case ActionTypes.SET_CART_CLASS:
+      return {
+        ...state,
+        cart_class: action.payload,
+      };
+    case ActionTypes.SET_CART_BUBBLE_CLASS:
+      return {
+        ...state,
+        cart_bubble_class: action.payload,
       };
     default:
       return state;

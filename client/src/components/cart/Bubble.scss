@@ -1,0 +1,64 @@
+.cart-bubble-wrapper {
+    cursor: pointer;
+    .cart-bubble {
+        position: fixed;
+        top: 70px;
+        left: 10px;
+        z-index: 10;
+        border-radius: 50%;
+        background-color: white;
+        width: 60px;
+        height: 60px;
+        box-shadow: 0px 0px 6px 0px grey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.35;
+        img {
+            width: 60%;
+            height: 60%;
+        }
+    }
+    .cart-bubble:hover {
+        opacity: 1;
+        transition: opacity 300ms;
+    }
+    .cart-bubble-closed {
+        visibility: hidden;
+        opacity: 0;
+    }
+    .cart-bubble-closing {
+        visibility: visible;
+        transition: opacity 300ms;
+        opacity: 0;
+    }
+    .cart-bubble-open {
+        visibility: visible;
+        opacity: 0.35;
+    }
+    .cart-bubble-opening {
+        visibility: visible;
+        transition: opacity 300ms;
+        opacity: 0.35;
+    }
+    @media screen and (max-width: 800px) {
+        .cart-bubble {
+            top: 50px;
+            left: 10px;
+        }
+    }
+    @media screen and (max-width: 616px) {
+        .cart-bubble {
+            top: 40px;
+            left: 10px;
+        }
+    }
+    @media screen and (max-width: 471px) {
+        .cart-bubble {
+            top: 100px;
+            left: 10px;
+            width: 50px;
+            height: 50px;
+        }
+    }
+}

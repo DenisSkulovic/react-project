@@ -13,6 +13,7 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import AllProducts from "./pages/all_products/AllProducts";
 import PaymentHistory from "./pages/users/history/PaymentHistory";
+import Page404 from "./pages/page404/Page404";
 import { decideAuthStatus } from "./redux/user/actions";
 
 import {
@@ -45,6 +46,7 @@ function App() {
         <PublicRoute path="/register" component={Register} />
         <PublicRoute path="/all" component={AllProducts} />
         <PublicRoute exact path="/" component={Home} />
+        <Route component={Page404} />
       </Switch>
     </Router>
   );
