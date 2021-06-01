@@ -4,10 +4,15 @@
     justify-content: center;
     .categories{
         padding: 5px 0px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
         li {
-            cursor: pointer
+            cursor: pointer;
         }
         .list-group-item {
+            margin-bottom: 5px !important;
             border-top: none !important;
             border-bottom: none !important;
             border-left: none !important;

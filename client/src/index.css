@@ -42,7 +42,6 @@ code {
     monospace;
 }
 
-
 .main {
   height: 100%;
   padding-bottom: 100px;
@@ -55,4 +54,24 @@ code {
 
 .main.with-navbar {
   padding-top: 100px;
+}
+  @media only screen and (max-width: 800px) {
+    .main.with-navbar {
+      padding-top: 80px;
+    }
+}
+@media only screen and (max-width: 616px) {
+  .main.with-navbar {
+    padding-top: 60px;
+  }
+}
+@media only screen and (max-width: 560px) {
+  .main.with-navbar {
+    padding-top: 50px;
+  }
+}
+@media only screen and (max-width: 471px) {
+  .main.with-navbar {
+    padding-top: 30px;
+  }
 }

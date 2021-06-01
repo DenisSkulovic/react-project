@@ -25,4 +25,9 @@
         outline: none;
         box-shadow: none;
     }
+    @media screen and (max-width: 750px) {
+        .add-remove-buttons-wrapper {
+            opacity: 1;
+        }
+    }
 }

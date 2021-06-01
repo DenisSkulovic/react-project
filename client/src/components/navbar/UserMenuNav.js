@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { makeSelect_isAuthenticated } from "../../redux/user/selectors";
 import { logout } from "../../redux/user/actions";
+import CartBtn from "../cart/CartBtn";
 
 export default function UserMenuNav() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export default function UserMenuNav() {
 
   return (
     <div className="user-menu-nav">
+      <CartBtn />
       {!authStatusSelector.isAuthenticated && (
         <span>
           {!isLoginPage && <Link to="/login">Login</Link>}{" "}
