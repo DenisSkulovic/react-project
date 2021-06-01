@@ -30,9 +30,9 @@ export default function Checkout() {
   }, [parseInt(window.sessionStorage.getItem("cart_length"))]);
   return (
     <>
-      <Navbar className={"fixed with-cart"} />
+      <Navbar className={"fixed"} />
       <Cart />
-      <div className="main with-navbar with-cart">
+      <div className="main with-navbar">
         <div className="container">
           <div className="checkout-container  w-100 d-flex justify-content-center">
             <div className="checkout-wrapper">
