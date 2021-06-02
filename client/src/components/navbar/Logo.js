@@ -1,12 +1,14 @@
 import React from "react";
-import logo from "../../shop-logo.png";
 import { Link } from "react-router-dom";
 
 export default function Logo() {
   return (
     <div className="logo-wrapper">
       <Link to="/">
-        <img src={logo} alt="shop-logo" />
+        <img
+          src="https://github.com/DenisSkulovic/react-project/blob/main/client/src/shop-logo.png?raw=true"
+          alt="shop-logo"
+        />
       </Link>
     </div>
   );
