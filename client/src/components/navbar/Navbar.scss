@@ -40,15 +40,35 @@
         .logo-wrapper {
             width: 175px;
             height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             img {
                 width: 100%;
                 height: auto;
             }
         }
         .user-menu-nav {
-            margin:5px 15px;
+            margin: 5px 15px;
             display: flex;
             flex-direction: row;
+            span {
+                padding: 3px 7px;
+            }
+        }
+        .dropdown {
+            display: flex;
+            align-items: center;
+        }
+        .dropdown .btn:active, .dropdown .btn:focus {
+            outline: none !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        #account-dropdown {
+            background-color: transparent !important;
+            color: initial !important;   
+            border: none;
         }
         @media only screen and (max-width: 800px) {
             .logo-wrapper {
@@ -62,28 +82,32 @@
                 font-size: 0.9em !important;
             }
         }
-        @media only screen and (max-width: 616px) {
+        @media only screen and (max-width: 660px) {
             .logo-wrapper {
-                width: 85px;
-                height: 30px;
+                width: 140px;
+                height: 45px;
             }
             .navbar-link-list {
-                font-size: 0.8em !important;
+                font-size: 0.70em !important;
             }
             .user-menu-nav {
+                display: flex;
+                flex-direction: column;
                 font-size: 0.9em !important;
             }
         }
-        @media only screen and (max-width: 560px) {
+        @media only screen and (max-width: 566px) {
             .logo-wrapper {
-                width: 85px;
-                height: 30px;
+                width: 110px;
+                height: 40px;
             }
             .navbar-link-list {
                 font-size: 0.6em !important;
             }
             .user-menu-nav {
+                .btn {
                 font-size: 0.8em !important;
+                }
             }
         }
 

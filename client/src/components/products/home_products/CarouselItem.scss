@@ -49,6 +49,12 @@
     }
 }
 
+@media screen and (max-width: 750px) {
+    .carousel-item {
+        font-size: 0.85em;
+    }
+}
+
 .react-multiple-carousel__arrow {
     z-index: 1;
 }

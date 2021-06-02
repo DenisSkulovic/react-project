@@ -8,4 +8,13 @@
         background-color: rgb(190, 0, 0);
         color: white;
     }
+}
+
+@media screen and (max-width: 440px) {
+    .cart-top-nav-wrapper {
+        .greeting {
+            margin-top: 45px;
+            margin-bottom: 10px;
+        }
     }
+}

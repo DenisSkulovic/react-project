@@ -51,8 +51,12 @@
     @media screen and (max-width: 471px) {
         .cart-bubble {
             left: 10px;
+            bottom: 10px;
             width: 50px;
             height: 50px;
+        }
+        .cart-bubble-closing {
+            opacity: 0 !important;
         }
     }
 }

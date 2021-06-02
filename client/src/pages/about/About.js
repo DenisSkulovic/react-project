@@ -1,13 +1,9 @@
 import React from "react";
-import Navbar from "../../components/navbar/Navbar";
 import "./About.scss";
-import Cart from "../../components/cart/Cart";
 
 export default function About() {
   return (
     <div className="about-page">
-      <Cart />
-      <Navbar className={"fixed"} />
       <div className="main with-navbar">
         <div className="container d-flex flex-row flex-wrap justify-content-around">
           <div className="about-wrapper col-11 col-md-9 col-lg-7 col-xl-7 mb-4">

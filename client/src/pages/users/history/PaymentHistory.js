@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../../../components/navbar/Navbar";
 import PaymentList from "../../../components/payment/PaymentList";
 import "./PaymentHistory.scss";
 import { useHistory } from "react-router-dom";
@@ -9,8 +8,6 @@ import {
   makeSelect_Payment_payment,
   makeSelect_Payment_payment_history,
 } from "../../../redux/payment/selectors";
-import { Link } from "react-router-dom";
-import BackBtn from "../../../components/BackBtn";
 
 export default function PaymentHistory() {
   const dispatch = useDispatch();
@@ -29,12 +26,8 @@ export default function PaymentHistory() {
 
   return (
     <div className="payment-history-page">
-      <Navbar className={"fixed"} />
       <div className="main with-navbar">
         <div className="container">
-          <Link to="/account">
-            <BackBtn />
-          </Link>
           {paymentHistorySelector.payment_history && (
             <PaymentList payments={paymentHistorySelector.payment_history} />
           )}

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "../../components/navbar/Navbar";
 import "./Register.scss";
 import { Link, useHistory } from "react-router-dom";
 import { register } from "../../redux/user/actions";
@@ -31,7 +30,6 @@ export default function Register() {
 
   return (
     <div className="register-page">
-      <Navbar />
       <div className="main with-navbar">
         <div className="container register-container">
           <div className="register-wrapper">

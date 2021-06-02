@@ -95,6 +95,12 @@
 }
 }
 
+@media screen and (max-width: 600px) {
+    .cart-item-wrapper {
+        font-size: 0.8em !important;
+    }
+}
+
 
 @keyframes cart-img-zoom-out {
     0% {max-width: 100px;

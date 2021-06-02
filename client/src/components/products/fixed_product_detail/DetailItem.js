@@ -38,7 +38,10 @@ export default function DetailItem({ product, stock_item }) {
     <div className="product-detail-info">
       <div className="image-wrapper col-3">
         <div className="image-div">
-          <img src={product ? product.image : "no data"} alt={product ? product.name : "no data"} />
+          <img
+            src={product ? product.image : "no data"}
+            alt={product ? product.name : "no data"}
+          />
         </div>
       </div>
       <div className="name col-2">{product ? product.name : "no data"}</div>
@@ -49,14 +52,17 @@ export default function DetailItem({ product, stock_item }) {
           quantityInputValue_Selector={quantityInputValue_Selector}
         />
         <div className="available">
-          Available: {stock_item ? stock_item.quantity : "no data"}
+          <div>Available:</div>
+          <div>{stock_item ? stock_item.quantity : "no data"}</div>
         </div>
       </div>
       <div className="unit-price col-2">
-        {product ? product.unit_price : "no data"} / {product ? product.unit : "no data"}
+        <div>{product ? `$${product.unit_price}` : "no data"}</div>
+        <div> / {product ? product.unit : "no data"}</div>
       </div>
       <div className="total-price col-2">
-        ${product &&
+        $
+        {product &&
           (
             quantityInputValue_Selector.quantity_input_value *
             product.unit_price

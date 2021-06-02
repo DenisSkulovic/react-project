@@ -10,7 +10,14 @@
     }
     .name {
         padding: 0px 5px;
-
+    }
+    .available {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .available div {
+        padding: 3px;
     }
     .image-wrapper {
     
@@ -25,6 +32,15 @@
                 max-height: 185px;
                 max-width: 90%;
             }
+        }
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .product-detail-info {
+        .name {
+            text-align: center;
+            padding: 0 !important;
         }
     }
 }

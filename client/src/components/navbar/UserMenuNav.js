@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeSelect_isAuthenticated } from "../../redux/user/selectors";
 import { logout } from "../../redux/user/actions";
 import CartBtn from "../cart/CartBtn";
+import { Dropdown } from "react-bootstrap";
 
 export default function UserMenuNav() {
   const dispatch = useDispatch();
@@ -32,20 +33,33 @@ export default function UserMenuNav() {
     <div className="user-menu-nav">
       <CartBtn />
       {!authStatusSelector.isAuthenticated && (
-        <span>
-          {!isLoginPage && <Link to="/login">Login</Link>}{" "}
-          {!isLoginPage && !isRegisterPage && "|"}{" "}
-          {!isRegisterPage && <Link to="/register">Register</Link>}
-        </span>
+        <>
+          <span className="login-span">
+            {!isLoginPage && <Link to="/login">Login</Link>}{" "}
+          </span>
+          <span className="register-span">
+            {!isRegisterPage && <Link to="/register">Register</Link>}
+          </span>
+        </>
       )}
       {authStatusSelector.isAuthenticated && (
-        <span>
-          <a href="#" onClick={(e) => handleLogout(e)}>
-            Logout
-          </a>
-          {" | "}
-          <Link to="/account">Account</Link>
-        </span>
+        <>
+          <button className="logout-span btn">
+            <a href="#" onClick={(e) => handleLogout(e)}>
+              Logout
+            </a>
+          </button>
+          <Dropdown>
+            <Dropdown.Toggle id="account-dropdown">Account</Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item href="/account/history">History</Dropdown.Item>
+              <Dropdown.Item href="/account/change-password">
+                Change Password
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </>
       )}
     </div>
   );

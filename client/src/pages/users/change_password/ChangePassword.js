@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./ChangePassword.scss";
-import Navbar from "../../../components/navbar/Navbar";
 import { Link, useHistory } from "react-router-dom";
 import { change_password } from "../../../redux/user/actions";
 import { useDispatch, useSelector } from "react-redux";
-import BackBtn from "../../../components/BackBtn";
 
 export default function ChangePassword() {
   const [email, setEmail] = useState("");
@@ -29,12 +27,8 @@ export default function ChangePassword() {
 
   return (
     <div className="change-password-page">
-      <Navbar className={"fixed"} />
       <div className="main with-navbar">
         <div className="container change-password-container">
-          <Link to="/account">
-            <BackBtn />
-          </Link>
           <div className="change-password-wrapper d-flex flex-column justify-content-center align-items-center">
             <h4>Change Password</h4>
             <form

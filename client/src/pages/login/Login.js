@@ -1,34 +1,32 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../../components/navbar/Navbar";
 import { Link, useHistory } from "react-router-dom";
 import "./Login.scss";
 import { login } from "../../redux/user/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { makeSelect_isAuthenticated } from '../../redux/user/selectors'
+import { makeSelect_isAuthenticated } from "../../redux/user/selectors";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("submit")
+    console.log("submit");
     dispatch(login(email, password));
   };
 
-  const authSelector = useSelector(makeSelect_isAuthenticated)
+  const authSelector = useSelector(makeSelect_isAuthenticated);
   useEffect(() => {
     if (authSelector.isAuthenticated) {
-      history.goBack()
+      history.goBack();
     }
-  }, [authSelector.isAuthenticated])
+  }, [authSelector.isAuthenticated]);
 
   return (
     <div className="login-page">
-      <Navbar />
       <div className="main with-navbar">
         <div className="container login-container">
           <div className="login-wrapper">
@@ -61,7 +59,9 @@ export default function Login() {
                 />
               </div>
               <div className="form-group mb-3 submit-div">
-                <button className="btn btn-success btn-block" type="submit">Login</button>
+                <button className="btn btn-success btn-block" type="submit">
+                  Login
+                </button>
               </div>
               <p>
                 Don't have an account? <Link to="/register">Register</Link>

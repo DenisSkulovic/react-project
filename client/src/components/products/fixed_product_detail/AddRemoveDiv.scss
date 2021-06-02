@@ -24,8 +24,10 @@
             border-radius: 0px;
             border-left: 1px solid #ced4da;
             border-right: 1px solid #ced4da;
+            min-width: 50px;
         }
     }
+
         
     input[type='number'],
     input[type="number"]:active,
@@ -37,4 +39,15 @@
         -moz-appearance: textfield !important;
         box-shadow: initial;
     }
-}    
+}  
+@media screen and (max-width: 1150px) {
+    .add-remove-wrapper .add-remove-btn {
+        display: none;
+    }
+    .add-remove-wrapper {
+    }
+    .add-remove-wrapper .add-remove {
+        grid-template-columns: initial;
+    }
+}  
+
