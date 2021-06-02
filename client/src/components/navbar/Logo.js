@@ -6,7 +6,7 @@ export default function Logo() {
     <div className="logo-wrapper">
       <Link to="/">
         <img
-          src="https://github.com/DenisSkulovic/react-project/blob/main/client/src/shop-logo.png?raw=true"
+          src="https://github.com/DenisSkulovic/react-project/blob/main/client/src/shop-logo.jpg?raw=true"
           alt="shop-logo"
         />
       </Link>

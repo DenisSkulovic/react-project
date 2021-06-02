@@ -38,14 +38,21 @@
             }
         }
         .logo-wrapper {
-            width: 60px;
             height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0px 10px;
             img {
+                width: auto;
+                height: 90%;
+            }
+            a {
                 width: 100%;
-                height: auto;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
         .user-menu-nav {
@@ -72,8 +79,7 @@
         }
         @media only screen and (max-width: 800px) {
             .logo-wrapper {
-                width: 40px;
-                height: 40px;
+                height: 55px;
             }
             .navbar-link-list {
                 font-size: 0.9em !important;
@@ -84,7 +90,6 @@
         }
         @media only screen and (max-width: 660px) {
             .logo-wrapper {
-                width: 45px;
                 height: 45px;
             }
             .navbar-link-list {
@@ -98,7 +103,6 @@
         }
         @media only screen and (max-width: 566px) {
             .logo-wrapper {
-                width: 40px;
                 height: 40px;
             }
             .navbar-link-list {
@@ -108,6 +112,11 @@
                 .btn {
                 font-size: 0.8em !important;
                 }
+            }
+        }
+        @media only screen and (max-width: 400px) {
+            .logo-wrapper {
+                height: 35px;
             }
         }
 
@@ -121,8 +130,7 @@
     .navbar-wrapper.fixed {
         position: initial;
         .logo-wrapper {
-            width: 100px !important;
-            height: 90px !important;
+            height: 40px;
         }
         .navbar-link-list {
             font-size: 0.9em !important;
@@ -137,8 +145,9 @@
             font-size: 0.9em !important;
         }
     }
-
 }
+
+
 .navbar-wrapper.with-cart {
     padding-left: 400px;
 }
