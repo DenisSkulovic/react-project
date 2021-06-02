@@ -29,7 +29,6 @@ import {
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    // console.log("Sessionkey", window.sessionStorage.getItem("Sessionkey"));
     dispatch(decideAuthStatus());
   });
   return (

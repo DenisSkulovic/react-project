@@ -31,9 +31,13 @@ export default function PaymentHistory() {
           {paymentHistorySelector.payment_history && (
             <PaymentList payments={paymentHistorySelector.payment_history} />
           )}
-          {!paymentHistorySelector.payment_history
-            ? "No Payments to Display"
-            : ""}
+          {!paymentHistorySelector.payment_history ? (
+            <div>
+              <h3>No Payments to Display</h3>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

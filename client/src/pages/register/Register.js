@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Register.scss";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import { register } from "../../redux/user/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { makeSelect_isAuthenticated } from "../../redux/user/selectors";
@@ -25,7 +25,7 @@ export default function Register() {
   };
 
   if (authStatusSelector.isAuthenticated) {
-    history.goBack();
+    return <Redirect to="/" />;
   }
 
   return (

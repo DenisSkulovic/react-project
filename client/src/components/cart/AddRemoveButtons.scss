@@ -1,7 +1,7 @@
 .cart {
     .add-remove-buttons-wrapper {
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-self: flex-end;
         opacity: 0;
         transition: opacity 0.1s ease-out 100ms;
