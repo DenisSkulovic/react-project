@@ -61,12 +61,14 @@ export default function DetailItem({ product, stock_item }) {
         <div> / {product ? product.unit : "no data"}</div>
       </div>
       <div className="total-price col-2">
-        $
-        {product &&
-          (
-            quantityInputValue_Selector.quantity_input_value *
-            product.unit_price
-          ).toFixed(2)}
+        <span>
+          $
+          {product &&
+            (
+              quantityInputValue_Selector.quantity_input_value *
+              product.unit_price
+            ).toFixed(2)}
+        </span>
       </div>
     </div>
   );

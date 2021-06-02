@@ -78,10 +78,6 @@ export default function ChangePassword() {
                   Change Password
                 </button>
               </div>
-              <p>
-                Create a new account instead?{" "}
-                <Link to="/register">Register</Link>
-              </p>
             </form>
           </div>
         </div>
