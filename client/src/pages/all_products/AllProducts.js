@@ -4,7 +4,6 @@ import OrderBy from "../../components/products/all_products/OrderBy";
 import ProductsListByCategory from "../../components/products/all_products/ProductsListByCategory";
 import Container from "react-bootstrap/Container";
 import "./AllProducts.scss";
-import ProductDetailFixedOverlay from "../../components/products/fixed_product_detail/ProductDetailFixedOverlay";
 
 export default function AllProducts() {
   return (
@@ -20,7 +19,6 @@ export default function AllProducts() {
           </div>
         </Container>
       </div>
-      <ProductDetailFixedOverlay />
     </>
   );
 }

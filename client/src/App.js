@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { PrivateRoute, PublicRoute } from "./utils";
 import Cart from "./components/cart/Cart";
 import Navbar from "./components/navbar/Navbar";
+import ProductDetailFixedOverlay from "./components/products/fixed_product_detail/ProductDetailFixedOverlay";
 
 // pages
 import About from "./pages/about/About";
@@ -35,6 +36,7 @@ function App() {
     <Router>
       <Navbar className={"fixed"} />
       <Cart />
+      <ProductDetailFixedOverlay />
 
       <Switch>
         <PrivateRoute path="/account/history" component={PaymentHistory} />
