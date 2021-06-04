@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeSelectProducts } from "../../../redux/productsHomePage/selectors";
 import { getProductsByCategory } from "../../../redux/productsHomePage/actions";
 
-import ProductDetailFixedOverlay from "../../../components/products/fixed_product_detail/ProductDetailFixedOverlay";
-
 export default function CarouselList() {
   const dispatch = useDispatch();
 
@@ -31,7 +29,6 @@ export default function CarouselList() {
             );
           })}
       </div>
-      <ProductDetailFixedOverlay />
     </div>
   );
 }
