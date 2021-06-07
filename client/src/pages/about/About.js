@@ -10,18 +10,19 @@ export default function About() {
             <div className="about">
               <h3>About</h3>
               <p>
-                This project uses <strong>Django REST API</strong> as the
-                backend and <strong>React</strong> for the frontend.
+                The project uses <strong>Django REST API</strong> as the backend
+                and <strong>React</strong> for the frontend.
               </p>
               <p>
-                Most information is processed at the backend (i.e. button clicks
-                send requests to the backend and receive JSON responses).
+                As much information as possible is processed at the backend
+                (i.e. button clicks send requests to the backend and receive
+                JSON responses).
               </p>
               <h4>Authentication</h4>
               <p>
                 The store supports both anonymous and authenticated purchases.
                 The cart is connected to the session key of a user, and to the
-                user account in case a user is authenticated. The{" "}
+                user account in case the user is authenticated. The{" "}
                 <strong>session key</strong> and the{" "}
                 <strong>authentication token</strong> are stored in the
                 sessionStorage of the browser.
@@ -74,7 +75,7 @@ export default function About() {
                         <td>LinkedIn:</td>
                         <td>
                           <a href="https://www.linkedin.com/in/denis-skulovi%C4%8D-34880712b/">
-                            link
+                            linkedin.com/in/denis-skulovič-34880712b/
                           </a>
                         </td>
                       </tr>
